@@ -15,6 +15,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from db import connect, describe_target  # noqa: E402
+from intervals_sync import DEDUP_MATCH  # noqa: E402  — single source of truth
 
 PASS, FAIL = "PASS", "FAIL"
 results: list[tuple[str, str, str, str]] = []  # gate, check, status, evidence
@@ -116,19 +117,21 @@ def gate_c(c) -> None:
         check("C", "CTL/ATL pulled from intervals.icu", ctl > 0,
               f"{ctl}/{well} wellness rows carry ctl")
 
-    # Dedup: no strava row left on a day+sport an intervals row also covers.
-    dupes = c.run("""
-        select count(*) from activities s
-        where s.source='strava' and exists (
-            select 1 from activities i
-            where i.source='intervals'
-              and i.date::date = s.date::date
-              and i.sport = s.sport
-              and (s.distance_m is null or i.distance_m is null
-                   or abs(i.distance_m - s.distance_m) <= 0.02 * greatest(i.distance_m, s.distance_m))
-        )""")[0][0]
+    # Dedup: no strava row left that an intervals row supersedes. Uses the exact
+    # predicate the deletion uses (imported, not re-typed) so this gate actually
+    # constrains intervals_sync.py rather than approximating it.
+    dupes = c.run(f"""
+        select count(*)
+        from public.activities s
+        join public.activities i on {DEDUP_MATCH}
+    """)[0][0]
     check("C", "dedup — no strava/intervals double-count", dupes == 0,
           f"{dupes} overlapping strava rows remain")
+
+    # Guard against the inverse failure: dedup deleting far too much.
+    strava = c.run("select count(*) from activities where source='strava'")[0][0]
+    check("C", "strava seed not over-pruned by dedup", strava >= 4680,
+          f"{strava} strava rows remain of 4690 imported")
 
 
 GATES = {"A": gate_a, "B": gate_b, "C": gate_c}
