@@ -1,0 +1,36 @@
+<div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>Home — edge-bleed numeral. 247 breaks the right edge over coral; readouts as hairline table, no cards. Nav A.</div>
+<div class="dv-card" style="width:390px">
+<div style="width:390px;height:844px;background:#FAF7F2;color:#17140F;position:relative;overflow:hidden">
+<div style="display:flex;justify-content:space-between;padding:14px 20px 0;font:400 11px 'Space Mono',monospace;letter-spacing:.04em;opacity:.55"><span>9:41</span><span>5G · 82%</span></div>
+<div style="position:relative;background:#FF6B54;padding:26px 0 30px;margin-top:16px;overflow:hidden">
+<div style="display:flex;justify-content:space-between;padding:0 20px;font:700 10px 'Space Mono',monospace;letter-spacing:.2em;color:rgba(23,20,15,.7)"><span>WEEK 32 VOLUME</span><span>27 JUL – 02 AUG</span></div>
+<div style="font:700 168px/.8 'Space Grotesk',sans-serif;letter-spacing:-.07em;margin:10px 0 0 14px;white-space:nowrap">247<span style="font-size:52px;letter-spacing:0">km</span></div>
+<div style="display:flex;align-items:baseline;gap:12px;padding:0 20px;margin-top:18px;font:400 12.5px 'Space Mono',monospace"><span>196 ride</span><span style="opacity:.5">/</span><span>38 run</span><span style="opacity:.5">/</span><span>1 gym</span></div>
+</div>
+<div style="display:flex;border-bottom:1.5px solid rgba(23,20,15,.14)">
+<div style="flex:1;padding:20px 20px 18px;border-right:1.5px solid rgba(23,20,15,.14)"><div style="font:700 9.5px 'Space Mono',monospace;letter-spacing:.18em;opacity:.5">READINESS</div><div style="font:700 56px/1 'Space Grotesk',sans-serif;letter-spacing:-.04em;margin-top:4px">86<span style="font-size:24px">%</span></div></div>
+<div style="flex:1;padding:20px 20px 18px"><div style="font:700 9.5px 'Space Mono',monospace;letter-spacing:.18em;opacity:.5">FORM</div><div style="font:700 56px/1 'Space Grotesk',sans-serif;letter-spacing:-.04em;margin-top:4px;color:#124E4A">+4</div></div>
+</div>
+<div style="display:flex;flex-direction:column;font-variant-numeric:tabular-nums">
+<sc-for list="{{ homeRows }}" as="r" hint-placeholder-count="3">
+<div style="display:flex;justify-content:space-between;align-items:baseline;padding:13px 20px;border-bottom:1px solid rgba(23,20,15,.1)"><span style="font:400 11px 'Space Mono',monospace;letter-spacing:.14em;opacity:.55">{{ r.k }}</span><span style="font:700 14px 'Space Mono',monospace">{{ r.v }}</span></div>
+</sc-for>
+</div>
+<div style="padding:18px 20px 6px;font:700 11px 'Space Mono',monospace;letter-spacing:.2em;opacity:.5">LAST THREE</div>
+<div style="display:flex;flex-direction:column">
+<sc-for list="{{ recent3 }}" as="a" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;gap:12px;padding:11px 20px;border-top:1px solid rgba(23,20,15,.1)">
+<div style="width:8px;height:26px;background:{{ a.color }}"></div>
+<div style="flex:1;min-width:0"><div style="font:500 13px 'Space Grotesk',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ a.title }}</div><div style="font:400 10px 'Space Mono',monospace;opacity:.5;margin-top:1px">{{ a.date }} · TSS {{ a.tss }}</div></div>
+<span style="font:700 12.5px 'Space Mono',monospace;font-variant-numeric:tabular-nums">{{ a.dist }}</span>
+</div>
+</sc-for>
+</div>
+<div style="position:absolute;left:0;right:0;bottom:0;height:84px;background:#17140F;display:flex;padding:0 6px">
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:#FF6B54"></div><span style="font:700 10px 'Space Mono',monospace;letter-spacing:.1em;color:#FF6B54">WEEK</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:transparent"></div><span style="font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(250,247,242,.45)">LOG</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:transparent"></div><span style="font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(250,247,242,.45)">FITNESS</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:transparent"></div><span style="font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(250,247,242,.45)">BODY</span></div>
+</div>
+</div>
+</div>

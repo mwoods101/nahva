@@ -1,0 +1,917 @@
+@import "./tokens.css";
+
+/* ── Reset / frame ─────────────────────────────────────────── */
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--display);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Mobile-first: the design is a 390px frame. On desktop it centres in a
+ * phone-width column with the tab bar pinned to that column, so the layout
+ * holds up rather than stretching (CLAUDE.md: "must hold up on desktop"). */
+#app {
+  max-width: 430px;
+  margin: 0 auto;
+  min-height: 100vh;
+  min-height: 100dvh;
+  position: relative;
+  background: var(--paper);
+  padding-bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom, 0px));
+}
+@media (min-width: 900px) {
+  body {
+    background: #e9e5de; /* the design canvas ground, as desktop matting */
+  }
+  #app {
+    box-shadow: 0 2px 24px rgba(23, 20, 15, 0.14);
+  }
+}
+
+/* ── Shared primitives ─────────────────────────────────────── */
+.mono {
+  font-family: var(--data);
+  font-variant-numeric: tabular-nums;
+}
+.eyebrow {
+  font: 700 10px var(--data);
+  letter-spacing: 0.2em;
+  opacity: 0.5;
+}
+.screen-pad {
+  padding: 0 var(--pad-screen);
+}
+.card {
+  margin: 0 var(--gutter);
+  background: var(--raised);
+  border-radius: var(--r-card);
+  padding: 16px 16px 12px;
+}
+.card--outline {
+  background: var(--paper);
+  border: 1.5px solid var(--hairline);
+}
+.statusbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px var(--pad-screen) 0;
+  font: 400 11px var(--data);
+  opacity: 0.55;
+}
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 22px var(--pad-screen) 8px;
+}
+.section-head__title {
+  font: 700 13px var(--display);
+}
+.section-head__meta {
+  font: 400 10px var(--data);
+  letter-spacing: 0.1em;
+  opacity: 0.45;
+}
+
+/* ── Tab bar: ink, coral rule on the active tab (nav pattern A) ── */
+.tabbar {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 430px;
+  height: calc(var(--tabbar-h) + env(safe-area-inset-bottom, 0px));
+  padding: 0 6px env(safe-area-inset-bottom, 0px);
+  background: var(--ink);
+  display: flex;
+  z-index: 10;
+}
+.tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  padding-top: 14px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font: 400 10px var(--data);
+  letter-spacing: 0.1em;
+  color: rgba(250, 247, 242, 0.55);
+}
+.tab__rule {
+  width: 26px;
+  height: 3px;
+  background: transparent;
+}
+.tab[aria-selected="true"] {
+  font-weight: 700;
+  color: var(--coral);
+}
+.tab[aria-selected="true"] .tab__rule {
+  background: var(--coral);
+}
+
+/* ── Hero (coral) — one per screen ─────────────────────────── */
+.hero {
+  margin: 0 var(--gutter);
+  background: var(--coral);
+  color: var(--coral-on);
+  border-radius: var(--r-hero);
+  padding: 20px 22px 18px;
+}
+.hero__label {
+  font: 700 10px var(--data);
+  letter-spacing: 0.2em;
+  opacity: 0.7;
+}
+.hero__row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 2px;
+}
+.hero__figure {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+}
+.hero__num {
+  font: 700 82px/0.86 var(--display);
+  letter-spacing: -0.05em;
+}
+.hero__unit {
+  font: 700 28px var(--display);
+  padding-bottom: 7px;
+}
+.hero__delta {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 12px;
+  font: 700 12px var(--data);
+}
+.hero__delta span:last-child {
+  font-weight: 400;
+  opacity: 0.65;
+}
+.hero__sub {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  font: 400 12px var(--data);
+}
+.hero__sub .sep {
+  opacity: 0.45;
+}
+
+/* Sparkbars inside the hero */
+.sparkbars {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 52px;
+  width: 96px;
+  padding-bottom: 6px;
+}
+.sparkbars__col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+  gap: 4px;
+}
+.sparkbars__bar {
+  border-radius: 2px;
+}
+.sparkbars__label {
+  font: 400 7.5px var(--data);
+  opacity: 0.5;
+  text-align: center;
+}
+
+/* ── Sport split bar ───────────────────────────────────────── */
+.split {
+  margin: 10px var(--gutter) 0;
+  display: flex;
+  gap: 6px;
+}
+.split__seg {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.split__rule {
+  height: 8px;
+  border-radius: 4px;
+}
+.split__label {
+  font: 400 9.5px var(--data);
+  letter-spacing: 0.08em;
+  opacity: 0.6;
+}
+
+/* ── Tile pair (petrol readiness + outlined form) ──────────── */
+.tiles {
+  display: flex;
+  gap: 10px;
+  margin: 10px var(--gutter) 0;
+}
+.tile {
+  flex: 1;
+  border-radius: var(--r-card);
+  padding: 16px 18px;
+}
+.tile--petrol {
+  background: var(--petrol);
+  color: var(--petrol-on);
+}
+.tile--outline {
+  background: var(--paper);
+  border: 1.5px solid var(--hairline);
+}
+.tile__label {
+  font: 700 10px var(--data);
+  letter-spacing: 0.18em;
+  opacity: 0.7;
+}
+.tile--outline .tile__label {
+  opacity: 0.5;
+}
+.tile__value {
+  font: 700 46px/1 var(--display);
+  letter-spacing: -0.03em;
+  margin-top: 6px;
+}
+.tile__value small {
+  font-size: 22px;
+}
+.tile__foot {
+  font: 400 11px var(--data);
+  margin-top: 6px;
+}
+.tile--outline .tile__foot {
+  opacity: 0.55;
+}
+
+/* Missing-data state. readiness/body_battery are null from intervals.icu,
+ * so these render as an explicit absence rather than a fake number. */
+.tile__value--absent {
+  opacity: 0.3;
+}
+.tile__foot--absent {
+  opacity: 0.5;
+  letter-spacing: 0.08em;
+}
+
+/* ── Metric strip (CTL / ATL / 7D TSS) ─────────────────────── */
+.strip {
+  display: grid;
+  margin: 10px var(--gutter) 0;
+  border: 1.5px solid var(--hairline);
+  border-radius: var(--r-card);
+  overflow: hidden;
+  font-variant-numeric: tabular-nums;
+}
+.strip__cell {
+  padding: 14px 16px;
+  border-right: 1.5px solid var(--hairline);
+}
+.strip__cell:last-child {
+  border-right: 0;
+}
+.strip__label {
+  font: 400 9.5px var(--data);
+  letter-spacing: 0.16em;
+  opacity: 0.5;
+}
+.strip__value {
+  font: 700 24px var(--data);
+  margin-top: 4px;
+}
+.strip__value--absent {
+  opacity: 0.3;
+}
+
+/* ── Activity rows ─────────────────────────────────────────── */
+.rows {
+  padding: 0 var(--gutter);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--raised);
+  border-radius: var(--r-row);
+  padding: 12px 14px;
+  border: 0;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+}
+.row__tag {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 700 10px var(--data);
+  flex: none;
+}
+.row__tag--dot {
+  border-radius: var(--r-pill);
+}
+.row__body {
+  flex: 1;
+  min-width: 0;
+}
+.row__title {
+  font: 500 13.5px var(--display);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.row__meta {
+  font: 400 10.5px var(--data);
+  opacity: 0.5;
+  margin-top: 2px;
+}
+.row__right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  flex: none;
+}
+.row__dur {
+  font: 700 13px var(--data);
+}
+.row__dist {
+  font: 400 10.5px var(--data);
+  opacity: 0.5;
+  margin-top: 2px;
+}
+
+/* ── Chips (range tabs, sport filters, metric toggle) ──────── */
+.chips {
+  display: flex;
+  gap: 7px;
+}
+.chip {
+  padding: 7px 13px;
+  border-radius: var(--r-chip);
+  font: 700 10px var(--data);
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  background: var(--paper);
+  color: var(--ink);
+  border: 1.5px solid var(--hairline);
+}
+.chip[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--ink-on);
+  border-color: var(--ink);
+}
+.chip--pill {
+  border-radius: var(--r-pill);
+  padding: 7px 14px;
+  border-color: rgba(23, 20, 15, 0.14);
+}
+.toggle {
+  display: flex;
+  border: 1.5px solid rgba(250, 247, 242, 0.4);
+  border-radius: var(--r-pill);
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+.toggle__opt {
+  padding: 6px 13px;
+  font: 700 10px var(--data);
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  background: transparent;
+  color: rgba(250, 247, 242, 0.7);
+  border: 0;
+}
+.toggle__opt[aria-pressed="true"] {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+/* ── Calendar (Log) ────────────────────────────────────────── */
+.cal {
+  margin: 0 var(--gutter);
+  background: var(--raised);
+  border-radius: var(--r-card);
+  padding: 14px 12px 10px;
+}
+.cal__head,
+.cal__week {
+  display: grid;
+  grid-template-columns: 52px repeat(7, 1fr);
+  align-items: center;
+}
+.cal__head {
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--hairline-soft);
+}
+.cal__dow {
+  text-align: center;
+  font: 400 9.5px var(--data);
+  letter-spacing: 0.06em;
+  opacity: 0.4;
+}
+.cal__scroll {
+  max-height: 296px;
+  overflow: auto;
+}
+.cal__week {
+  border-bottom: 1px solid var(--hairline-faint);
+}
+.cal__wk {
+  padding: 6px 0;
+}
+.cal__wk-start {
+  font: 700 9.5px var(--data);
+}
+.cal__wk-total {
+  font: 400 9px var(--data);
+  opacity: 0.45;
+  margin-top: 1px;
+}
+.cal__day {
+  height: 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  cursor: pointer;
+  border-radius: 8px;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  padding: 0;
+}
+.cal__day[aria-selected="true"] {
+  background: var(--hairline-faint);
+}
+.cal__daynum {
+  font: 400 8.5px var(--data);
+  opacity: 0.5;
+}
+.cal__dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  height: 38px;
+}
+.cal__dot {
+  border-radius: var(--r-pill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--data);
+  font-weight: 700;
+}
+.cal__legend {
+  display: flex;
+  gap: 12px;
+  padding: 10px 4px 0;
+  font: 400 9px var(--data);
+  letter-spacing: 0.06em;
+  border-top: 1px solid var(--hairline-soft);
+}
+.cal__empty {
+  border: 1.5px dashed var(--hairline);
+  border-radius: var(--r-row);
+  padding: 16px;
+  text-align: center;
+  font: 400 11px var(--data);
+  letter-spacing: 0.1em;
+  opacity: 0.6;
+  margin: 0 var(--gutter);
+}
+
+/* ── Charts ────────────────────────────────────────────────── */
+.chart__legend {
+  display: flex;
+  gap: 16px;
+  padding: 0 4px 10px;
+  font: 400 10px var(--data);
+  letter-spacing: 0.08em;
+  flex-wrap: wrap;
+}
+.chart__key {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.chart__swatch {
+  width: 14px;
+  height: 3px;
+}
+.chart__axis {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 2px 0;
+  font: 400 9.5px var(--data);
+  opacity: 0.45;
+}
+.chart__sub {
+  margin-top: 10px;
+  border-top: 1px solid var(--hairline-soft);
+  padding-top: 10px;
+}
+.chart__sublabel {
+  font: 400 9.5px var(--data);
+  letter-spacing: 0.14em;
+  opacity: 0.5;
+  margin-bottom: 4px;
+}
+.volbars {
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+  height: 82px;
+  margin-top: 14px;
+}
+.volbars__col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+  gap: 5px;
+}
+.volbars__bar {
+  border-radius: 3px;
+  min-height: 1px;
+}
+.volbars__label {
+  font: 400 8.5px var(--data);
+  opacity: 0.4;
+  text-align: center;
+}
+
+/* ── "Building" notice — the PMC has ~5 weeks of load against 13 years
+ *    of volume, so it must not imply a long-term trend (CHECKLIST). ── */
+.building {
+  margin: 10px var(--gutter) 0;
+  border: 1.5px dashed var(--hairline);
+  border-radius: var(--r-card);
+  padding: 12px 14px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.building__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--r-pill);
+  background: var(--ochre);
+  margin-top: 4px;
+  flex: none;
+}
+.building__title {
+  font: 700 10px var(--data);
+  letter-spacing: 0.16em;
+}
+.building__body {
+  font: 400 10.5px/1.6 var(--data);
+  opacity: 0.6;
+  margin-top: 3px;
+}
+
+/* ── Activity detail ───────────────────────────────────────── */
+.detail__header {
+  background: var(--coral);
+  color: var(--coral-on);
+  padding: 14px var(--pad-screen) 24px;
+}
+.detail__header--ride {
+  background: var(--petrol);
+  color: var(--petrol-on);
+}
+.detail__header--gym {
+  background: var(--ochre);
+  color: var(--ochre-on);
+}
+.detail__header--other {
+  background: var(--paper);
+  color: var(--ink);
+  border-bottom: 1.5px solid var(--hairline);
+}
+.detail__bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 14px;
+  font: 700 10px var(--data);
+  letter-spacing: 0.18em;
+}
+.detail__back {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+}
+.detail__title {
+  font: 700 34px/1.05 var(--display);
+  letter-spacing: -0.03em;
+  margin-top: 18px;
+}
+.detail__when {
+  font: 400 11.5px var(--data);
+  margin-top: 12px;
+  opacity: 0.75;
+}
+.detail__note {
+  font: 500 14px var(--display);
+  margin-top: 14px;
+  line-height: 1.4;
+}
+.detail__keys {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  border-bottom: 1.5px solid rgba(23, 20, 15, 0.14);
+  font-variant-numeric: tabular-nums;
+}
+.detail__key {
+  padding: 16px 18px;
+  border-right: 1.5px solid rgba(23, 20, 15, 0.14);
+}
+.detail__key:last-child {
+  border-right: 0;
+}
+.detail__key-label {
+  font: 400 9px var(--data);
+  letter-spacing: 0.14em;
+  opacity: 0.5;
+}
+.detail__key-value {
+  font: 700 26px var(--display);
+  margin-top: 2px;
+}
+.detail__key-value small {
+  font-size: 12px;
+}
+.detail__metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  font-variant-numeric: tabular-nums;
+}
+.detail__metric {
+  padding: 13px 18px;
+  border-bottom: 1px solid var(--hairline-soft);
+  border-right: 1px solid var(--hairline-soft);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.detail__metric span:first-child {
+  font: 400 10px var(--data);
+  letter-spacing: 0.1em;
+  opacity: 0.5;
+}
+.detail__metric span:last-child {
+  font: 700 13px var(--data);
+}
+.blocks {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 74px;
+  margin-top: 14px;
+}
+.blocks__b {
+  border-radius: 3px 3px 0 0;
+  min-height: 2px;
+}
+.blocks__base {
+  height: 1.5px;
+  background: var(--ink);
+}
+.ivals {
+  padding: 0 var(--gutter);
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.ival {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--raised);
+  border-radius: 12px;
+  padding: 11px 14px;
+  font-variant-numeric: tabular-nums;
+}
+.ival__n {
+  width: 22px;
+  font: 700 12px var(--data);
+  color: var(--coral);
+}
+.ival__dur {
+  flex: 1;
+  font: 400 11px var(--data);
+  opacity: 0.6;
+}
+.ival__pace {
+  font: 700 13px var(--data);
+}
+.ival__hr {
+  width: 64px;
+  text-align: right;
+  font: 400 11px var(--data);
+  opacity: 0.6;
+}
+.context {
+  margin: 18px var(--gutter) 24px;
+  background: var(--petrol);
+  color: var(--petrol-on);
+  border-radius: var(--r-card);
+  padding: 16px 18px;
+}
+.context__label {
+  font: 700 10px var(--data);
+  letter-spacing: 0.18em;
+  opacity: 0.65;
+}
+.context__row {
+  display: flex;
+  gap: 18px;
+  margin-top: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.context__k {
+  font: 400 9.5px var(--data);
+  opacity: 0.6;
+}
+.context__v {
+  font: 700 26px var(--display);
+  margin-top: 2px;
+}
+.context__foot {
+  font: 400 11px/1.5 var(--data);
+  opacity: 0.7;
+  margin-top: 12px;
+}
+
+/* ── Body block (folded into Home per card 2a) ─────────────── */
+.body-batt {
+  margin: 0 var(--gutter);
+  background: var(--petrol);
+  color: var(--petrol-on);
+  border-radius: var(--r-card);
+  padding: 16px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.body-batt__value {
+  font: 700 52px/1 var(--display);
+  letter-spacing: -0.035em;
+  margin-top: 4px;
+}
+.body-batt__side {
+  text-align: right;
+  font: 400 11px var(--data);
+  line-height: 1.8;
+  opacity: 0.8;
+}
+.sleep {
+  margin: 10px var(--gutter) 0;
+  background: var(--raised);
+  border-radius: var(--r-card);
+  padding: 16px 16px 12px;
+}
+.sleep__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.sleep__bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 7px;
+  height: 96px;
+  margin-top: 14px;
+}
+.sleep__col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+  gap: 6px;
+}
+.sleep__stack {
+  display: flex;
+  flex-direction: column;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.sleep__label {
+  font: 400 8.5px var(--data);
+  opacity: 0.45;
+  text-align: center;
+}
+.minis {
+  margin: 10px var(--gutter) 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.mini {
+  background: var(--raised);
+  border-radius: var(--r-card);
+  padding: 14px 16px;
+}
+.mini__label {
+  font: 400 9.5px var(--data);
+  letter-spacing: 0.14em;
+  opacity: 0.5;
+}
+.mini__value {
+  font: 700 28px var(--data);
+  margin-top: 2px;
+  font-variant-numeric: tabular-nums;
+}
+.mini__value small {
+  font-size: 12px;
+}
+.trio {
+  margin: 10px var(--gutter) 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+}
+.trio__card {
+  background: var(--raised);
+  border-radius: var(--r-row);
+  padding: 12px 12px 8px;
+}
+.trio__label {
+  font: 400 9px var(--data);
+  letter-spacing: 0.12em;
+  opacity: 0.5;
+}
+.trio__value {
+  font: 700 22px var(--data);
+  margin-top: 2px;
+  font-variant-numeric: tabular-nums;
+}
+
+.page-title {
+  padding: 16px var(--pad-screen) 12px;
+}
+.page-title__h {
+  font: 700 26px var(--display);
+  letter-spacing: -0.02em;
+}
+.page-title__sub {
+  font: 400 11px var(--data);
+  opacity: 0.5;
+  margin-top: 3px;
+}
+.wordmark {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 18px var(--pad-screen) 14px;
+}
+.wordmark__name {
+  font: 700 11px var(--data);
+  letter-spacing: 0.22em;
+}
+.wordmark__date {
+  font: 400 11px var(--data);
+  opacity: 0.5;
+}
+.spacer {
+  height: 24px;
+}

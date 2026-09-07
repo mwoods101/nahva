@@ -1,0 +1,62 @@
+<div class="dv-olabel"><a class="dv-oid" href="#2b">2b</a>Log as a calendar. Week per row, one dot per activity, dot size and its number both read duration (or km). Scrolls back 13 weeks; TIME/KM toggle, sport filter and day selection are all live.</div>
+<div class="dv-card" style="width:390px">
+<div style="width:390px;height:844px;background:#FAF7F2;color:#17140F;position:relative;overflow:hidden">
+<div style="display:flex;justify-content:space-between;padding:14px 20px 0;font:400 11px 'Space Mono',monospace;opacity:.55"><span>9:41</span><span>5G · 82%</span></div>
+<div style="margin:16px 14px 0;background:#124E4A;color:#FAF7F2;border-radius:16px;padding:16px 18px;display:flex;justify-content:space-between;align-items:flex-end">
+<div><div style="font:700 10px 'Space Mono',monospace;letter-spacing:.2em;opacity:.65">{{ calSpanLabel }}</div><div style="display:flex;align-items:flex-end;gap:5px;margin-top:4px"><span style="font:700 46px/1 'Space Grotesk',sans-serif;letter-spacing:-.04em;color:#FF6B54">{{ calBig }}</span><span style="font:700 18px 'Space Grotesk',sans-serif;padding-bottom:4px">{{ calUnit }}</span><span style="font:700 46px/1 'Space Grotesk',sans-serif;letter-spacing:-.04em;color:#FF6B54">{{ calSmall }}</span></div></div>
+<div style="display:flex;border:1.5px solid rgba(250,247,242,.4);border-radius:999px;overflow:hidden;margin-bottom:6px">
+<sc-for list="{{ calMetrics }}" as="m" hint-placeholder-count="2">
+<div onClick="{{ m.pick }}" style="padding:6px 13px;font:700 10px 'Space Mono',monospace;letter-spacing:.1em;cursor:pointer;background:{{ m.bg }};color:{{ m.fg }}">{{ m.label }}</div>
+</sc-for>
+</div>
+</div>
+<div style="display:flex;justify-content:space-between;align-items:center;padding:14px 20px">
+<div style="display:flex;gap:7px">
+<sc-for list="{{ calFilters }}" as="f" hint-placeholder-count="4">
+<div onClick="{{ f.pick }}" style="padding:7px 13px;border-radius:6px;font:700 10px 'Space Mono',monospace;letter-spacing:.1em;cursor:pointer;background:{{ f.bg }};color:{{ f.fg }};border:1.5px solid {{ f.border }}">{{ f.label }}</div>
+</sc-for>
+</div>
+<span style="font:400 10px 'Space Mono',monospace;opacity:.45">AUG 26</span>
+</div>
+<div style="margin:0 14px;background:#FFFFFF;color:#17140F;border-radius:16px;padding:14px 12px 10px">
+<div style="display:grid;grid-template-columns:52px repeat(7,1fr);align-items:center;padding-bottom:6px;border-bottom:1px solid rgba(23,20,15,.12)">
+<span></span>
+<sc-for list="{{ weekdays }}" as="d" hint-placeholder-count="7"><span style="text-align:center;font:400 9.5px 'Space Mono',monospace;letter-spacing:.06em;opacity:.4">{{ d }}</span></sc-for>
+</div>
+<div ref="{{ calScrollRef }}" style="height:296px;overflow:auto">
+<sc-for list="{{ calRows }}" as="w" hint-placeholder-count="5">
+<div style="display:grid;grid-template-columns:52px repeat(7,1fr);align-items:center;border-bottom:1px solid rgba(23,20,15,.08)">
+<div style="padding:6px 0"><div style="font:700 9.5px 'Space Mono',monospace">{{ w.start }}</div><div style="font:400 9px 'Space Mono',monospace;opacity:.45;margin-top:1px">{{ w.total }}</div></div>
+<sc-for list="{{ w.days }}" as="d" hint-placeholder-count="7">
+<div onClick="{{ d.pick }}" style="height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;background:{{ d.cellBg }};border-radius:8px">
+<span style="font:400 8.5px 'Space Mono',monospace;color:{{ d.numColor }}">{{ d.n }}</span>
+<div style="display:flex;align-items:center;justify-content:center;gap:2px;height:38px">
+<sc-for list="{{ d.circles }}" as="c" hint-placeholder-count="1"><div style="width:{{ c.size }};height:{{ c.size }};border-radius:999px;background:{{ c.color }};opacity:{{ c.opacity }};display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-weight:700;font-size:{{ c.fs }};color:{{ c.fg }}">{{ c.label }}</div></sc-for>
+</div>
+</div>
+</sc-for>
+</div>
+</sc-for>
+</div>
+<div style="display:flex;gap:12px;padding:10px 4px 0;font:400 9px 'Space Mono',monospace;letter-spacing:.06em;border-top:1px solid rgba(23,20,15,.1)"><span style="color:#FF6B54">● RUN</span><span style="color:#124E4A">● RIDE</span><span style="color:#E7A82E">● GYM</span><span style="opacity:.4">{{ calSizeNote }}</span></div>
+</div>
+<div style="padding:18px 20px 8px;display:flex;justify-content:space-between;align-items:baseline"><span style="font:700 11px 'Space Mono',monospace;letter-spacing:.2em">{{ selLabel }}</span><span style="font:400 10px 'Space Mono',monospace;opacity:.45">SELECTED DAY</span></div>
+<div style="padding:0 14px;display:flex;flex-direction:column;gap:8px">
+<sc-for list="{{ selList }}" as="a" hint-placeholder-count="1">
+<div style="display:flex;align-items:center;gap:12px;background:#FFFFFF;color:#17140F;border-radius:14px;padding:12px 14px">
+<div style="width:34px;height:34px;border-radius:999px;background:{{ a.color }}"></div>
+<div style="flex:1;min-width:0"><div style="font:500 13.5px 'Space Grotesk',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ a.title }}</div><div style="font:400 10px 'Space Mono',monospace;opacity:.5;margin-top:2px">{{ a.tag }} · {{ a.dist }}</div></div>
+<span style="font:700 13px 'Space Mono',monospace;font-variant-numeric:tabular-nums">{{ a.dur }}</span>
+</div>
+</sc-for>
+<sc-if value="{{ selEmpty }}" hint-placeholder-val="{{ false }}">
+<div style="border:1.5px dashed rgba(250,247,242,.3);border-radius:14px;padding:16px;text-align:center;font:400 11px 'Space Mono',monospace;letter-spacing:.1em;opacity:.6">REST DAY</div>
+</sc-if>
+</div>
+<div style="position:absolute;left:0;right:0;bottom:0;height:84px;background:#17140F;display:flex;padding:0 6px">
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:transparent"></div><span style="font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(250,247,242,.5)">WEEK</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:#FF6B54"></div><span style="font:700 10px 'Space Mono',monospace;letter-spacing:.1em;color:#FF6B54">LOG</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:transparent"></div><span style="font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(250,247,242,.5)">FITNESS</span></div>
+</div>
+</div>
+</div>

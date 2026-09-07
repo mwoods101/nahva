@@ -1,0 +1,64 @@
+/* Nahva design tokens — transcribed from the Claude Design project,
+ * card 2d ("The colour rules the app now follows").
+ *
+ * ONE JOB PER COLOUR. Fixed text colour per ground:
+ *   coral  + ochre -> ink type
+ *   petrol + ink   -> paper type
+ * Sport colour appears ONLY where a sport is named.
+ * Charts use exactly three series: coral CTL, petrol ATL, ochre TSB.
+ * Any extra series is ink at 40%.
+ */
+
+:root {
+  /* ── Ground ─────────────────────────────────────────────── */
+  --paper: #faf7f2; /* every screen ground */
+  --raised: #ffffff; /* raised cards ONLY — never a screen ground */
+
+  /* ── Ink: all type, hairlines, the tab bar. The only dark surface. ── */
+  --ink: #17140f;
+  --ink-on: var(--paper); /* type on ink */
+
+  /* ── Coral: hero + RUN. One hero block or number per screen, plus CTL. ── */
+  --coral: #ff6b54;
+  --coral-on: var(--ink); /* type on coral is ink */
+
+  /* ── Petrol: calm + RIDE. Readiness/battery tiles, plus ATL. ── */
+  --petrol: #124e4a;
+  --petrol-on: var(--paper); /* type on petrol is paper */
+
+  /* ── Ochre: form + GYM. TSB bars (faded when negative), REM sleep. ── */
+  --ochre: #e7a82e;
+  --ochre-on: var(--ink); /* type on ochre is ink */
+
+  /* ── Derived ink alphas. The design uses these exact values. ─────── */
+  --hairline: rgba(23, 20, 15, 0.16); /* 1.5px card borders, dividers */
+  --hairline-soft: rgba(23, 20, 15, 0.1);
+  --hairline-faint: rgba(23, 20, 15, 0.08);
+  --rule-mid: rgba(23, 20, 15, 0.2); /* TSB zero line */
+  --grid: rgba(23, 20, 15, 0.09); /* chart gridlines */
+  --awake: rgba(23, 20, 15, 0.12); /* sleep "awake" band */
+  --extra-series: rgba(23, 20, 15, 0.4); /* any 4th chart series */
+  --coral-wash: rgba(255, 107, 84, 0.14); /* CTL area fill */
+
+  /* ── Type ───────────────────────────────────────────────── */
+  --display: "Space Grotesk", system-ui, sans-serif; /* headings, big numbers */
+  --data: "Space Mono", ui-monospace, monospace; /* all readouts, labels */
+
+  /* ── Geometry lifted from the design ───────────────────── */
+  --r-hero: 16px;
+  --r-card: 16px;
+  --r-row: 14px;
+  --r-chip: 6px;
+  --r-pill: 999px;
+  --gutter: 14px; /* card margin from screen edge */
+  --pad-screen: 20px; /* text padding from screen edge */
+  --tabbar-h: 84px;
+}
+
+/* Sport -> colour. The only place sport colours are assigned. */
+:root {
+  --sport-run: var(--coral);
+  --sport-ride: var(--petrol);
+  --sport-gym: var(--ochre);
+  --sport-other: var(--extra-series);
+}

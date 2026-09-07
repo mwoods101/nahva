@@ -1,0 +1,50 @@
+<div class="dv-olabel"><a class="dv-oid" href="#1g">1g</a>Activity detail — coral header for a run, interval structure as a real block diagram, recovery context underneath.</div>
+<div class="dv-card" style="width:390px">
+<div style="width:390px;height:844px;background:#FAF7F2;color:#17140F;position:relative;overflow:auto">
+<div style="background:#FF6B54;padding:14px 20px 24px">
+<div style="display:flex;justify-content:space-between;font:400 11px 'Space Mono',monospace;opacity:.6"><span>9:41</span><span>5G · 82%</span></div>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px;font:700 10px 'Space Mono',monospace;letter-spacing:.18em"><span>← LOG</span><span>RUN</span></div>
+<div style="font:700 34px/1.05 'Space Grotesk',sans-serif;letter-spacing:-.03em;margin-top:18px">Threshold<br>intervals</div>
+<div style="font:400 11.5px 'Space Mono',monospace;margin-top:12px;opacity:.75">MON 03 AUG · 18:40 · OSTPARK</div>
+<div style="font:500 14px 'Space Grotesk',sans-serif;margin-top:14px;line-height:1.4">Held 3:42/km through all four — cleanest set this block.</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1.5px solid rgba(23,20,15,.14);font-variant-numeric:tabular-nums">
+<div style="padding:16px 18px;border-right:1.5px solid rgba(23,20,15,.14)"><div style="font:400 9px 'Space Mono',monospace;letter-spacing:.14em;opacity:.5">DISTANCE</div><div style="font:700 26px 'Space Grotesk',sans-serif;margin-top:2px">14.2<span style="font-size:12px"> km</span></div></div>
+<div style="padding:16px 18px;border-right:1.5px solid rgba(23,20,15,.14)"><div style="font:400 9px 'Space Mono',monospace;letter-spacing:.14em;opacity:.5">TIME</div><div style="font:700 26px 'Space Grotesk',sans-serif;margin-top:2px">1:02</div></div>
+<div style="padding:16px 18px"><div style="font:400 9px 'Space Mono',monospace;letter-spacing:.14em;opacity:.5">LOAD</div><div style="font:700 26px 'Space Grotesk',sans-serif;margin-top:2px;color:#FF6B54">98</div></div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;font-variant-numeric:tabular-nums">
+<sc-for list="{{ detailMetrics }}" as="m" hint-placeholder-count="6">
+<div style="padding:13px 18px;border-bottom:1px solid rgba(23,20,15,.1);border-right:1px solid rgba(23,20,15,.1);display:flex;justify-content:space-between;align-items:baseline"><span style="font:400 10px 'Space Mono',monospace;letter-spacing:.1em;opacity:.5">{{ m.k }}</span><span style="font:700 13px 'Space Mono',monospace">{{ m.v }}</span></div>
+</sc-for>
+</div>
+<div style="padding:20px 20px 6px;font:700 11px 'Space Mono',monospace;letter-spacing:.2em;opacity:.5">STRUCTURE</div>
+<div style="padding:0 20px"><div style="font:700 22px 'Space Grotesk',sans-serif;letter-spacing:-.01em">4 × 8min @ threshold</div><div style="font:400 10.5px 'Space Mono',monospace;opacity:.55;margin-top:4px">2min float · 15min w/u · 10min c/d</div>
+<div style="display:flex;align-items:flex-end;gap:3px;height:74px;margin-top:14px">
+<sc-for list="{{ intervalBlocks }}" as="b" hint-placeholder-count="10">
+<div style="flex:{{ b.flex }};height:{{ b.h }};background:{{ b.color }};border-radius:3px 3px 0 0"></div>
+</sc-for>
+</div>
+<div style="height:1.5px;background:#17140F"></div>
+</div>
+<div style="padding:0 14px;margin-top:16px;display:flex;flex-direction:column;gap:8px">
+<sc-for list="{{ intervalRows }}" as="i" hint-placeholder-count="4">
+<div style="display:flex;align-items:center;gap:12px;background:#FFFFFF;border-radius:12px;padding:11px 14px;font-variant-numeric:tabular-nums">
+<span style="width:22px;font:700 12px 'Space Mono',monospace;color:#FF6B54">{{ i.n }}</span>
+<span style="flex:1;font:400 11px 'Space Mono',monospace;opacity:.6">{{ i.dur }}</span>
+<span style="font:700 13px 'Space Mono',monospace">{{ i.pace }}</span>
+<span style="width:64px;text-align:right;font:400 11px 'Space Mono',monospace;opacity:.6">{{ i.hr }}</span>
+</div>
+</sc-for>
+</div>
+<div style="margin:18px 14px 24px;background:#124E4A;color:#FAF7F2;border-radius:16px;padding:16px 18px">
+<div style="font:700 10px 'Space Mono',monospace;letter-spacing:.18em;opacity:.65">RECOVERY CONTEXT</div>
+<div style="display:flex;gap:18px;margin-top:12px;font-variant-numeric:tabular-nums">
+<div><div style="font:400 9.5px 'Space Mono',monospace;opacity:.6">MORNING</div><div style="font:700 26px 'Space Grotesk',sans-serif;margin-top:2px">91%</div></div>
+<div><div style="font:400 9.5px 'Space Mono',monospace;opacity:.6">NEXT DAY</div><div style="font:700 26px 'Space Grotesk',sans-serif;margin-top:2px;color:#E7A82E">74%</div></div>
+<div><div style="font:400 9.5px 'Space Mono',monospace;opacity:.6">TSB AFTER</div><div style="font:700 26px 'Space Grotesk',sans-serif;margin-top:2px">−6</div></div>
+</div>
+<div style="font:400 11px/1.5 'Space Mono',monospace;opacity:.7;margin-top:12px">Sleep 7h48 · HRV 78ms · RHR 42</div>
+</div>
+</div>
+</div>

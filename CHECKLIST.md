@@ -40,11 +40,19 @@ Reproduce all gate evidence with:
 - [ ] **Action unproven** — needs GitHub Secrets (see *Blocked on human*)
 
 ## D · Front-end  *(`/web`, mock data)*
-- [ ] Design imported via `claude-design` MCP
-- [ ] Views: Home/This week, Training log, Progression, Activity detail, (opt) Recovery
-- [ ] **Gate:** builds + renders all views on mock data
-- [ ] **Gate:** matches tokens — paper `#FAF7F2`, ink `#17140F`, coral `#FF6B54`,
-      petrol `#124E4A`, ochre `#E7A82E`; Space Grotesk + Space Mono
+- [x] Design imported via `claude-design` MCP — project `4a37c4d9…`
+      ("Mobile app layout exploration"), files `Freischwimmer.dc.html` + `support.js`,
+      kept as provenance in `web/.design-src/`
+- [x] Views: Home/This week (2a), Training log (2b), Progression (1d),
+      Activity detail (1g). **No Recovery tab** — card 2a folds Body into Home
+- [x] Nav per card 2c: pattern A, ink tab bar, coral rule, **three** tabs
+- [x] **Gate:** builds — `npm run build` (tsc --noEmit + vite) clean
+- [x] **Gate:** renders all views on mock data — `npm run smoke`, **130/130**
+      assertions, plus headless screenshots of all three tabs
+- [x] **Gate:** matches tokens — `src/tokens.css` transcribed from card 2d;
+      smoke test **fails on any raw hex** in a view, so drift is caught
+- [x] Interactions live: TIME/KM toggle, sport filter, day selection, PMC range tabs
+- [x] Hash routes: `#home`, `#log`, `#fitness`, `#activity/<id>`
 
 ## JOIN · Wire front-end to live Supabase
 - [ ] Mock data replaced with live queries in every view
@@ -76,6 +84,14 @@ time**, not as a historical record:
 - Design the PMC to render gracefully with a few weeks of data and no ride load:
   short axis, no implied long-term trend, and an empty/partial state that reads
   as "building" rather than broken.
+
+**Handled in D.** `web/src/views/progression.ts` clamps the PMC to actual load
+coverage — a 1Y range never stretches 5 weeks across a year — labels the axis
+"N DAYS OF LOAD", and carries a permanent *FITNESS CURVE · BUILDING* panel
+stating the coverage in days against the volume span in years. `web/src/mock.ts`
+mirrors the real shape (23 of 4,611 activities carry load; 34 days of CTL;
+readiness and body_battery null throughout), so the views are exercised against
+production conditions rather than tuned to numbers that never arrive.
 
 ## Blocked on human
 - [x] Session-pooler `SUPABASE_DB_URL` — set, `aws-1-eu-west-1.pooler.supabase.com:5432`,

@@ -1,0 +1,43 @@
+<div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a>Home — the ring nod. Load gauge reads gauge first, record second. Ink field up top. Nav B: floating pill.</div>
+<div class="dv-card" style="width:390px">
+<div style="width:390px;height:844px;background:#FAF7F2;color:#17140F;position:relative;overflow:hidden">
+<div style="background:#17140F;color:#FAF7F2;padding:14px 20px 24px">
+<div style="display:flex;justify-content:space-between;font:400 11px 'Space Mono',monospace;opacity:.55"><span>9:41</span><span>5G · 82%</span></div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:16px"><span style="font:700 11px 'Space Mono',monospace;letter-spacing:.22em">THIS WEEK</span><span style="font:400 11px 'Space Mono',monospace;opacity:.5">WK 32</span></div>
+<div style="display:flex;align-items:center;gap:18px;margin-top:14px">
+<div style="position:relative;width:150px;height:150px;flex:none">
+<svg viewBox="0 0 150 150" width="150" height="150"><circle cx="75" cy="75" r="64" fill="none" stroke="rgba(250,247,242,.16)" stroke-width="13"></circle><circle cx="75" cy="75" r="64" fill="none" stroke="#FF6B54" stroke-width="13" stroke-linecap="butt" stroke-dasharray="342 402" transform="rotate(-90 75 75)"></circle><circle cx="75" cy="75" r="42" fill="none" stroke="rgba(250,247,242,.1)" stroke-width="1"></circle></svg>
+<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center"><div style="font:700 44px/1 'Space Grotesk',sans-serif;letter-spacing:-.03em">524</div><div style="font:400 9.5px 'Space Mono',monospace;letter-spacing:.14em;opacity:.6;margin-top:3px">TSS / 620</div></div>
+</div>
+<div style="flex:1">
+<div style="font:700 10px 'Space Mono',monospace;letter-spacing:.18em;opacity:.55">VOLUME</div>
+<div style="font:700 58px/.9 'Space Grotesk',sans-serif;letter-spacing:-.045em;color:#FF6B54">247<span style="font-size:20px;color:#FAF7F2">km</span></div>
+<div style="font:400 11.5px 'Space Mono',monospace;opacity:.7;margin-top:8px">3 ride · 2 run · 1 gym</div>
+<div style="font:400 11.5px 'Space Mono',monospace;opacity:.7;margin-top:4px">8h 39m moving</div>
+</div>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px">
+<div style="background:#FF6B54;border-radius:16px;padding:16px 18px"><div style="font:700 9.5px 'Space Mono',monospace;letter-spacing:.18em;opacity:.7">READINESS</div><div style="font:700 48px/1 'Space Grotesk',sans-serif;letter-spacing:-.035em;margin-top:6px">86<span style="font-size:20px">%</span></div></div>
+<div style="background:#124E4A;color:#FAF7F2;border-radius:16px;padding:16px 18px"><div style="font:700 9.5px 'Space Mono',monospace;letter-spacing:.18em;opacity:.65">FORM TSB</div><div style="font:700 48px/1 'Space Grotesk',sans-serif;letter-spacing:-.035em;margin-top:6px">+4</div></div>
+<div style="background:#FFFFFF;border-radius:16px;padding:14px 18px"><div style="font:400 9.5px 'Space Mono',monospace;letter-spacing:.16em;opacity:.5">FITNESS CTL</div><div style="font:700 30px 'Space Mono',monospace;margin-top:4px;font-variant-numeric:tabular-nums">71</div><div style="font:400 10px 'Space Mono',monospace;color:#124E4A;margin-top:2px">+3 / 28d</div></div>
+<div style="background:#FFFFFF;border-radius:16px;padding:14px 18px"><div style="font:400 9.5px 'Space Mono',monospace;letter-spacing:.16em;opacity:.5">FATIGUE ATL</div><div style="font:700 30px 'Space Mono',monospace;margin-top:4px;font-variant-numeric:tabular-nums">67</div><div style="font:400 10px 'Space Mono',monospace;color:#FF6B54;margin-top:2px">+9 / 7d</div></div>
+</div>
+<div style="padding:6px 20px 8px;font:700 11px 'Space Mono',monospace;letter-spacing:.2em;opacity:.5">RECENT</div>
+<div style="padding:0 14px;display:flex;flex-direction:column;gap:7px">
+<sc-for list="{{ recent }}" as="a" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;gap:12px;background:#FFFFFF;border-radius:13px;padding:11px 14px">
+<div style="width:10px;height:10px;border-radius:3px;background:{{ a.color }}"></div>
+<div style="flex:1;min-width:0;font:500 13px 'Space Grotesk',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ a.title }}</div>
+<span style="font:700 12px 'Space Mono',monospace;font-variant-numeric:tabular-nums">{{ a.dist }}</span>
+</div>
+</sc-for>
+</div>
+<div style="position:absolute;left:14px;right:14px;bottom:20px;background:#17140F;border-radius:999px;padding:7px;display:flex;gap:4px">
+<div style="flex:1;background:#FF6B54;border-radius:999px;padding:11px 0;text-align:center;font:700 10px 'Space Mono',monospace;letter-spacing:.1em;color:#17140F">WEEK</div>
+<div style="flex:1;padding:11px 0;text-align:center;font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(250,247,242,.5)">LOG</div>
+<div style="flex:1;padding:11px 0;text-align:center;font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(250,247,242,.5)">FITNESS</div>
+<div style="flex:1;padding:11px 0;text-align:center;font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(250,247,242,.5)">BODY</div>
+</div>
+</div>
+</div>

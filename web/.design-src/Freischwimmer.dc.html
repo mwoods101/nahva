@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics><meta name="design_doc_mode" content="canvas"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"><style>body{margin:0;background:#e9e5de;font-family:'Space Grotesk',system-ui,sans-serif}a{color:#124E4A}a:hover{color:#FF6B54}.dv-turn{padding:44px 48px 36px;border-bottom:1px solid rgba(0,0,0,.1);scroll-margin-top:16px}.dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 22px}.dv-tid{font:700 10px 'Space Mono',monospace;padding:4px 8px;background:#17140F;color:#FAF7F2;border-radius:4px;text-decoration:none}.dv-tname{font:500 13px/1.2 'Space Grotesk',sans-serif;color:#17140F}.dv-opts{display:flex;flex-wrap:wrap;gap:30px;align-items:flex-start}.dv-opt{flex:none;display:flex;flex-direction:column;gap:10px;scroll-margin-top:16px}.dv-oid{font:700 10.5px 'Space Mono',monospace;padding:3px 7px;background:rgba(0,0,0,.09);color:#17140F;border-radius:5px;text-decoration:none}.dv-olabel{display:flex;align-items:baseline;gap:8px;font:400 11px/1.3 'Space Mono',monospace;color:rgba(0,0,0,.55);max-width:390px}.dv-card{background:#FAF7F2;border-radius:18px;box-shadow:0 2px 14px rgba(23,20,15,.14);overflow:hidden}.dv-opt:target .dv-oid{background:#FF6B54;color:#FAF7F2}.dv-next{margin:24px 0 0;font:11px/1.6 'Space Mono',monospace;color:rgba(0,0,0,.5)}</style></helmet>
+
+<section class="dv-turn" id="t2">
+<div class="dv-thd"><a class="dv-tid" href="#t2">2</a><span class="dv-tname">Volume in time, petrol instead of ink, Body folded into Home, and the log rebuilt as a calendar.</span></div>
+<div class="dv-opts">
+
+<div class="dv-opt" id="2a"><div class="dv-olabel"><a class="dv-oid" href="#2a">2a</a><a class="dv-oid" href="#1a">1a</a> evolved — hero is moving time, readiness tile is petrol, and the whole Body screen now lives under the week. Three tabs. Scrolls.</div>
+<div class="dv-card" style="width:390px">
+<div style="width:390px;height:844px;background:#FAF7F2;color:#17140F;position:relative;overflow:hidden">
+<div style="position:absolute;left:0;right:0;top:0;bottom:84px;overflow:auto">
+<div style="display:flex;justify-content:space-between;padding:14px 20px 0;font:400 11px 'Space Mono',monospace;opacity:.55"><span>9:41</span><span>5G · 82%</span></div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;padding:18px 20px 14px"><span style="font:700 11px 'Space Mono',monospace;letter-spacing:.22em">FREISCHWIMMER</span><span style="font:400 11px 'Space Mono',monospace;opacity:.5">TUE 04 AUG</span></div>
+<div style="margin:0 14px;background:#FF6B54;border-radius:16px;padding:20px 22px 18px">
+<div style="font:700 10px 'Space Mono',monospace;letter-spacing:.2em;opacity:.7">THIS WEEK · MOVING TIME</div>
+<div style="display:flex;align-items:flex-end;justify-content:space-between;gap:10px;margin-top:2px">
+<div style="display:flex;align-items:flex-end;gap:6px"><span style="font:700 82px/.86 'Space Grotesk',sans-serif;letter-spacing:-.05em">11</span><span style="font:700 28px 'Space Grotesk',sans-serif;padding-bottom:7px">h</span><span style="font:700 82px/.86 'Space Grotesk',sans-serif;letter-spacing:-.05em">46</span></div>
+<div style="display:flex;align-items:flex-end;gap:3px;height:52px;width:96px;padding-bottom:6px">
+<sc-for list="{{ heroBars }}" as="b" hint-placeholder-count="5">
+<div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;gap:4px"><div style="height:{{ b.h }};background:{{ b.color }};border-radius:2px"></div><div style="font:400 7.5px 'Space Mono',monospace;opacity:.5;text-align:center">{{ b.label }}</div></div>
+</sc-for>
+</div>
+</div>
+<div style="display:flex;align-items:baseline;gap:8px;margin-top:12px;font:700 12px 'Space Mono',monospace"><span>▲ +3h 20</span><span style="font-weight:400;opacity:.65">VS 4-WK AVG 8h 26</span></div>
+<div style="display:flex;gap:12px;margin-top:8px;font:400 12px 'Space Mono',monospace"><span>247 km</span><span style="opacity:.45">·</span><span>6 sessions</span></div>
+</div>
+<div style="margin:10px 14px 0;display:flex;gap:6px">
+<div style="flex:71;display:flex;flex-direction:column;gap:5px"><div style="height:8px;border-radius:4px;background:#124E4A"></div><span style="font:400 9.5px 'Space Mono',monospace;letter-spacing:.08em;opacity:.6">3 RIDE · 8h 21</span></div>
+<div style="flex:22;display:flex;flex-direction:column;gap:5px"><div style="height:8px;border-radius:4px;background:#FF6B54"></div><span style="font:400 9.5px 'Space Mono',monospace;letter-spacing:.08em;opacity:.6">2 RUN</span></div>
+<div style="flex:9;display:flex;flex-direction:column;gap:5px"><div style="height:8px;border-radius:4px;background:#E7A82E"></div><span style="font:400 9.5px 'Space Mono',monospace;letter-spacing:.08em;opacity:.6">1 GYM</span></div>
+</div>
+<div style="display:flex;gap:10px;margin:10px 14px 0">
+<div style="flex:1;background:#124E4A;border-radius:16px;padding:16px 18px;color:#FAF7F2">
+<div style="font:700 10px 'Space Mono',monospace;letter-spacing:.18em;opacity:.7">READINESS</div>
+<div style="font:700 46px/1 'Space Grotesk',sans-serif;letter-spacing:-.03em;margin-top:6px">86<span style="font-size:22px">%</span></div>
+<div style="font:400 11px 'Space Mono',monospace;margin-top:6px;color:#FAF7F2">HRV 78ms ↑</div>
+</div>
+<div style="flex:1;background:#FAF7F2;border:1.5px solid rgba(23,20,15,.16);border-radius:16px;padding:16px 18px">
+<div style="font:700 10px 'Space Mono',monospace;letter-spacing:.18em;opacity:.5">FORM · TSB</div>
+<div style="font:700 46px/1 'Space Grotesk',sans-serif;letter-spacing:-.03em;margin-top:6px;color:#124E4A">+4</div>
+<div style="font:400 11px 'Space Mono',monospace;margin-top:6px;opacity:.55">FRESH-ISH</div>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;margin:10px 14px 0;border:1.5px solid rgba(23,20,15,.16);border-radius:16px;overflow:hidden;font-variant-numeric:tabular-nums">
+<div style="padding:14px 16px;border-right:1.5px solid rgba(23,20,15,.16)"><div style="font:400 9.5px 'Space Mono',monospace;letter-spacing:.16em;opacity:.5">CTL</div><div style="font:700 24px 'Space Mono',monospace;margin-top:4px">71</div></div>
+<div style="padding:14px 16px;border-right:1.5px solid rgba(23,20,15,.16)"><div style="font:400 9.5px 'Space Mono',monospace;letter-spacing:.16em;opacity:.5">ATL</div><div style="font:700 24px 'Space Mono',monospace;margin-top:4px">67</div></div>
+<div style="padding:14px 16px"><div style="font:400 9.5px 'Space Mono',monospace;letter-spacing:.16em;opacity:.5">7D TSS</div><div style="font:700 24px 'Space Mono',monospace;margin-top:4px">524</div></div>
+</div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;padding:22px 20px 8px"><span style="font:700 13px 'Space Grotesk',sans-serif">Recent</span><span style="font:400 10px 'Space Mono',monospace;letter-spacing:.1em;opacity:.45">ALL 14</span></div>
+<div style="padding:0 14px;display:flex;flex-direction:column;gap:8px">
+<sc-for list="{{ recent3 }}" as="a" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;gap:12px;background:#FFFFFF;border-radius:14px;padding:12px 14px">
+<div style="width:34px;height:34px;border-radius:9px;background:{{ a.color }};display:flex;align-items:center;justify-content:center;font:700 10px 'Space Mono',monospace;color:{{ a.tagFg }}">{{ a.tag }}</div>
+<div style="flex:1;min-width:0"><div style="font:500 13.5px 'Space Grotesk',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ a.title }}</div><div style="font:400 10.5px 'Space Mono',monospace;opacity:.5;margin-top:2px">{{ a.date }}</div></div>
+<div style="text-align:right;font-variant-numeric:tabular-nums"><div style="font:700 13px 'Space Mono',monospace">{{ a.dur }}</div><div style="font:400 10.5px 'Space Mono',monospace;opacity:.5;margin-top:2px">{{ a.dist }}</div></div>
+</div>
+</sc-for>
+</div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;padding:26px 20px 10px;margin-top:6px;border-top:1.5px solid rgba(23,20,15,.16)"><span style="font:700 13px 'Space Grotesk',sans-serif">Body</span><span style="font:400 10px 'Space Mono',monospace;letter-spacing:.1em;opacity:.45">TODAY 07:12</span></div>
+<div style="margin:0 14px;background:#124E4A;color:#FAF7F2;border-radius:16px;padding:16px 18px;display:flex;justify-content:space-between;align-items:flex-end">
+<div><div style="font:700 10px 'Space Mono',monospace;letter-spacing:.18em;opacity:.65">BODY BATTERY</div><div style="font:700 52px/1 'Space Grotesk',sans-serif;letter-spacing:-.035em;margin-top:4px">78</div></div>
+<div style="text-align:right;font:400 11px 'Space Mono',monospace;line-height:1.8;opacity:.8"><div>RHR 42</div><div>HRV 78ms</div><div>71.4 kg</div></div>
+</div>
+<div style="margin:10px 14px 0;background:#FFFFFF;border-radius:16px;padding:16px 16px 12px">
+<div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font:700 10px 'Space Mono',monospace;letter-spacing:.18em;opacity:.55">SLEEP · 7 NIGHTS</span><span style="font:700 13px 'Space Mono',monospace">Ø 7h26</span></div>
+<div style="display:flex;align-items:flex-end;gap:7px;height:96px;margin-top:14px">
+<sc-for list="{{ sleepBars }}" as="s" hint-placeholder-count="7">
+<div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;gap:6px">
+<div style="display:flex;flex-direction:column;border-radius:3px;overflow:hidden;height:{{ s.h }}"><div style="height:{{ s.awake }};background:rgba(23,20,15,.12)"></div><div style="height:{{ s.rem }};background:#E7A82E"></div><div style="height:{{ s.light }};background:#124E4A"></div><div style="height:{{ s.deep }};background:#17140F"></div></div>
+<div style="font:400 8.5px 'Space Mono',monospace;opacity:.45;text-align:center">{{ s.label }}</div>
+</div>
+</sc-for>
+</div>
+</div>
+<div style="margin:10px 14px 0;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<div style="background:#FFFFFF;border-radius:16px;padding:14px 16px"><div style="font:400 9.5px 'Space Mono',monospace;letter-spacing:.14em;opacity:.5">HRV 28D</div><div style="font:700 28px 'Space Mono',monospace;margin-top:2px;font-variant-numeric:tabular-nums">78<span style="font-size:12px">ms</span></div><svg viewBox="0 0 140 40" width="100%" height="36" preserveAspectRatio="none"><path d="{{ hrvPath }}" fill="none" stroke="#FF6B54" stroke-width="2.4"></path></svg></div>
+<div style="background:#FFFFFF;border-radius:16px;padding:14px 16px"><div style="font:400 9.5px 'Space Mono',monospace;letter-spacing:.14em;opacity:.5">RESTING HR</div><div style="font:700 28px 'Space Mono',monospace;margin-top:2px;font-variant-numeric:tabular-nums">42<span style="font-size:12px">bpm</span></div><svg viewBox="0 0 140 40" width="100%" height="36" preserveAspectRatio="none"><path d="{{ rhrPath }}" fill="none" stroke="#124E4A" stroke-width="2.4"></path></svg></div>
+</div>
+<div style="height:110px"></div>
+</div>
+<div style="position:absolute;left:0;right:0;bottom:0;height:84px;background:#17140F;display:flex;padding:0 6px">
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:#FF6B54"></div><span style="font:700 10px 'Space Mono',monospace;letter-spacing:.1em;color:#FF6B54">HOME</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:transparent"></div><span style="font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(250,247,242,.55)">LOG</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:transparent"></div><span style="font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(250,247,242,.55)">FITNESS</span></div>
+</div>
+</div>
+</div></div>
+
+<div class="dv-opt" id="2b"><div class="dv-olabel"><a class="dv-oid" href="#2b">2b</a>Log as a calendar. Week per row, one dot per activity, dot size and its number both read duration (or km). Scrolls back 13 weeks; TIME/KM toggle, sport filter and day selection are all live.</div>
+<div class="dv-card" style="width:390px">
+<div style="width:390px;height:844px;background:#FAF7F2;color:#17140F;position:relative;overflow:hidden">
+<div style="display:flex;justify-content:space-between;padding:14px 20px 0;font:400 11px 'Space Mono',monospace;opacity:.55"><span>9:41</span><span>5G · 82%</span></div>
+<div style="margin:16px 14px 0;background:#124E4A;color:#FAF7F2;border-radius:16px;padding:16px 18px;display:flex;justify-content:space-between;align-items:flex-end">
+<div><div style="font:700 10px 'Space Mono',monospace;letter-spacing:.2em;opacity:.65">{{ calSpanLabel }}</div><div style="display:flex;align-items:flex-end;gap:5px;margin-top:4px"><span style="font:700 46px/1 'Space Grotesk',sans-serif;letter-spacing:-.04em;color:#FF6B54">{{ calBig }}</span><span style="font:700 18px 'Space Grotesk',sans-serif;padding-bottom:4px">{{ calUnit }}</span><span style="font:700 46px/1 'Space Grotesk',sans-serif;letter-spacing:-.04em;color:#FF6B54">{{ calSmall }}</span></div></div>
+<div style="display:flex;border:1.5px solid rgba(250,247,242,.4);border-radius:999px;overflow:hidden;margin-bottom:6px">
+<sc-for list="{{ calMetrics }}" as="m" hint-placeholder-count="2">
+<div onClick="{{ m.pick }}" style="padding:6px 13px;font:700 10px 'Space Mono',monospace;letter-spacing:.1em;cursor:pointer;background:{{ m.bg }};color:{{ m.fg }}">{{ m.label }}</div>
+</sc-for>
+</div>
+</div>
+<div style="display:flex;justify-content:space-between;align-items:center;padding:14px 20px">
+<div style="display:flex;gap:7px">
+<sc-for list="{{ calFilters }}" as="f" hint-placeholder-count="4">
+<div onClick="{{ f.pick }}" style="padding:7px 13px;border-radius:6px;font:700 10px 'Space Mono',monospace;letter-spacing:.1em;cursor:pointer;background:{{ f.bg }};color:{{ f.fg }};border:1.5px solid {{ f.border }}">{{ f.label }}</div>
+</sc-for>
+</div>
+<span style="font:400 10px 'Space Mono',monospace;opacity:.45">AUG 26</span>
+</div>
+<div style="margin:0 14px;background:#FFFFFF;color:#17140F;border-radius:16px;padding:14px 12px 10px">
+<div style="display:grid;grid-template-columns:52px repeat(7,1fr);align-items:center;padding-bottom:6px;border-bottom:1px solid rgba(23,20,15,.12)">
+<span></span>
+<sc-for list="{{ weekdays }}" as="d" hint-placeholder-count="7"><span style="text-align:center;font:400 9.5px 'Space Mono',monospace;letter-spacing:.06em;opacity:.4">{{ d }}</span></sc-for>
+</div>
+<div ref="{{ calScrollRef }}" style="height:296px;overflow:auto">
+<sc-for list="{{ calRows }}" as="w" hint-placeholder-count="5">
+<div style="display:grid;grid-template-columns:52px repeat(7,1fr);align-items:center;border-bottom:1px solid rgba(23,20,15,.08)">
+<div style="padding:6px 0"><div style="font:700 9.5px 'Space Mono',monospace">{{ w.start }}</div><div style="font:400 9px 'Space Mono',monospace;opacity:.45;margin-top:1px">{{ w.total }}</div></div>
+<sc-for list="{{ w.days }}" as="d" hint-placeholder-count="7">
+<div onClick="{{ d.pick }}" style="height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;background:{{ d.cellBg }};border-radius:8px">
+<span style="font:400 8.5px 'Space Mono',monospace;color:{{ d.numColor }}">{{ d.n }}</span>
+<div style="display:flex;align-items:center;justify-content:center;gap:2px;height:38px">
+<sc-for list="{{ d.circles }}" as="c" hint-placeholder-count="1"><div style="width:{{ c.size }};height:{{ c.size }};border-radius:999px;background:{{ c.color }};opacity:{{ c.opacity }};display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-weight:700;font-size:{{ c.fs }};color:{{ c.fg }}">{{ c.label }}</div></sc-for>
+</div>
+</div>
+</sc-for>
+</div>
+</sc-for>
+</div>
+<div style="display:flex;gap:12px;padding:10px 4px 0;font:400 9px 'Space Mono',monospace;letter-spacing:.06em;border-top:1px solid rgba(23,20,15,.1)"><span style="color:#FF6B54">● RUN</span><span style="color:#124E4A">● RIDE</span><span style="color:#E7A82E">● GYM</span><span style="opacity:.4">{{ calSizeNote }}</span></div>
+</div>
+<div style="padding:18px 20px 8px;display:flex;justify-content:space-between;align-items:baseline"><span style="font:700 11px 'Space Mono',monospace;letter-spacing:.2em">{{ selLabel }}</span><span style="font:400 10px 'Space Mono',monospace;opacity:.45">SELECTED DAY</span></div>
+<div style="padding:0 14px;display:flex;flex-direction:column;gap:8px">
+<sc-for list="{{ selList }}" as="a" hint-placeholder-count="1">
+<div style="display:flex;align-items:center;gap:12px;background:#FFFFFF;color:#17140F;border-radius:14px;padding:12px 14px">
+<div style="width:34px;height:34px;border-radius:999px;background:{{ a.color }}"></div>
+<div style="flex:1;min-width:0"><div style="font:500 13.5px 'Space Grotesk',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ a.title }}</div><div style="font:400 10px 'Space Mono',monospace;opacity:.5;margin-top:2px">{{ a.tag }} · {{ a.dist }}</div></div>
+<span style="font:700 13px 'Space Mono',monospace;font-variant-numeric:tabular-nums">{{ a.dur }}</span>
+</div>
+</sc-for>
+<sc-if value="{{ selEmpty }}" hint-placeholder-val="{{ false }}">
+<div style="border:1.5px dashed rgba(250,247,242,.3);border-radius:14px;padding:16px;text-align:center;font:400 11px 'Space Mono',monospace;letter-spacing:.1em;opacity:.6">REST DAY</div>
+</sc-if>
+</div>
+<div style="position:absolute;left:0;right:0;bottom:0;height:84px;background:#17140F;display:flex;padding:0 6px">
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:transparent"></div><span style="font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(250,247,242,.5)">WEEK</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:#FF6B54"></div><span style="font:700 10px 'Space Mono',monospace;letter-spacing:.1em;color:#FF6B54">LOG</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:transparent"></div><span style="font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(250,247,242,.5)">FITNESS</span></div>
+</div>
+</div>
+</div></div>
+
+<div class="dv-opt" id="2d"><div class="dv-olabel"><a class="dv-oid" href="#2d">2d</a>The colour rules the app now follows — one job per colour, and a fixed text colour per ground.</div>
+<div class="dv-card" style="width:390px;padding:20px 18px 22px">
+<div style="font:700 11px 'Space Mono',monospace;letter-spacing:.2em;opacity:.5">COLOUR SYSTEM</div>
+<div style="display:flex;flex-direction:column;gap:10px;margin-top:14px">
+<div style="display:flex;align-items:center;gap:12px"><div style="width:52px;height:44px;border-radius:10px;background:#FAF7F2;border:1.5px solid rgba(23,20,15,.16)"></div><div style="flex:1"><div style="font:700 12px 'Space Grotesk',sans-serif">Paper · #FAF7F2</div><div style="font:400 10px/1.5 'Space Mono',monospace;opacity:.55">Every screen ground. White #FFF only for raised cards.</div></div></div>
+<div style="display:flex;align-items:center;gap:12px"><div style="width:52px;height:44px;border-radius:10px;background:#17140F;display:flex;align-items:center;justify-content:center;font:700 10px 'Space Mono',monospace;color:#FAF7F2">Aa</div><div style="flex:1"><div style="font:700 12px 'Space Grotesk',sans-serif">Ink · #17140F</div><div style="font:400 10px/1.5 'Space Mono',monospace;opacity:.55">All type, hairlines, and the tab bar — the only dark surface left.</div></div></div>
+<div style="display:flex;align-items:center;gap:12px"><div style="width:52px;height:44px;border-radius:10px;background:#FF6B54;display:flex;align-items:center;justify-content:center;font:700 10px 'Space Mono',monospace;color:#17140F">Aa</div><div style="flex:1"><div style="font:700 12px 'Space Grotesk',sans-serif">Coral · hero + RUN</div><div style="font:400 10px/1.5 'Space Mono',monospace;opacity:.55">One hero block or number per screen, plus the CTL line. Type on coral is ink.</div></div></div>
+<div style="display:flex;align-items:center;gap:12px"><div style="width:52px;height:44px;border-radius:10px;background:#124E4A;display:flex;align-items:center;justify-content:center;font:700 10px 'Space Mono',monospace;color:#FAF7F2">Aa</div><div style="flex:1"><div style="font:700 12px 'Space Grotesk',sans-serif">Petrol · calm + RIDE</div><div style="font:400 10px/1.5 'Space Mono',monospace;opacity:.55">Readiness / battery tiles and the ATL line. Type on petrol is paper.</div></div></div>
+<div style="display:flex;align-items:center;gap:12px"><div style="width:52px;height:44px;border-radius:10px;background:#E7A82E;display:flex;align-items:center;justify-content:center;font:700 10px 'Space Mono',monospace;color:#17140F">Aa</div><div style="flex:1"><div style="font:700 12px 'Space Grotesk',sans-serif">Ochre · form + GYM</div><div style="font:400 10px/1.5 'Space Mono',monospace;opacity:.55">TSB bars (faded when negative) and REM sleep. Type on ochre is ink.</div></div></div>
+</div>
+<div style="margin-top:16px;border-top:1.5px solid rgba(23,20,15,.16);padding-top:12px;font:400 10px/1.6 'Space Mono',monospace;opacity:.6">Fixed by rule: coral and ochre carry ink type, petrol and ink carry paper type. Sport colour only appears where a sport is named. Charts use these three and nothing else: coral CTL, petrol ATL, ochre TSB — any extra series is ink at 40%.</div>
+</div></div>
+
+<div class="dv-opt" id="2c"><div class="dv-olabel"><a class="dv-oid" href="#2c">2c</a>Nav at three tabs — A (ink bar) vs C (swipe header). My read: A, because Log and Fitness both want the full height for charts.</div>
+<div class="dv-card" style="width:390px;padding:20px 0">
+<div style="display:flex;flex-direction:column;gap:26px">
+<div><div style="font:700 10px 'Space Mono',monospace;letter-spacing:.16em;opacity:.5;padding:0 20px 8px">A · INK TAB BAR</div>
+<div style="height:84px;background:#17140F;display:flex;padding:0 6px">
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:#FF6B54"></div><span style="font:700 10px 'Space Mono',monospace;letter-spacing:.1em;color:#FF6B54">WEEK</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:transparent"></div><span style="font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(250,247,242,.55)">LOG</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:transparent"></div><span style="font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(250,247,242,.55)">FITNESS</span></div>
+</div></div>
+<div><div style="font:700 10px 'Space Mono',monospace;letter-spacing:.16em;opacity:.5;padding:0 20px 8px">C · SWIPE HEADER</div>
+<div style="border-bottom:1.5px solid rgba(23,20,15,.16);display:flex;gap:26px;padding:0 20px">
+<div style="padding-bottom:12px;border-bottom:3px solid #FF6B54;margin-bottom:-2px;font:700 17px 'Space Grotesk',sans-serif">Week</div>
+<div style="padding-bottom:12px;font:500 17px 'Space Grotesk',sans-serif;opacity:.4">Log</div>
+<div style="padding-bottom:12px;font:500 17px 'Space Grotesk',sans-serif;opacity:.4">Fitness</div>
+</div>
+<div style="padding:14px 20px 0;font:400 10.5px/1.6 'Space Mono',monospace;opacity:.55">Three tabs swipe well and it frees 84px — but <a class="dv-oid" href="#2a">2a</a> is now a long scroller, so a sticky header competes with the coral hero. A keeps the chrome out of the content.</div>
+</div>
+</div>
+</div></div>
+
+</div>
+<p class="dv-next">Try next: "make the calendar in <a class="dv-oid" href="#2b">2b</a> scroll back through the year" · "put the sleep + HRV block above Recent in <a class="dv-oid" href="#2a">2a</a>" · "add a weekly time-target ring to the coral hero" · "wire <a class="dv-oid" href="#2a">2a</a> + <a class="dv-oid" href="#2b">2b</a> + <a class="dv-oid" href="#1d">1d</a> into one tappable prototype"</p>
+</section>
+
+<section class="dv-turn" id="t1">
+<div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">Freischwimmer — first pass. Home ×3, Progression ×2, Log, Activity, Recovery, nav patterns.</span></div>
+<div class="dv-opts">
+
+<div class="dv-opt" id="1a"><div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a>Home — stacked blocks. Coral volume slab up top, ink readiness tile, mono fitness grid. Nav A: bottom tabs.</div>
+<div class="dv-card" style="width:390px">
+<div style="width:390px;height:844px;background:#FAF7F2;color:#17140F;position:relative;overflow:hidden">
+<div style="display:flex;justify-content:space-between;padding:14px 20px 0;font:400 11px 'Space Mono',monospace;letter-spacing:.04em;opacity:.55"><span>9:41</span><span>5G · 82%</span></div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;padding:18px 20px 16px"><span style="font:700 11px 'Space Mono',monospace;letter-spacing:.22em">FREISCHWIMMER</span><span style="font:400 11px 'Space Mono',monospace;letter-spacing:.08em;opacity:.5">WK 32 · AUG</span></div>
+<div style="margin:0 14px;background:#FF6B54;border-radius:16px;padding:20px 22px 18px;color:#17140F">
+<div style="font:700 10px 'Space Mono',monospace;letter-spacing:.2em;opacity:.7">THIS WEEK · VOLUME</div>
+<div style="display:flex;align-items:flex-end;gap:8px;margin-top:2px"><span style="font:700 92px/.86 'Space Grotesk',sans-serif;letter-spacing:-.045em">247</span><span style="font:700 26px/1 'Space Grotesk',sans-serif;padding-bottom:10px">km</span></div>
+<div style="display:flex;gap:14px;margin-top:14px;font:400 12px 'Space Mono',monospace;letter-spacing:.02em"><span>3 ride</span><span style="opacity:.45">·</span><span>2 run</span><span style="opacity:.45">·</span><span>1 gym</span></div>
+<div style="display:flex;height:6px;margin-top:12px;border-radius:3px;overflow:hidden;background:rgba(23,20,15,.18)"><div style="width:79%;background:#124E4A"></div><div style="width:16%;background:#17140F"></div><div style="width:5%;background:#E7A82E"></div></div>
+</div>
+<div style="display:flex;gap:10px;margin:10px 14px 0">
+<div style="flex:1;background:#17140F;border-radius:16px;padding:16px 18px;color:#FAF7F2">
+<div style="font:700 10px 'Space Mono',monospace;letter-spacing:.18em;opacity:.6">READINESS</div>
+<div style="font:700 46px/1 'Space Grotesk',sans-serif;letter-spacing:-.03em;margin-top:6px">86<span style="font-size:22px">%</span></div>
+<div style="font:400 11px 'Space Mono',monospace;margin-top:6px;color:#FF6B54">HRV 78ms ↑</div>
+</div>
+<div style="flex:1;background:#FAF7F2;border:1.5px solid rgba(23,20,15,.14);border-radius:16px;padding:16px 18px">
+<div style="font:700 10px 'Space Mono',monospace;letter-spacing:.18em;opacity:.5">FORM · TSB</div>
+<div style="font:700 46px/1 'Space Grotesk',sans-serif;letter-spacing:-.03em;margin-top:6px;color:#124E4A">+4</div>
+<div style="font:400 11px 'Space Mono',monospace;margin-top:6px;opacity:.55">FRESH-ISH</div>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;margin:10px 14px 0;border:1.5px solid rgba(23,20,15,.14);border-radius:16px;overflow:hidden;font-variant-numeric:tabular-nums">
+<div style="padding:14px 16px;border-right:1.5px solid rgba(23,20,15,.14)"><div style="font:400 9.5px 'Space Mono',monospace;letter-spacing:.16em;opacity:.5">CTL</div><div style="font:700 24px 'Space Mono',monospace;margin-top:4px">71</div></div>
+<div style="padding:14px 16px;border-right:1.5px solid rgba(23,20,15,.14)"><div style="font:400 9.5px 'Space Mono',monospace;letter-spacing:.16em;opacity:.5">ATL</div><div style="font:700 24px 'Space Mono',monospace;margin-top:4px">67</div></div>
+<div style="padding:14px 16px"><div style="font:400 9.5px 'Space Mono',monospace;letter-spacing:.16em;opacity:.5">7D TSS</div><div style="font:700 24px 'Space Mono',monospace;margin-top:4px">524</div></div>
+</div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;padding:22px 20px 8px"><span style="font:700 13px 'Space Grotesk',sans-serif;letter-spacing:.02em">Recent</span><span style="font:400 10px 'Space Mono',monospace;letter-spacing:.1em;opacity:.45">ALL 14</span></div>
+<div style="padding:0 14px;display:flex;flex-direction:column;gap:8px">
+<sc-for list="{{ recent3 }}" as="a" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;gap:12px;background:#FFFFFF;border-radius:14px;padding:12px 14px">
+<div style="width:34px;height:34px;border-radius:9px;background:{{ a.color }};display:flex;align-items:center;justify-content:center;font:700 10px 'Space Mono',monospace;color:#FAF7F2;letter-spacing:.04em">{{ a.tag }}</div>
+<div style="flex:1;min-width:0"><div style="font:500 13.5px 'Space Grotesk',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ a.title }}</div><div style="font:400 10.5px 'Space Mono',monospace;opacity:.5;margin-top:2px">{{ a.date }}</div></div>
+<div style="text-align:right;font-variant-numeric:tabular-nums"><div style="font:700 13px 'Space Mono',monospace">{{ a.dist }}</div><div style="font:400 10.5px 'Space Mono',monospace;opacity:.5;margin-top:2px">{{ a.dur }}</div></div>
+</div>
+</sc-for>
+</div>
+<div style="position:absolute;left:0;right:0;bottom:0;height:84px;background:#17140F;display:flex;padding:0 6px">
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:#FF6B54"></div><span style="font:700 10px 'Space Mono',monospace;letter-spacing:.1em;color:#FF6B54">WEEK</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:transparent"></div><span style="font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(250,247,242,.45)">LOG</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:transparent"></div><span style="font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(250,247,242,.45)">FITNESS</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:transparent"></div><span style="font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(250,247,242,.45)">BODY</span></div>
+</div>
+</div>
+</div></div>
+
+<div class="dv-opt" id="1b"><div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>Home — edge-bleed numeral. 247 breaks the right edge over coral; readouts as hairline table, no cards. Nav A.</div>
+<div class="dv-card" style="width:390px">
+<div style="width:390px;height:844px;background:#FAF7F2;color:#17140F;position:relative;overflow:hidden">
+<div style="display:flex;justify-content:space-between;padding:14px 20px 0;font:400 11px 'Space Mono',monospace;letter-spacing:.04em;opacity:.55"><span>9:41</span><span>5G · 82%</span></div>
+<div style="position:relative;background:#FF6B54;padding:26px 0 30px;margin-top:16px;overflow:hidden">
+<div style="display:flex;justify-content:space-between;padding:0 20px;font:700 10px 'Space Mono',monospace;letter-spacing:.2em;color:rgba(23,20,15,.7)"><span>WEEK 32 VOLUME</span><span>27 JUL – 02 AUG</span></div>
+<div style="font:700 168px/.8 'Space Grotesk',sans-serif;letter-spacing:-.07em;margin:10px 0 0 14px;white-space:nowrap">247<span style="font-size:52px;letter-spacing:0">km</span></div>
+<div style="display:flex;align-items:baseline;gap:12px;padding:0 20px;margin-top:18px;font:400 12.5px 'Space Mono',monospace"><span>196 ride</span><span style="opacity:.5">/</span><span>38 run</span><span style="opacity:.5">/</span><span>1 gym</span></div>
+</div>
+<div style="display:flex;border-bottom:1.5px solid rgba(23,20,15,.14)">
+<div style="flex:1;padding:20px 20px 18px;border-right:1.5px solid rgba(23,20,15,.14)"><div style="font:700 9.5px 'Space Mono',monospace;letter-spacing:.18em;opacity:.5">READINESS</div><div style="font:700 56px/1 'Space Grotesk',sans-serif;letter-spacing:-.04em;margin-top:4px">86<span style="font-size:24px">%</span></div></div>
+<div style="flex:1;padding:20px 20px 18px"><div style="font:700 9.5px 'Space Mono',monospace;letter-spacing:.18em;opacity:.5">FORM</div><div style="font:700 56px/1 'Space Grotesk',sans-serif;letter-spacing:-.04em;margin-top:4px;color:#124E4A">+4</div></div>
+</div>
+<div style="display:flex;flex-direction:column;font-variant-numeric:tabular-nums">
+<sc-for list="{{ homeRows }}" as="r" hint-placeholder-count="3">
+<div style="display:flex;justify-content:space-between;align-items:baseline;padding:13px 20px;border-bottom:1px solid rgba(23,20,15,.1)"><span style="font:400 11px 'Space Mono',monospace;letter-spacing:.14em;opacity:.55">{{ r.k }}</span><span style="font:700 14px 'Space Mono',monospace">{{ r.v }}</span></div>
+</sc-for>
+</div>
+<div style="padding:18px 20px 6px;font:700 11px 'Space Mono',monospace;letter-spacing:.2em;opacity:.5">LAST THREE</div>
+<div style="display:flex;flex-direction:column">
+<sc-for list="{{ recent3 }}" as="a" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;gap:12px;padding:11px 20px;border-top:1px solid rgba(23,20,15,.1)">
+<div style="width:8px;height:26px;background:{{ a.color }}"></div>
+<div style="flex:1;min-width:0"><div style="font:500 13px 'Space Grotesk',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ a.title }}</div><div style="font:400 10px 'Space Mono',monospace;opacity:.5;margin-top:1px">{{ a.date }} · TSS {{ a.tss }}</div></div>
+<span style="font:700 12.5px 'Space Mono',monospace;font-variant-numeric:tabular-nums">{{ a.dist }}</span>
+</div>
+</sc-for>
+</div>
+<div style="position:absolute;left:0;right:0;bottom:0;height:84px;background:#17140F;display:flex;padding:0 6px">
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:#FF6B54"></div><span style="font:700 10px 'Space Mono',monospace;letter-spacing:.1em;color:#FF6B54">WEEK</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:transparent"></div><span style="font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(250,247,242,.45)">LOG</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:transparent"></div><span style="font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(250,247,242,.45)">FITNESS</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:transparent"></div><span style="font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(250,247,242,.45)">BODY</span></div>
+</div>
+</div>
+</div></div>
+
+<div class="dv-opt" id="1c"><div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a>Home — the ring nod. Load gauge reads gauge first, record second. Ink field up top. Nav B: floating pill.</div>
+<div class="dv-card" style="width:390px">
+<div style="width:390px;height:844px;background:#FAF7F2;color:#17140F;position:relative;overflow:hidden">
+<div style="background:#17140F;color:#FAF7F2;padding:14px 20px 24px">
+<div style="display:flex;justify-content:space-between;font:400 11px 'Space Mono',monospace;opacity:.55"><span>9:41</span><span>5G · 82%</span></div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:16px"><span style="font:700 11px 'Space Mono',monospace;letter-spacing:.22em">THIS WEEK</span><span style="font:400 11px 'Space Mono',monospace;opacity:.5">WK 32</span></div>
+<div style="display:flex;align-items:center;gap:18px;margin-top:14px">
+<div style="position:relative;width:150px;height:150px;flex:none">
+<svg viewBox="0 0 150 150" width="150" height="150"><circle cx="75" cy="75" r="64" fill="none" stroke="rgba(250,247,242,.16)" stroke-width="13"></circle><circle cx="75" cy="75" r="64" fill="none" stroke="#FF6B54" stroke-width="13" stroke-linecap="butt" stroke-dasharray="342 402" transform="rotate(-90 75 75)"></circle><circle cx="75" cy="75" r="42" fill="none" stroke="rgba(250,247,242,.1)" stroke-width="1"></circle></svg>
+<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center"><div style="font:700 44px/1 'Space Grotesk',sans-serif;letter-spacing:-.03em">524</div><div style="font:400 9.5px 'Space Mono',monospace;letter-spacing:.14em;opacity:.6;margin-top:3px">TSS / 620</div></div>
+</div>
+<div style="flex:1">
+<div style="font:700 10px 'Space Mono',monospace;letter-spacing:.18em;opacity:.55">VOLUME</div>
+<div style="font:700 58px/.9 'Space Grotesk',sans-serif;letter-spacing:-.045em;color:#FF6B54">247<span style="font-size:20px;color:#FAF7F2">km</span></div>
+<div style="font:400 11.5px 'Space Mono',monospace;opacity:.7;margin-top:8px">3 ride · 2 run · 1 gym</div>
+<div style="font:400 11.5px 'Space Mono',monospace;opacity:.7;margin-top:4px">8h 39m moving</div>
+</div>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px">
+<div style="background:#FF6B54;border-radius:16px;padding:16px 18px"><div style="font:700 9.5px 'Space Mono',monospace;letter-spacing:.18em;opacity:.7">READINESS</div><div style="font:700 48px/1 'Space Grotesk',sans-serif;letter-spacing:-.035em;margin-top:6px">86<span style="font-size:20px">%</span></div></div>
+<div style="background:#124E4A;color:#FAF7F2;border-radius:16px;padding:16px 18px"><div style="font:700 9.5px 'Space Mono',monospace;letter-spacing:.18em;opacity:.65">FORM TSB</div><div style="font:700 48px/1 'Space Grotesk',sans-serif;letter-spacing:-.035em;margin-top:6px">+4</div></div>
+<div style="background:#FFFFFF;border-radius:16px;padding:14px 18px"><div style="font:400 9.5px 'Space Mono',monospace;letter-spacing:.16em;opacity:.5">FITNESS CTL</div><div style="font:700 30px 'Space Mono',monospace;margin-top:4px;font-variant-numeric:tabular-nums">71</div><div style="font:400 10px 'Space Mono',monospace;color:#124E4A;margin-top:2px">+3 / 28d</div></div>
+<div style="background:#FFFFFF;border-radius:16px;padding:14px 18px"><div style="font:400 9.5px 'Space Mono',monospace;letter-spacing:.16em;opacity:.5">FATIGUE ATL</div><div style="font:700 30px 'Space Mono',monospace;margin-top:4px;font-variant-numeric:tabular-nums">67</div><div style="font:400 10px 'Space Mono',monospace;color:#FF6B54;margin-top:2px">+9 / 7d</div></div>
+</div>
+<div style="padding:6px 20px 8px;font:700 11px 'Space Mono',monospace;letter-spacing:.2em;opacity:.5">RECENT</div>
+<div style="padding:0 14px;display:flex;flex-direction:column;gap:7px">
+<sc-for list="{{ recent }}" as="a" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;gap:12px;background:#FFFFFF;border-radius:13px;padding:11px 14px">
+<div style="width:10px;height:10px;border-radius:3px;background:{{ a.color }}"></div>
+<div style="flex:1;min-width:0;font:500 13px 'Space Grotesk',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ a.title }}</div>
+<span style="font:700 12px 'Space Mono',monospace;font-variant-numeric:tabular-nums">{{ a.dist }}</span>
+</div>
+</sc-for>
+</div>
+<div style="position:absolute;left:14px;right:14px;bottom:20px;background:#17140F;border-radius:999px;padding:7px;display:flex;gap:4px">
+<div style="flex:1;background:#FF6B54;border-radius:999px;padding:11px 0;text-align:center;font:700 10px 'Space Mono',monospace;letter-spacing:.1em;color:#17140F">WEEK</div>
+<div style="flex:1;padding:11px 0;text-align:center;font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(250,247,242,.5)">LOG</div>
+<div style="flex:1;padding:11px 0;text-align:center;font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(250,247,242,.5)">FITNESS</div>
+<div style="flex:1;padding:11px 0;text-align:center;font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(250,247,242,.5)">BODY</div>
+</div>
+</div>
+</div></div>
+
+<div class="dv-opt" id="1d"><div class="dv-olabel"><a class="dv-oid" href="#1d">1d</a>Progression on paper — PMC with coral CTL as hero, petrol ATL, TSB as a centred ochre/coral strip. Range tabs are live.</div>
+<div class="dv-card" style="width:390px">
+<div style="width:390px;height:844px;background:#FAF7F2;color:#17140F;position:relative;overflow:hidden">
+<div style="display:flex;justify-content:space-between;padding:14px 20px 0;font:400 11px 'Space Mono',monospace;opacity:.55"><span>9:41</span><span>5G · 82%</span></div>
+<div style="padding:16px 20px 12px"><div style="font:700 26px 'Space Grotesk',sans-serif;letter-spacing:-.02em">Progression</div><div style="font:400 11px 'Space Mono',monospace;opacity:.5;margin-top:3px">FITNESS · FATIGUE · FORM</div></div>
+<div style="display:flex;gap:6px;padding:0 20px 14px">
+<sc-for list="{{ ranges }}" as="r" hint-placeholder-count="3">
+<div onClick="{{ r.pick }}" style="padding:7px 14px;border-radius:999px;font:700 10px 'Space Mono',monospace;letter-spacing:.1em;cursor:pointer;background:{{ r.bg }};color:{{ r.fg }};border:1.5px solid rgba(23,20,15,.14)">{{ r.label }}</div>
+</sc-for>
+</div>
+<div style="margin:0 14px;background:#FFFFFF;border-radius:16px;padding:16px 14px 12px">
+<div style="display:flex;gap:16px;padding:0 4px 10px;font:400 10px 'Space Mono',monospace;letter-spacing:.08em">
+<span style="display:flex;align-items:center;gap:6px"><span style="width:14px;height:3px;background:#FF6B54"></span>CTL 71</span>
+<span style="display:flex;align-items:center;gap:6px"><span style="width:14px;height:3px;background:#124E4A"></span>ATL 67</span>
+<span style="display:flex;align-items:center;gap:6px"><span style="width:14px;height:3px;background:#E7A82E"></span>TSB +4</span>
+</div>
+<svg viewBox="0 0 330 190" width="100%" height="158" preserveAspectRatio="none">
+<line x1="0" y1="47.5" x2="330" y2="47.5" stroke="rgba(23,20,15,.09)" stroke-width="1"></line>
+<line x1="0" y1="95" x2="330" y2="95" stroke="rgba(23,20,15,.09)" stroke-width="1"></line>
+<line x1="0" y1="142.5" x2="330" y2="142.5" stroke="rgba(23,20,15,.09)" stroke-width="1"></line>
+<path d="{{ ctlArea }}" fill="rgba(255,107,84,.14)"></path>
+<path d="{{ atlPath }}" fill="none" stroke="#124E4A" stroke-width="1.6" stroke-linejoin="round"></path>
+<path d="{{ ctlPath }}" fill="none" stroke="#FF6B54" stroke-width="3" stroke-linejoin="round"></path>
+</svg>
+<div style="display:flex;justify-content:space-between;padding:6px 2px 0;font:400 9.5px 'Space Mono',monospace;opacity:.45"><span>{{ axisStart }}</span><span>{{ axisMid }}</span><span>TODAY</span></div>
+<div style="margin-top:10px;border-top:1px solid rgba(23,20,15,.1);padding-top:10px">
+<div style="font:400 9.5px 'Space Mono',monospace;letter-spacing:.14em;opacity:.5;margin-bottom:4px">FORM / TSB</div>
+<svg viewBox="0 0 330 54" width="100%" height="54" preserveAspectRatio="none">
+<line x1="0" y1="27" x2="330" y2="27" stroke="rgba(23,20,15,.2)" stroke-width="1"></line>
+<sc-for list="{{ tsbBars }}" as="b" hint-placeholder-count="30"><rect x="{{ b.x }}" y="{{ b.y }}" width="{{ b.w }}" height="{{ b.h }}" fill="{{ b.color }}" opacity="{{ b.op }}"></rect></sc-for>
+</svg>
+</div>
+</div>
+<div style="margin:10px 14px 0;background:#FFFFFF;border-radius:16px;padding:16px 16px 12px">
+<div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font:700 11px 'Space Mono',monospace;letter-spacing:.16em;opacity:.55">WEEKLY VOLUME</span><span style="font:700 13px 'Space Mono',monospace">Ø 222 km</span></div>
+<div style="display:flex;align-items:flex-end;gap:5px;height:82px;margin-top:14px">
+<sc-for list="{{ volBars }}" as="v" hint-placeholder-count="12">
+<div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;gap:5px"><div style="height:{{ v.h }};background:{{ v.color }};border-radius:3px"></div><div style="font:400 8.5px 'Space Mono',monospace;opacity:.4;text-align:center">{{ v.label }}</div></div>
+</sc-for>
+</div>
+</div>
+<div style="margin:10px 14px 0;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+<sc-for list="{{ wellness }}" as="w" hint-placeholder-count="3">
+<div style="background:#FFFFFF;border-radius:14px;padding:12px 12px 8px"><div style="font:400 9px 'Space Mono',monospace;letter-spacing:.12em;opacity:.5">{{ w.label }}</div><div style="font:700 22px 'Space Mono',monospace;margin-top:2px;font-variant-numeric:tabular-nums">{{ w.value }}</div><svg viewBox="0 0 90 30" width="100%" height="30" preserveAspectRatio="none"><path d="{{ w.path }}" fill="none" stroke="{{ w.color }}" stroke-width="2"></path></svg></div>
+</sc-for>
+</div>
+<div style="position:absolute;left:0;right:0;bottom:0;height:84px;background:#17140F;display:flex;padding:0 6px">
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:transparent"></div><span style="font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(250,247,242,.45)">WEEK</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:transparent"></div><span style="font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(250,247,242,.45)">LOG</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:#FF6B54"></div><span style="font:700 10px 'Space Mono',monospace;letter-spacing:.1em;color:#FF6B54">FITNESS</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:transparent"></div><span style="font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(250,247,242,.45)">BODY</span></div>
+</div>
+</div>
+</div></div>
+
+<div class="dv-opt" id="1e"><div class="dv-olabel"><a class="dv-oid" href="#1e">1e</a>Progression on ink — full-bleed dark chart, coral glows. Same data, more Panorama. Wellness as a mono table.</div>
+<div class="dv-card" style="width:390px">
+<div style="width:390px;height:844px;background:#17140F;color:#FAF7F2;position:relative;overflow:hidden">
+<div style="display:flex;justify-content:space-between;padding:14px 20px 0;font:400 11px 'Space Mono',monospace;opacity:.5"><span>9:41</span><span>5G · 82%</span></div>
+<div style="display:flex;justify-content:space-between;align-items:flex-end;padding:16px 20px 6px"><div><div style="font:700 11px 'Space Mono',monospace;letter-spacing:.22em;opacity:.55">PERFORMANCE MGMT</div><div style="font:700 40px/1 'Space Grotesk',sans-serif;letter-spacing:-.035em;margin-top:8px;color:#FF6B54">71<span style="font-size:16px;color:#FAF7F2;letter-spacing:0"> CTL</span></div></div><div style="text-align:right;font:400 11px 'Space Mono',monospace;opacity:.6;line-height:1.7"><div>ATL 67</div><div>TSB +4</div><div>PEAK 74</div></div></div>
+<svg viewBox="0 0 390 300" width="390" height="300" style="display:block;margin-top:10px">
+<line x1="0" y1="75" x2="390" y2="75" stroke="rgba(250,247,242,.1)" stroke-width="1"></line>
+<line x1="0" y1="150" x2="390" y2="150" stroke="rgba(250,247,242,.1)" stroke-width="1"></line>
+<line x1="0" y1="225" x2="390" y2="225" stroke="rgba(250,247,242,.1)" stroke-width="1"></line>
+<path d="{{ darkAtl }}" fill="none" stroke="#E7A82E" stroke-width="1.6"></path>
+<path d="{{ darkCtlArea }}" fill="rgba(255,107,84,.2)"></path>
+<path d="{{ darkCtl }}" fill="none" stroke="#FF6B54" stroke-width="3.4" stroke-linejoin="round"></path>
+</svg>
+<div style="display:flex;justify-content:space-between;padding:8px 20px 0;font:400 9.5px 'Space Mono',monospace;opacity:.4"><span>{{ axisStart }}</span><span>{{ axisMid }}</span><span>TODAY</span></div>
+<div style="display:flex;gap:6px;padding:16px 20px 0">
+<sc-for list="{{ ranges }}" as="r" hint-placeholder-count="3">
+<div onClick="{{ r.pick }}" style="padding:7px 14px;border-radius:999px;font:700 10px 'Space Mono',monospace;letter-spacing:.1em;cursor:pointer;background:{{ r.dbg }};color:{{ r.dfg }};border:1.5px solid rgba(250,247,242,.2)">{{ r.label }}</div>
+</sc-for>
+</div>
+<div style="margin:18px 20px 0;border-top:1px solid rgba(250,247,242,.14)">
+<sc-for list="{{ wellRows }}" as="w" hint-placeholder-count="4">
+<div style="display:flex;align-items:center;gap:14px;padding:13px 0;border-bottom:1px solid rgba(250,247,242,.14)">
+<span style="width:78px;font:400 10px 'Space Mono',monospace;letter-spacing:.14em;opacity:.55">{{ w.label }}</span>
+<svg viewBox="0 0 120 26" width="120" height="26" preserveAspectRatio="none"><path d="{{ w.path }}" fill="none" stroke="{{ w.color }}" stroke-width="2"></path></svg>
+<span style="flex:1;text-align:right;font:700 15px 'Space Mono',monospace;font-variant-numeric:tabular-nums">{{ w.value }}</span>
+<span style="width:52px;text-align:right;font:400 10px 'Space Mono',monospace;color:{{ w.deltaColor }}">{{ w.delta }}</span>
+</div>
+</sc-for>
+</div>
+<div style="position:absolute;left:14px;right:14px;bottom:20px;background:#FAF7F2;border-radius:999px;padding:7px;display:flex;gap:4px">
+<div style="flex:1;padding:11px 0;text-align:center;font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(23,20,15,.5)">WEEK</div>
+<div style="flex:1;padding:11px 0;text-align:center;font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(23,20,15,.5)">LOG</div>
+<div style="flex:1;background:#FF6B54;border-radius:999px;padding:11px 0;text-align:center;font:700 10px 'Space Mono',monospace;letter-spacing:.1em;color:#17140F">FITNESS</div>
+<div style="flex:1;padding:11px 0;text-align:center;font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(23,20,15,.5)">BODY</div>
+</div>
+</div>
+</div></div>
+
+<div class="dv-opt" id="1f"><div class="dv-olabel"><a class="dv-oid" href="#1f">1f</a>Training log — week/month toggle and sport filter both live. Logbook rules, tabular mono, volume bars per period.</div>
+<div class="dv-card" style="width:390px">
+<div style="width:390px;height:844px;background:#FAF7F2;color:#17140F;position:relative;overflow:hidden">
+<div style="display:flex;justify-content:space-between;padding:14px 20px 0;font:400 11px 'Space Mono',monospace;opacity:.55"><span>9:41</span><span>5G · 82%</span></div>
+<div style="display:flex;justify-content:space-between;align-items:flex-end;padding:16px 20px 12px"><div style="font:700 26px 'Space Grotesk',sans-serif;letter-spacing:-.02em">Log</div>
+<div style="display:flex;border:1.5px solid #17140F;border-radius:999px;overflow:hidden">
+<div onClick="{{ setWeek }}" style="padding:6px 15px;font:700 10px 'Space Mono',monospace;letter-spacing:.1em;cursor:pointer;background:{{ weekBg }};color:{{ weekFg }}">WEEK</div>
+<div onClick="{{ setMonth }}" style="padding:6px 15px;font:700 10px 'Space Mono',monospace;letter-spacing:.1em;cursor:pointer;background:{{ monthBg }};color:{{ monthFg }}">MONTH</div>
+</div></div>
+<div style="display:flex;gap:7px;padding:0 20px 14px">
+<sc-for list="{{ filters }}" as="f" hint-placeholder-count="4">
+<div onClick="{{ f.pick }}" style="padding:7px 13px;border-radius:6px;font:700 10px 'Space Mono',monospace;letter-spacing:.1em;cursor:pointer;background:{{ f.bg }};color:{{ f.fg }};border:1.5px solid {{ f.border }}">{{ f.label }}</div>
+</sc-for>
+</div>
+<div style="padding:0 14px">
+<div style="background:#17140F;border-radius:16px;padding:16px 18px;color:#FAF7F2">
+<div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font:700 10px 'Space Mono',monospace;letter-spacing:.18em;opacity:.6">{{ totalLabel }}</span><span style="font:400 10px 'Space Mono',monospace;opacity:.6">{{ totalMeta }}</span></div>
+<div style="display:flex;align-items:flex-end;gap:6px;margin-top:2px"><span style="font:700 54px/1 'Space Grotesk',sans-serif;letter-spacing:-.04em;color:#FF6B54">{{ totalKm }}</span><span style="font:700 18px 'Space Grotesk',sans-serif;padding-bottom:6px">km</span></div>
+<div style="display:flex;align-items:flex-end;gap:4px;height:44px;margin-top:14px">
+<sc-for list="{{ logBars }}" as="b" hint-placeholder-count="10">
+<div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%"><div style="height:{{ b.h }};background:{{ b.color }};border-radius:2px"></div></div>
+</sc-for>
+</div>
+</div>
+</div>
+<div style="position:absolute;left:0;right:0;top:400px;bottom:0;overflow:auto">
+<sc-for list="{{ groups }}" as="g" hint-placeholder-count="2">
+<div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;padding:20px 20px 8px;border-bottom:1.5px solid #17140F;margin:0 0 0"><span style="font:700 12px 'Space Mono',monospace;letter-spacing:.16em">{{ g.title }}</span><span style="font:700 12px 'Space Mono',monospace;font-variant-numeric:tabular-nums">{{ g.total }}</span></div>
+<sc-for list="{{ g.rows }}" as="s" hint-placeholder-count="3">
+<div style="display:flex;align-items:center;gap:12px;padding:11px 20px;border-bottom:1px solid rgba(23,20,15,.1)">
+<span style="width:34px;font:400 10px 'Space Mono',monospace;opacity:.5">{{ s.day }}</span>
+<div style="width:6px;height:24px;background:{{ s.color }}"></div>
+<div style="flex:1;min-width:0"><div style="font:500 13px 'Space Grotesk',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ s.title }}</div><div style="font:400 9.5px 'Space Mono',monospace;opacity:.5;margin-top:1px">{{ s.detail }}</div></div>
+<div style="text-align:right;font-variant-numeric:tabular-nums"><div style="font:700 12.5px 'Space Mono',monospace">{{ s.dist }}</div><div style="font:400 9.5px 'Space Mono',monospace;opacity:.5">{{ s.dur }}</div></div>
+</div>
+</sc-for>
+</div>
+</sc-for>
+<div style="height:96px"></div>
+</div>
+<div style="position:absolute;left:0;right:0;bottom:0;height:84px;background:#17140F;display:flex;padding:0 6px">
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:transparent"></div><span style="font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(250,247,242,.45)">WEEK</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:#FF6B54"></div><span style="font:700 10px 'Space Mono',monospace;letter-spacing:.1em;color:#FF6B54">LOG</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:transparent"></div><span style="font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(250,247,242,.45)">FITNESS</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:transparent"></div><span style="font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(250,247,242,.45)">BODY</span></div>
+</div>
+</div>
+</div></div>
+
+<div class="dv-opt" id="1g"><div class="dv-olabel"><a class="dv-oid" href="#1g">1g</a>Activity detail — coral header for a run, interval structure as a real block diagram, recovery context underneath.</div>
+<div class="dv-card" style="width:390px">
+<div style="width:390px;height:844px;background:#FAF7F2;color:#17140F;position:relative;overflow:auto">
+<div style="background:#FF6B54;padding:14px 20px 24px">
+<div style="display:flex;justify-content:space-between;font:400 11px 'Space Mono',monospace;opacity:.6"><span>9:41</span><span>5G · 82%</span></div>
+<div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px;font:700 10px 'Space Mono',monospace;letter-spacing:.18em"><span>← LOG</span><span>RUN</span></div>
+<div style="font:700 34px/1.05 'Space Grotesk',sans-serif;letter-spacing:-.03em;margin-top:18px">Threshold<br>intervals</div>
+<div style="font:400 11.5px 'Space Mono',monospace;margin-top:12px;opacity:.75">MON 03 AUG · 18:40 · OSTPARK</div>
+<div style="font:500 14px 'Space Grotesk',sans-serif;margin-top:14px;line-height:1.4">Held 3:42/km through all four — cleanest set this block.</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1.5px solid rgba(23,20,15,.14);font-variant-numeric:tabular-nums">
+<div style="padding:16px 18px;border-right:1.5px solid rgba(23,20,15,.14)"><div style="font:400 9px 'Space Mono',monospace;letter-spacing:.14em;opacity:.5">DISTANCE</div><div style="font:700 26px 'Space Grotesk',sans-serif;margin-top:2px">14.2<span style="font-size:12px"> km</span></div></div>
+<div style="padding:16px 18px;border-right:1.5px solid rgba(23,20,15,.14)"><div style="font:400 9px 'Space Mono',monospace;letter-spacing:.14em;opacity:.5">TIME</div><div style="font:700 26px 'Space Grotesk',sans-serif;margin-top:2px">1:02</div></div>
+<div style="padding:16px 18px"><div style="font:400 9px 'Space Mono',monospace;letter-spacing:.14em;opacity:.5">LOAD</div><div style="font:700 26px 'Space Grotesk',sans-serif;margin-top:2px;color:#FF6B54">98</div></div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;font-variant-numeric:tabular-nums">
+<sc-for list="{{ detailMetrics }}" as="m" hint-placeholder-count="6">
+<div style="padding:13px 18px;border-bottom:1px solid rgba(23,20,15,.1);border-right:1px solid rgba(23,20,15,.1);display:flex;justify-content:space-between;align-items:baseline"><span style="font:400 10px 'Space Mono',monospace;letter-spacing:.1em;opacity:.5">{{ m.k }}</span><span style="font:700 13px 'Space Mono',monospace">{{ m.v }}</span></div>
+</sc-for>
+</div>
+<div style="padding:20px 20px 6px;font:700 11px 'Space Mono',monospace;letter-spacing:.2em;opacity:.5">STRUCTURE</div>
+<div style="padding:0 20px"><div style="font:700 22px 'Space Grotesk',sans-serif;letter-spacing:-.01em">4 × 8min @ threshold</div><div style="font:400 10.5px 'Space Mono',monospace;opacity:.55;margin-top:4px">2min float · 15min w/u · 10min c/d</div>
+<div style="display:flex;align-items:flex-end;gap:3px;height:74px;margin-top:14px">
+<sc-for list="{{ intervalBlocks }}" as="b" hint-placeholder-count="10">
+<div style="flex:{{ b.flex }};height:{{ b.h }};background:{{ b.color }};border-radius:3px 3px 0 0"></div>
+</sc-for>
+</div>
+<div style="height:1.5px;background:#17140F"></div>
+</div>
+<div style="padding:0 14px;margin-top:16px;display:flex;flex-direction:column;gap:8px">
+<sc-for list="{{ intervalRows }}" as="i" hint-placeholder-count="4">
+<div style="display:flex;align-items:center;gap:12px;background:#FFFFFF;border-radius:12px;padding:11px 14px;font-variant-numeric:tabular-nums">
+<span style="width:22px;font:700 12px 'Space Mono',monospace;color:#FF6B54">{{ i.n }}</span>
+<span style="flex:1;font:400 11px 'Space Mono',monospace;opacity:.6">{{ i.dur }}</span>
+<span style="font:700 13px 'Space Mono',monospace">{{ i.pace }}</span>
+<span style="width:64px;text-align:right;font:400 11px 'Space Mono',monospace;opacity:.6">{{ i.hr }}</span>
+</div>
+</sc-for>
+</div>
+<div style="margin:18px 14px 24px;background:#124E4A;color:#FAF7F2;border-radius:16px;padding:16px 18px">
+<div style="font:700 10px 'Space Mono',monospace;letter-spacing:.18em;opacity:.65">RECOVERY CONTEXT</div>
+<div style="display:flex;gap:18px;margin-top:12px;font-variant-numeric:tabular-nums">
+<div><div style="font:400 9.5px 'Space Mono',monospace;opacity:.6">MORNING</div><div style="font:700 26px 'Space Grotesk',sans-serif;margin-top:2px">91%</div></div>
+<div><div style="font:400 9.5px 'Space Mono',monospace;opacity:.6">NEXT DAY</div><div style="font:700 26px 'Space Grotesk',sans-serif;margin-top:2px;color:#E7A82E">74%</div></div>
+<div><div style="font:400 9.5px 'Space Mono',monospace;opacity:.6">TSB AFTER</div><div style="font:700 26px 'Space Grotesk',sans-serif;margin-top:2px">−6</div></div>
+</div>
+<div style="font:400 11px/1.5 'Space Mono',monospace;opacity:.7;margin-top:12px">Sleep 7h48 · HRV 78ms · RHR 42</div>
+</div>
+</div>
+</div></div>
+
+<div class="dv-opt" id="1h"><div class="dv-olabel"><a class="dv-oid" href="#1h">1h</a>Recovery — readiness as the one big number, sleep stages as a stacked bar week, body battery + weight trended.</div>
+<div class="dv-card" style="width:390px">
+<div style="width:390px;height:844px;background:#FAF7F2;color:#17140F;position:relative;overflow:hidden">
+<div style="display:flex;justify-content:space-between;padding:14px 20px 0;font:400 11px 'Space Mono',monospace;opacity:.55"><span>9:41</span><span>5G · 82%</span></div>
+<div style="padding:16px 20px 10px"><div style="font:700 26px 'Space Grotesk',sans-serif;letter-spacing:-.02em">Body</div><div style="font:400 11px 'Space Mono',monospace;opacity:.5;margin-top:3px">TUE 04 AUG · 07:12</div></div>
+<div style="margin:0 14px;background:#FF6B54;border-radius:16px;padding:18px 20px;display:flex;align-items:flex-end;justify-content:space-between">
+<div><div style="font:700 10px 'Space Mono',monospace;letter-spacing:.2em;opacity:.7">READINESS</div><div style="font:700 96px/.85 'Space Grotesk',sans-serif;letter-spacing:-.05em;margin-top:4px">86</div></div>
+<div style="text-align:right;font:400 11px 'Space Mono',monospace;line-height:1.8;padding-bottom:8px"><div>BATTERY 78</div><div>HRV 78ms</div><div>RHR 42</div></div>
+</div>
+<div style="margin:10px 14px 0;background:#FFFFFF;border-radius:16px;padding:16px 16px 12px">
+<div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font:700 10px 'Space Mono',monospace;letter-spacing:.18em;opacity:.55">SLEEP · 7 NIGHTS</span><span style="font:700 13px 'Space Mono',monospace">Ø 7h26</span></div>
+<div style="display:flex;align-items:flex-end;gap:7px;height:110px;margin-top:14px">
+<sc-for list="{{ sleepBars }}" as="s" hint-placeholder-count="7">
+<div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;height:100%;gap:6px">
+<div style="display:flex;flex-direction:column;border-radius:3px;overflow:hidden;height:{{ s.h }}"><div style="height:{{ s.awake }};background:rgba(23,20,15,.14)"></div><div style="height:{{ s.rem }};background:#E7A82E"></div><div style="height:{{ s.light }};background:#124E4A"></div><div style="height:{{ s.deep }};background:#17140F"></div></div>
+<div style="font:400 8.5px 'Space Mono',monospace;opacity:.45;text-align:center">{{ s.label }}</div>
+</div>
+</sc-for>
+</div>
+<div style="display:flex;gap:12px;margin-top:8px;font:400 9px 'Space Mono',monospace;letter-spacing:.06em;opacity:.6"><span>■ DEEP</span><span style="color:#124E4A">■ LIGHT</span><span style="color:#E7A82E">■ REM</span></div>
+</div>
+<div style="margin:10px 14px 0;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<div style="background:#17140F;color:#FAF7F2;border-radius:16px;padding:14px 16px"><div style="font:400 9.5px 'Space Mono',monospace;letter-spacing:.14em;opacity:.6">HRV 28D</div><div style="font:700 30px 'Space Mono',monospace;margin-top:2px;font-variant-numeric:tabular-nums">78<span style="font-size:12px">ms</span></div><svg viewBox="0 0 140 40" width="100%" height="40" preserveAspectRatio="none"><path d="{{ hrvPath }}" fill="none" stroke="#FF6B54" stroke-width="2.4"></path></svg></div>
+<div style="background:#FFFFFF;border-radius:16px;padding:14px 16px"><div style="font:400 9.5px 'Space Mono',monospace;letter-spacing:.14em;opacity:.5">RESTING HR</div><div style="font:700 30px 'Space Mono',monospace;margin-top:2px;font-variant-numeric:tabular-nums">42<span style="font-size:12px">bpm</span></div><svg viewBox="0 0 140 40" width="100%" height="40" preserveAspectRatio="none"><path d="{{ rhrPath }}" fill="none" stroke="#124E4A" stroke-width="2.4"></path></svg></div>
+</div>
+<div style="margin:10px 14px 0;background:#FFFFFF;border-radius:16px;padding:14px 16px;display:flex;align-items:center;gap:14px">
+<div><div style="font:400 9.5px 'Space Mono',monospace;letter-spacing:.14em;opacity:.5">WEIGHT</div><div style="font:700 30px 'Space Mono',monospace;margin-top:2px;font-variant-numeric:tabular-nums">71.4<span style="font-size:12px">kg</span></div></div>
+<svg viewBox="0 0 180 40" width="100%" height="40" preserveAspectRatio="none" style="flex:1"><path d="{{ weightPath }}" fill="none" stroke="#E7A82E" stroke-width="2.4"></path></svg>
+<span style="font:400 10px 'Space Mono',monospace;color:#124E4A">−0.8</span>
+</div>
+<div style="position:absolute;left:0;right:0;bottom:0;height:84px;background:#17140F;display:flex;padding:0 6px">
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:transparent"></div><span style="font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(250,247,242,.45)">WEEK</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:transparent"></div><span style="font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(250,247,242,.45)">LOG</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:transparent"></div><span style="font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(250,247,242,.45)">FITNESS</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:#FF6B54"></div><span style="font:700 10px 'Space Mono',monospace;letter-spacing:.1em;color:#FF6B54">BODY</span></div>
+</div>
+</div>
+</div></div>
+
+<div class="dv-opt" id="1i"><div class="dv-olabel"><a class="dv-oid" href="#1i">1i</a>Nav patterns compared. A: ink tab bar, coral rule (used in <a class="dv-oid" href="#1a">1a</a>/<a class="dv-oid" href="#1b">1b</a>). B: floating pill (<a class="dv-oid" href="#1c">1c</a>). C: swipe header with coral underline — no chrome at the bottom.</div>
+<div class="dv-card" style="width:390px;padding:20px 0">
+<div style="display:flex;flex-direction:column;gap:26px">
+<div><div style="font:700 10px 'Space Mono',monospace;letter-spacing:.16em;opacity:.5;padding:0 20px 8px">A · TAB BAR</div>
+<div style="height:84px;background:#17140F;display:flex;padding:0 6px">
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:#FF6B54"></div><span style="font:700 10px 'Space Mono',monospace;letter-spacing:.1em;color:#FF6B54">WEEK</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:transparent"></div><span style="font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(250,247,242,.45)">LOG</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:transparent"></div><span style="font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(250,247,242,.45)">FITNESS</span></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:9px"><div style="width:26px;height:3px;background:transparent"></div><span style="font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(250,247,242,.45)">BODY</span></div>
+</div></div>
+<div><div style="font:700 10px 'Space Mono',monospace;letter-spacing:.16em;opacity:.5;padding:0 20px 8px">B · FLOATING PILL</div>
+<div style="padding:0 14px"><div style="background:#17140F;border-radius:999px;padding:7px;display:flex;gap:4px">
+<div style="flex:1;background:#FF6B54;border-radius:999px;padding:11px 0;text-align:center;font:700 10px 'Space Mono',monospace;letter-spacing:.1em;color:#17140F">WEEK</div>
+<div style="flex:1;padding:11px 0;text-align:center;font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(250,247,242,.5)">LOG</div>
+<div style="flex:1;padding:11px 0;text-align:center;font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(250,247,242,.5)">FITNESS</div>
+<div style="flex:1;padding:11px 0;text-align:center;font:400 10px 'Space Mono',monospace;letter-spacing:.1em;color:rgba(250,247,242,.5)">BODY</div>
+</div></div></div>
+<div><div style="font:700 10px 'Space Mono',monospace;letter-spacing:.16em;opacity:.5;padding:0 20px 8px">C · SWIPE HEADER</div>
+<div style="border-bottom:1.5px solid rgba(23,20,15,.14);display:flex;gap:22px;padding:0 20px">
+<div style="padding-bottom:12px;border-bottom:3px solid #FF6B54;margin-bottom:-2px;font:700 15px 'Space Grotesk',sans-serif">Week</div>
+<div style="padding-bottom:12px;font:500 15px 'Space Grotesk',sans-serif;opacity:.4">Log</div>
+<div style="padding-bottom:12px;font:500 15px 'Space Grotesk',sans-serif;opacity:.4">Fitness</div>
+<div style="padding-bottom:12px;font:500 15px 'Space Grotesk',sans-serif;opacity:.4">Body</div>
+</div>
+<div style="padding:14px 20px 0;font:400 10.5px/1.6 'Space Mono',monospace;opacity:.5">Frees the bottom 84px for content — good on a 6.1" phone, but the thumb has to travel. Worth testing if the log becomes the main screen.</div>
+</div>
+</div>
+</div></div>
+
+</div>
+<p class="dv-next">Try next: "take <a class="dv-oid" href="#1b">1b</a>'s bleeding numeral into <a class="dv-oid" href="#1a">1a</a>" · "push <a class="dv-oid" href="#1e">1e</a> darker and drop the wellness table" · "the ring in <a class="dv-oid" href="#1c">1c</a> is naff, try a coral load slab instead" · "wire <a class="dv-oid" href="#1a">1a</a> up as a real prototype with working tabs"</p>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1400,&quot;height&quot;:1000}}">
+class Component extends DCLogic {
+  state = { range: '3m', logPeriod: 'week', sport: 'all' };
+
+  full() {
+    if (this._full) return this._full;
+    const out = [];
+    for (let i = 0; i < 365; i++) {
+      const p = i / 364;
+      const ctl = 42 + 29 * p + 2.4 * Math.sin(i / 9) + 1.2 * Math.sin(i / 3.7);
+      const atl = ctl + 13 * Math.sin(i / 5.2) + 5.5 * Math.sin(i / 2.1) + 2 * Math.sin(i / 11);
+      out.push({ ctl, atl, tsb: ctl - atl });
+    }
+    this._full = out;
+    return out;
+  }
+
+  win() {
+    const n = this.state.range === '6w' ? 42 : this.state.range === '3m' ? 90 : 365;
+    return this.full().slice(365 - n);
+  }
+
+  line(vals, w, h, min, max) {
+    return vals.map((v, i) => {
+      const x = (i / (vals.length - 1)) * w;
+      const y = h - ((v - min) / (max - min)) * h;
+      return (i ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1);
+    }).join(' ');
+  }
+
+  spark(vals, w, h) {
+    const min = Math.min(...vals), max = Math.max(...vals);
+    return this.line(vals, w, h - 4, min - (max - min) * 0.2, max + (max - min) * 0.2).replace(/M/, 'M');
+  }
+
+  bars(vals, w, h) {
+    const step = w / vals.length, bw = Math.max(1.4, step * 0.62);
+    return vals.map((v, i) => {
+      const mag = Math.min(1, Math.abs(v) / 28) * (h / 2 - 2);
+      return {
+        x: (i * step + (step - bw) / 2).toFixed(1),
+        w: bw.toFixed(1),
+        y: (v >= 0 ? h / 2 - mag : h / 2).toFixed(1),
+        h: Math.max(1, mag).toFixed(1),
+        color: '#E7A82E',
+        op: v >= 0 ? 1 : 0.4
+      };
+    });
+  }
+
+  sessions() {
+    return [
+      { day: 'MON', date: 'MON 03 AUG', title: 'Threshold intervals', sport: 'run', dist: '14.2 km', dur: '1:02', tss: 98, detail: '4×8min @ 3:42/km · 172 avg HR', week: 'W32', month: 'AUGUST' },
+      { day: 'SUN', date: 'SUN 02 AUG', title: 'Taunus loop', sport: 'ride', dist: '132 km', dur: '4:41', tss: 268, detail: '1,840 m · 218 W · 141 avg HR', week: 'W32', month: 'AUGUST' },
+      { day: 'SAT', date: 'SAT 01 AUG', title: 'Lower body + core', sport: 'gym', dist: '—', dur: '0:52', tss: 46, detail: 'Squat 5×5 @ 110 kg · 14 sets', week: 'W32', month: 'AUGUST' },
+      { day: 'FRI', date: 'FRI 31 JUL', title: 'Endurance ride', sport: 'ride', dist: '58 km', dur: '2:04', tss: 112, detail: 'Z2 · 196 W · 128 avg HR', week: 'W31', month: 'JULY' },
+      { day: 'THU', date: 'THU 30 JUL', title: 'Easy run', sport: 'run', dist: '9.4 km', dur: '0:48', tss: 52, detail: '5:06/km · 138 avg HR', week: 'W31', month: 'JULY' },
+      { day: 'WED', date: 'WED 29 JUL', title: 'Sweetspot 3×15', sport: 'ride', dist: '46 km', dur: '1:34', tss: 124, detail: '3×15min @ 252 W', week: 'W31', month: 'JULY' },
+      { day: 'TUE', date: 'TUE 28 JUL', title: 'Upper body', sport: 'gym', dist: '—', dur: '0:44', tss: 38, detail: 'Press 4×6 · rows · 11 sets', week: 'W31', month: 'JULY' },
+      { day: 'SUN', date: 'SUN 26 JUL', title: 'Hill repeats', sport: 'run', dist: '12.1 km', dur: '0:58', tss: 86, detail: '8×90s @ 3:28/km', week: 'W30', month: 'JULY' },
+      { day: 'SAT', date: 'SAT 25 JUL', title: 'Gravel — Spessart', sport: 'ride', dist: '104 km', dur: '4:02', tss: 231, detail: '1,260 m · 204 W', week: 'W30', month: 'JULY' },
+      { day: 'WED', date: 'WED 22 JUL', title: 'Recovery spin', sport: 'ride', dist: '32 km', dur: '1:06', tss: 48, detail: 'Z1 · 158 W', week: 'W30', month: 'JULY' },
+      { day: 'SUN', date: 'SUN 21 JUN', title: 'Long run', sport: 'run', dist: '24.6 km', dur: '1:58', tss: 148, detail: '4:48/km · 148 avg HR', week: 'W26', month: 'JUNE' },
+      { day: 'THU', date: 'THU 18 JUN', title: 'Vo2 5×4min', sport: 'ride', dist: '52 km', dur: '1:48', tss: 142, detail: '5×4min @ 318 W', week: 'W26', month: 'JUNE' }
+    ];
+  }
+
+  color(sport) { return sport === 'run' ? '#FF6B54' : sport === 'ride' ? '#124E4A' : '#E7A82E'; }
+
+  calendar() {
+    const wk = (start, spec) => ({ start, days: spec.map(d => ({ n: d[0], acts: (d[1] || []).map(a => ({ s: a[0], m: a[1], title: a[2], dist: a[3] })) })) });
+    return [
+      wk('11 MAY', [[11], [12, [['ride', 58, 'Commute loop', '26 km']]], [13, [['gym', 42, 'Upper body', '—']]], [14, [['run', 38, 'Easy run', '7.4 km']]], [15], [16, [['ride', 164, 'Rhine flats', '74 km']]], [17, [['run', 52, 'Tempo run', '10.6 km']]]]),
+      wk('18 MAY', [[18], [19, [['run', 44, 'Easy run', '8.6 km']]], [20, [['ride', 82, 'Sweetspot 3×10', '38 km']]], [21, [['gym', 40, 'Lower body', '—']]], [22], [23, [['ride', 186, 'Taunus loop', '86 km']]], [24, [['run', 56, 'Hill repeats', '11.2 km']]]]),
+      wk('25 MAY', [[25], [26, [['ride', 64, 'Recovery spin', '30 km']]], [27, [['run', 46, 'Fartlek', '9.2 km']]], [28, [['gym', 44, 'Upper body', '—']]], [29], [30, [['ride', 212, 'Gravel — Spessart', '94 km']]], [31, [['run', 62, 'Long run', '13.4 km']]]]),
+      wk('01 JUN', [[1], [2, [['gym', 46, 'Lower body', '—']]], [3, [['ride', 88, 'Vo2 5×4min', '42 km']]], [4, [['run', 42, 'Easy run', '8.4 km']]], [5, [['ride', 66, 'Recovery spin', '31 km']]], [6], [7, [['ride', 228, 'Odenwald', '104 km']]]]),
+      wk('08 JUN', [[8], [9, [['run', 48, 'Threshold 3×10', '10.2 km']]], [10, [['ride', 92, 'Sweetspot', '44 km']]], [11, [['gym', 42, 'Upper body', '—']]], [12], [13, [['ride', 196, 'Rhine loop', '92 km']]], [14, [['run', 58, 'Long run', '12.8 km']]]]),
+      wk('15 JUN', [[15], [16, [['ride', 70, 'Commute loop', '32 km']]], [17, [['gym', 44, 'Lower body', '—']]], [18, [['ride', 108, 'Vo2 5×4min', '52 km']]], [19], [20, [['ride', 174, 'Taunus loop', '81 km']]], [21, [['run', 118, 'Long run', '24.6 km']]]]),
+      wk('22 JUN', [[22], [23, [['run', 44, 'Easy run', '8.8 km']]], [24, [['ride', 86, 'Sweetspot 3×12', '41 km']]], [25, [['gym', 40, 'Upper body', '—']]], [26], [27, [['ride', 156, 'Gravel', '68 km']]], [28, [['run', 54, 'Hill repeats', '11.4 km']]]]),
+      wk('29 JUN', [[29], [30, [['ride', 62, 'Recovery spin', '29 km']]], [1, [['gym', 46, 'Lower body', '—']]], [2, [['run', 46, 'Fartlek', '9.4 km']]], [3], [4, [['ride', 198, 'Odenwald', '92 km']]], [5, [['run', 60, 'Long run', '12.6 km']]]]),
+      { start: '06 JUL', total: '5h 48', days: [
+        { n: 6, acts: [] },
+        { n: 7, acts: [{ s: 'ride', m: 68, title: 'Commute loop', dist: '34 km' }] },
+        { n: 8, acts: [{ s: 'gym', m: 46, title: 'Upper body', dist: '—' }] },
+        { n: 9, acts: [{ s: 'run', m: 42, title: 'Easy run', dist: '8.2 km' }] },
+        { n: 10, acts: [] },
+        { n: 11, acts: [{ s: 'ride', m: 132, title: 'Rhine flats', dist: '62 km' }] },
+        { n: 12, acts: [{ s: 'run', m: 60, title: 'Tempo run', dist: '12.4 km' }] }] },
+      { start: '13 JUL', total: '7h 24', days: [
+        { n: 13, acts: [] },
+        { n: 14, acts: [{ s: 'ride', m: 94, title: 'Sweetspot 3×12', dist: '44 km' }] },
+        { n: 15, acts: [{ s: 'gym', m: 44, title: 'Lower body', dist: '—' }] },
+        { n: 16, acts: [{ s: 'run', m: 48, title: 'Easy run', dist: '9.1 km' }] },
+        { n: 17, acts: [{ s: 'ride', m: 62, title: 'Recovery spin', dist: '28 km' }] },
+        { n: 18, acts: [] },
+        { n: 19, acts: [{ s: 'ride', m: 202, title: 'Odenwald', dist: '96 km' }, { s: 'run', m: 24, title: 'Shakeout', dist: '4.6 km' }] }] },
+      { start: '20 JUL', total: '8h 02', days: [
+        { n: 20, acts: [] },
+        { n: 21, acts: [{ s: 'run', m: 52, title: 'Fartlek', dist: '10.8 km' }] },
+        { n: 22, acts: [{ s: 'ride', m: 66, title: 'Recovery spin', dist: '32 km' }] },
+        { n: 23, acts: [{ s: 'gym', m: 42, title: 'Upper body', dist: '—' }] },
+        { n: 24, acts: [] },
+        { n: 25, acts: [{ s: 'ride', m: 242, title: 'Gravel — Spessart', dist: '104 km' }] },
+        { n: 26, acts: [{ s: 'run', m: 58, title: 'Hill repeats', dist: '12.1 km' }] }] },
+      { start: '27 JUL', total: '11h 46', days: [
+        { n: 27, acts: [] },
+        { n: 28, acts: [{ s: 'gym', m: 44, title: 'Upper body', dist: '—' }] },
+        { n: 29, acts: [{ s: 'ride', m: 94, title: 'Sweetspot 3×15', dist: '46 km' }] },
+        { n: 30, acts: [{ s: 'run', m: 48, title: 'Easy run', dist: '9.4 km' }] },
+        { n: 31, acts: [{ s: 'ride', m: 124, title: 'Endurance ride', dist: '58 km' }] },
+        { n: 1, acts: [{ s: 'gym', m: 52, title: 'Lower body + core', dist: '—' }] },
+        { n: 2, acts: [{ s: 'ride', m: 281, title: 'Taunus loop', dist: '132 km' }] }] },
+      { start: '03 AUG', total: '1h 02', days: [
+        { n: 3, acts: [{ s: 'run', m: 62, title: 'Threshold intervals', dist: '14.2 km' }] },
+        { n: 4, acts: [] }, { n: 5, acts: [] }, { n: 6, acts: [] },
+        { n: 7, acts: [] }, { n: 8, acts: [] }, { n: 9, acts: [] }] }
+    ];
+  }
+
+  renderVals() {
+    const w = this.win();
+    const ctl = w.map(d => d.ctl), atl = w.map(d => d.atl), tsb = w.map(d => d.tsb);
+    const min = 20, max = 100;
+    const ctlPath = this.line(ctl, 330, 190, min, max);
+    const darkCtl = this.line(ctl, 390, 300, min, max);
+
+    const volKm = [186, 212, 164, 238, 255, 142, 268, 241, 196, 283, 231, 247];
+    const volLabels = ['21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31', '32'];
+    const volBars = volKm.map((v, i) => ({
+      h: (v / 300 * 100).toFixed(0) + '%',
+      label: volLabels[i],
+      color: i === volKm.length - 1 ? '#FF6B54' : 'rgba(23,20,15,.82)'
+    }));
+
+    const hrv = [66, 69, 64, 71, 70, 68, 73, 72, 70, 75, 71, 74, 78, 76, 73, 79, 77, 75, 80, 78];
+    const rhr = [46, 45, 47, 45, 44, 45, 44, 43, 45, 43, 44, 42, 43, 42, 44, 42, 41, 43, 42, 42];
+    const sleepH = [7.1, 6.4, 7.8, 7.4, 8.1, 6.9, 7.8];
+    const weight = [72.2, 72.0, 72.1, 71.8, 71.9, 71.6, 71.5, 71.7, 71.4, 71.4];
+
+    const filters = [
+      { key: 'all', label: 'ALL', c: '#17140F' },
+      { key: 'run', label: 'RUN', c: '#FF6B54' },
+      { key: 'ride', label: 'RIDE', c: '#124E4A' },
+      { key: 'gym', label: 'GYM', c: '#E7A82E' }
+    ].map(f => {
+      const on = this.state.sport === f.key;
+      const light = f.key === 'gym';
+      return {
+        label: f.label, bg: on ? f.c : 'transparent', fg: on ? (light ? '#17140F' : '#FAF7F2') : '#17140F',
+        border: on ? f.c : 'rgba(23,20,15,.2)',
+        dbg: on ? (f.key === 'all' || f.key === 'ride' ? '#FAF7F2' : f.c) : 'transparent',
+        dfg: on ? (f.key === 'ride' ? '#124E4A' : light || f.key === 'all' ? '#17140F' : '#FAF7F2') : 'rgba(250,247,242,.82)',
+        dborder: on ? (f.key === 'all' || f.key === 'ride' ? '#FAF7F2' : f.c) : 'rgba(250,247,242,.32)',
+        pick: () => this.setState({ sport: f.key })
+      };
+    });
+
+    const shown = this.sessions().filter(s => this.state.sport === 'all' || s.sport === this.state.sport);
+    const keyOf = s => this.state.logPeriod === 'week' ? s.week : s.month;
+    const order = [], byKey = {};
+    shown.forEach(s => { const k = keyOf(s); if (!byKey[k]) { byKey[k] = []; order.push(k); } byKey[k].push(s); });
+    const groups = order.map(k => {
+      const rows = byKey[k];
+      const km = rows.reduce((a, s) => a + (parseFloat(s.dist) || 0), 0);
+      return {
+        title: this.state.logPeriod === 'week' ? k + ' · ' + rows[0].month.slice(0, 3) : k,
+        total: km.toFixed(0) + ' km',
+        rows: rows.map(s => ({ ...s, color: this.color(s.sport) }))
+      };
+    });
+
+    const logSeries = this.state.logPeriod === 'week' ? volKm.slice(-10) : [742, 806, 691, 884, 812, 947, 858, 902, 968, 1024];
+    const logMax = Math.max(...logSeries);
+    const logBars = logSeries.map((v, i) => ({ h: (v / logMax * 100).toFixed(0) + '%', color: i === logSeries.length - 1 ? '#FF6B54' : 'rgba(250,247,242,.28)' }));
+
+    const ranges = [{ k: '6w', l: '6 WEEKS' }, { k: '3m', l: '3 MONTHS' }, { k: '1y', l: '1 YEAR' }].map(r => {
+      const on = this.state.range === r.k;
+      return {
+        label: r.l, bg: on ? '#17140F' : 'transparent', fg: on ? '#FAF7F2' : '#17140F',
+        dbg: on ? '#FAF7F2' : 'transparent', dfg: on ? '#17140F' : 'rgba(250,247,242,.65)',
+        pick: () => this.setState({ range: r.k })
+      };
+    });
+
+    const axis = { '6w': ['23 JUN', '14 JUL'], '3m': ['06 MAY', '20 JUN'], '1y': ['AUG 25', 'FEB 26'] }[this.state.range];
+
+    const calSel = this.state.calSel || '03 AUG-3';
+    const monthOf = (start, n) => (start.slice(3) === 'JUL' && n < 10) ? 'AUG' : start.slice(3);
+    const fmt = m => Math.floor(m / 60) + 'h ' + String(m % 60).padStart(2, '0');
+    const calSport = this.state.calSport || 'all';
+    const keep = a => calSport === 'all' || a.s === calSport;
+    const calFilters = [
+      { key: 'all', label: 'ALL', c: '#17140F' },
+      { key: 'run', label: 'RUN', c: '#FF6B54' },
+      { key: 'ride', label: 'RIDE', c: '#124E4A' },
+      { key: 'gym', label: 'GYM', c: '#E7A82E' }
+    ].map(f => {
+      const on = calSport === f.key;
+      return {
+        label: f.label, bg: on ? f.c : 'transparent',
+        fg: on ? (f.key === 'gym' ? '#17140F' : '#FAF7F2') : '#17140F',
+        border: on ? f.c : 'rgba(23,20,15,.2)',
+        pick: () => this.setState({ calSport: f.key })
+      };
+    });
+    const metric = this.state.calMetric || 'time';
+    const km = a => parseFloat(a.dist) || 0;
+    const cal = this.calendar().map(w => ({
+      start: w.start,
+      days: w.days.map(d => ({ n: d.n, acts: d.acts.filter(keep) }))
+    }));
+    const calMetrics = [{ k: 'time', l: 'TIME' }, { k: 'dist', l: 'KM' }].map(m => {
+      const on = metric === m.k;
+      return {
+        label: m.l, bg: on ? '#FAF7F2' : 'transparent', fg: on ? '#17140F' : 'rgba(250,247,242,.8)',
+        pick: () => this.setState({ calMetric: m.k })
+      };
+    });
+    const calRows = cal.map(w => ({
+      start: w.start,
+      total: metric === 'time'
+        ? fmt(w.days.reduce((a, d) => a + d.acts.reduce((b, x) => b + x.m, 0), 0))
+        : w.days.reduce((a, d) => a + d.acts.reduce((b, x) => b + km(x), 0), 0).toFixed(0) + ' km',
+      days: w.days.map(d => {
+        const key = w.start + '-' + d.n;
+        const on = key === calSel;
+        return {
+          n: d.n, key,
+          cellBg: on ? 'rgba(23,20,15,.07)' : 'transparent',
+          numColor: on ? '#17140F' : d.acts.length ? 'rgba(23,20,15,.75)' : 'rgba(23,20,15,.3)',
+          circles: d.acts.map(a => {
+            const v = metric === 'time' ? a.m / 281 : km(a) / 132;
+            const multi = d.acts.length > 1;
+            const px = Math.round((multi ? 15 : 24) + Math.min(1, v) * (multi ? 8 : 16));
+            const none = metric === 'dist' && km(a) === 0;
+            return {
+              size: (none ? 16 : px) + 'px',
+              color: this.color(a.s),
+              opacity: none ? 0.42 : 1,
+              label: (none || multi) ? '' : metric === 'time' ? String(a.m) : km(a).toFixed(0),
+              fs: (px > 32 ? 11 : 9.5) + 'px',
+              fg: a.s === 'ride' ? '#FAF7F2' : '#17140F'
+            };
+          }),
+          pick: () => this.setState({ calSel: key })
+        };
+      })
+    }));
+    const calMins = cal.reduce((a, w) => a + w.days.reduce((b, d) => b + d.acts.reduce((c, x) => c + x.m, 0), 0), 0);
+    let selLabel = '', selList = [];
+    cal.forEach(w => w.days.forEach(d => {
+      if (w.start + '-' + d.n === calSel) {
+        selLabel = String(d.n).padStart(2, '0') + ' ' + monthOf(w.start, d.n);
+        selList = d.acts.map(a => ({
+          title: a.title, dist: a.dist, dur: fmt(a.m),
+          color: this.color(a.s), tag: a.s.toUpperCase()
+        }));
+      }
+    }));
+
+    const iv = [
+      { flex: 3, v: 0.35 }, { flex: 2, v: 0.92 }, { flex: 0.7, v: 0.4 }, { flex: 2, v: 0.95 },
+      { flex: 0.7, v: 0.4 }, { flex: 2, v: 0.97 }, { flex: 0.7, v: 0.4 }, { flex: 2, v: 1 }, { flex: 2, v: 0.3 }
+    ];
+
+    return {
+      recent: this.sessions().slice(0, 4).map(s => ({
+        title: s.title, date: s.date, dist: s.dist, dur: s.dur, tss: s.tss,
+        color: this.color(s.sport), tag: s.sport === 'run' ? 'RUN' : s.sport === 'ride' ? 'RDE' : 'GYM'
+      })),
+      recent3: this.sessions().slice(0, 3).map(s => ({
+        title: s.title, date: s.date, dist: s.dist, dur: s.dur, tss: s.tss,
+        color: this.color(s.sport), tag: s.sport === 'run' ? 'RUN' : s.sport === 'ride' ? 'RDE' : 'GYM',
+        tagFg: s.sport === 'ride' ? '#FAF7F2' : '#17140F'
+      })),
+      homeRows: [
+        { k: 'CTL FITNESS', v: '71' }, { k: 'ATL FATIGUE', v: '67' },
+        { k: '7D LOAD · TIME', v: '524 · 8h39' }
+      ],
+      ctlPath, ctlArea: ctlPath + ' L330 190 L0 190 Z',
+      atlPath: this.line(atl, 330, 190, min, max),
+      darkCtl, darkCtlArea: darkCtl + ' L390 300 L0 300 Z',
+      darkAtl: this.line(atl, 390, 300, min, max),
+      tsbBars: this.bars(tsb.filter((_, i) => i % Math.ceil(tsb.length / 44) === 0), 330, 54),
+      volBars, logBars, groups, filters, ranges,
+      heroBars: [750, 348, 444, 482, 706].map((m, i) => ({
+        h: (m / 750 * 100).toFixed(0) + '%',
+        label: ['06', '13', '20', '27', '03'][i],
+        color: i === 4 ? '#17140F' : 'rgba(23,20,15,.28)'
+      })),
+      calRows, selLabel, selList, calFilters, calMetrics,
+      calBig: metric === 'time' ? String(Math.floor(calMins / 60)) : String(Math.round(cal.reduce((a, w) => a + w.days.reduce((b, d) => b + d.acts.reduce((c, x) => c + km(x), 0), 0), 0))),
+      calUnit: metric === 'time' ? 'h' : 'km',
+      calSmall: metric === 'time' ? String(calMins % 60).padStart(2, '0') : '',
+      calScrollRef: el => {
+        if (el && !el.__init) { el.__init = true; el.scrollTop = el.scrollHeight; }
+      },
+      calSizeNote: metric === 'time' ? 'SIZE + NUMBER = MINUTES' : 'SIZE + NUMBER = KM',
+      calSpanLabel: metric === 'time' ? 'LAST 13 WEEKS · TIME' : 'LAST 13 WEEKS · DISTANCE',
+      selEmpty: selList.length === 0,
+      selHas: selList.length > 0,
+      weekdays: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+      axisStart: axis[0], axisMid: axis[1],
+      totalLabel: this.state.logPeriod === 'week' ? 'WEEK 32 TOTAL' : 'AUGUST TOTAL',
+      totalMeta: this.state.logPeriod === 'week' ? '27 JUL – 02 AUG' : '6 SESSIONS',
+      totalKm: this.state.logPeriod === 'week' ? '247' : '1024',
+      weekBg: this.state.logPeriod === 'week' ? '#17140F' : 'transparent',
+      weekFg: this.state.logPeriod === 'week' ? '#FAF7F2' : '#17140F',
+      monthBg: this.state.logPeriod === 'month' ? '#17140F' : 'transparent',
+      monthFg: this.state.logPeriod === 'month' ? '#FAF7F2' : '#17140F',
+      setWeek: () => this.setState({ logPeriod: 'week' }),
+      setMonth: () => this.setState({ logPeriod: 'month' }),
+      wellness: [
+        { label: 'HRV', value: '78', path: this.spark(hrv, 90, 30), color: '#FF6B54' },
+        { label: 'RHR', value: '42', path: this.spark(rhr, 90, 30), color: '#124E4A' },
+        { label: 'SLEEP', value: '7.4', path: this.spark(sleepH, 90, 30), color: '#E7A82E' }
+      ],
+      wellRows: [
+        { label: 'HRV MS', value: '78', delta: '+6', deltaColor: '#FF6B54', path: this.spark(hrv, 120, 26), color: '#FF6B54' },
+        { label: 'RESTING HR', value: '42', delta: '−3', deltaColor: '#E7A82E', path: this.spark(rhr, 120, 26), color: '#E7A82E' },
+        { label: 'SLEEP HRS', value: '7.4', delta: '+0.3', deltaColor: '#FF6B54', path: this.spark(sleepH, 120, 26), color: '#FAF7F2' },
+        { label: 'WEIGHT KG', value: '71.4', delta: '−0.8', deltaColor: '#E7A82E', path: this.spark(weight, 120, 26), color: '#E7A82E' }
+      ],
+      hrvPath: this.spark(hrv, 140, 40),
+      rhrPath: this.spark(rhr, 140, 40),
+      weightPath: this.spark(weight, 180, 40),
+      sleepBars: sleepH.map((h, i) => {
+        const pct = h / 8.5 * 100;
+        return {
+          label: ['W', 'T', 'F', 'S', 'S', 'M', 'T'][i],
+          h: pct.toFixed(0) + '%',
+          awake: '8%', rem: '22%', light: '46%', deep: '24%'
+        };
+      }),
+      detailMetrics: [
+        { k: 'AVG PACE', v: '4:22 /km' }, { k: 'ELEVATION', v: '86 m' },
+        { k: 'AVG HR', v: '172 bpm' }, { k: 'MAX HR', v: '186 bpm' },
+        { k: 'CADENCE', v: '182 spm' }, { k: 'CALORIES', v: '1,014' }
+      ],
+      intervalBlocks: iv.map((b, i) => ({
+        flex: b.flex, h: (b.v * 100).toFixed(0) + '%',
+        color: b.v > 0.8 ? '#FF6B54' : 'rgba(23,20,15,.18)'
+      })),
+      intervalRows: [
+        { n: '01', dur: '8:00', pace: '3:43 /km', hr: '169 bpm' },
+        { n: '02', dur: '8:00', pace: '3:42 /km', hr: '174 bpm' },
+        { n: '03', dur: '8:00', pace: '3:41 /km', hr: '177 bpm' },
+        { n: '04', dur: '8:00', pace: '3:40 /km', hr: '181 bpm' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
