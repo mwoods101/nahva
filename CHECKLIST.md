@@ -3,7 +3,7 @@
 Gates come from `CLAUDE.md` § *Definition of done*. Tick only with evidence.
 
 Reproduce all gate evidence with:
-`pipeline/.venv/bin/python pipeline/verify.py`  → **21/21 passing** (A, B, C, JOIN)
+`pipeline/.venv/bin/python pipeline/verify.py`  → **29/29 passing** (A, B, C, JOIN, COACH)
 Front-end render checks: `cd web && npm run smoke` → **151/151 passing**
 
 ## 0 · Scaffold
@@ -72,9 +72,17 @@ Front-end render checks: `cd web && npm run smoke` → **151/151 passing**
 - [ ] Deployed to Vercel with env vars set
 
 ## COACH · Read-only role
-- [ ] Dedicated read-only Postgres role, `SELECT` on `activities` + `wellness` only
-- [ ] **Gate:** role can `SELECT`; a write attempt **fails**
-- [ ] *(human)* Supabase connected to Claude as a connector
+- [x] Dedicated read-only role `nahva_coach` — `SELECT` on `activities` +
+      `wellness` only, `NOINHERIT`, own `SELECT`-only RLS policy, default
+      privileges revoked so future tables aren't readable by accident.
+      `pipeline/setup_coach_role.py`, idempotent
+- [x] **Gate:** **8/8** — connects *as* `nahva_coach` (not inspected from the
+      admin session), reads 4,714 activities + 36 wellness rows, and
+      `INSERT` / `UPDATE` / `DELETE` / wellness `INSERT` / DDL all refused
+      with `42501 permission denied`
+- [ ] *(human)* Supabase connected to Claude as a connector — role and password
+      are ready; user is `nahva_coach.gyzbfvnnjkgehqgymzwe` on
+      `aws-1-eu-west-1.pooler.supabase.com:5432`
 
 ---
 
@@ -115,8 +123,7 @@ paths across the four ranges, so the regression can't return.
       `INTERVALS_API_KEY`, `INTERVALS_ATHLETE_ID`
 - [x] Pushed to GitHub — `mwoods101/nahva` @ `83e33f9`, 5 commits, authorship
       normalised to `m.woods101@gmail.com`
-- [ ] `COACH_DB_PASSWORD` — the 15-char value is rejected by a length guard;
-      needs ≥16 (use `secrets.token_urlsafe(32)`)
+- [x] `COACH_DB_PASSWORD` set (43 chars)
 - [ ] Vercel project link + env vars
 - [ ] Claude ↔ Supabase connector auth (read-only role)
 

@@ -34,6 +34,28 @@ ROLE = "nahva_coach"
 TABLES = ("activities", "wellness")
 
 
+def assert_no_elevated_attributes(conn) -> None:
+    """Fail the transaction if the role carries any elevated attribute.
+
+    These can't be turned off from here (supautils blocks it), so the only safe
+    posture is to refuse to proceed if they are ever set, rather than grant
+    table access to a role that can bypass RLS.
+    """
+    row = conn.run(
+        """select rolsuper, rolcreatedb, rolcreaterole, rolbypassrls, rolreplication
+           from pg_roles where rolname = :r""",
+        r=ROLE,
+    )[0]
+    names = ("superuser", "createdb", "createrole", "bypassrls", "replication")
+    elevated = [n for n, v in zip(names, row) if v]
+    if elevated:
+        raise ConfigError(
+            f"role {ROLE} has elevated attributes {elevated} — refusing to grant "
+            f"table access. Drop the role and re-run, or clear them in Supabase."
+        )
+    print(f"  attributes OK: none of {', '.join(names)}")
+
+
 def apply_role(conn, password: str) -> None:
     """Create or update the role, then grant SELECT and nothing else."""
     exists = conn.run(
@@ -46,15 +68,21 @@ def apply_role(conn, password: str) -> None:
     if "$coachpw$" in password:
         raise ConfigError("COACH_DB_PASSWORD may not contain the string $coachpw$")
 
+    # NOINHERIT so the role never picks up privileges from a granted role.
+    # NOSUPERUSER / NOCREATEDB / NOCREATEROLE / NOBYPASSRLS are deliberately NOT
+    # stated: they are already the defaults for a new role, and Supabase's
+    # supautils hook rejects naming them in ALTER ROLE with
+    #   42501 permission denied to alter role
+    # ("Only roles with the SUPERUSER attribute may alter roles with the
+    # SUPERUSER attribute"). They are asserted below instead of set.
     if exists:
         print(f"  role {ROLE} exists — updating password")
-        conn.run(f"alter role {ROLE} with login password $coachpw${password}$coachpw$")
+        conn.run(f"alter role {ROLE} with login noinherit password $coachpw${password}$coachpw$")
     else:
         print(f"  creating role {ROLE}")
-        conn.run(f"create role {ROLE} with login password $coachpw${password}$coachpw$")
+        conn.run(f"create role {ROLE} with login noinherit password $coachpw${password}$coachpw$")
 
-    # Start from nothing, so a re-run can only narrow, never silently widen.
-    conn.run(f"alter role {ROLE} with nosuperuser nocreatedb nocreaterole noinherit nobypassrls")
+    assert_no_elevated_attributes(conn)
     conn.run(f"revoke all on all tables in schema public from {ROLE}")
     conn.run(f"revoke all on all sequences in schema public from {ROLE}")
     conn.run(f"revoke all on all functions in schema public from {ROLE}")
