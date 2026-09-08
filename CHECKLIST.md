@@ -69,7 +69,14 @@ Front-end render checks: `cd web && npm run smoke` → **151/151 passing**
 - [x] **Gate:** publishable key is read-only — anon `SELECT` works, anon
       `INSERT` rejected (`42501`, HTTP 401); no write policy exists
 - [x] Numeric coercion on ingest, so `numeric` columns can't concatenate
-- [ ] Deployed to Vercel with env vars set
+- [x] Deployed to Vercel — **https://nahva-mw-oods101.vercel.app**
+      (stable production alias). `VITE_SUPABASE_URL` +
+      `VITE_SUPABASE_PUBLISHABLE_KEY` set for production/preview/development
+- [x] Git connected, `rootDirectory` set to `web` so git-triggered builds find
+      the app — a CLI deploy from inside `web/` masked this
+- [x] Deployment Protection **disabled** by decision (2026-09-08): the URL is
+      public. Vercel enables it by default, and the first deploy served
+      "Login – Vercel" behind an HTTP 200
 
 ## COACH · Read-only role
 - [x] Dedicated read-only role `nahva_coach` — `SELECT` on `activities` +
@@ -124,7 +131,7 @@ paths across the four ranges, so the regression can't return.
 - [x] Pushed to GitHub — `mwoods101/nahva` @ `83e33f9`, 5 commits, authorship
       normalised to `m.woods101@gmail.com`
 - [x] `COACH_DB_PASSWORD` set (43 chars)
-- [ ] Vercel project link + env vars
+- [x] Vercel project link + env vars
 - [ ] Claude ↔ Supabase connector auth (read-only role)
 
 ## Fixed in review (2026-09-08)
