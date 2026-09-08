@@ -188,7 +188,87 @@ def gate_join(c) -> None:
     check("JOIN", "no write policy exists for anon", not writes, str(writes))
 
 
-GATES = {"A": gate_a, "B": gate_b, "C": gate_c, "JOIN": gate_join}
+# ──────────────── Gate COACH — read-only role ────────────────
+def gate_coach(_c) -> None:
+    """Connects AS nahva_coach and proves it can read but not write.
+
+    Deliberately opens its own connection rather than reusing the admin one —
+    checking grants from a superuser session proves nothing about what the role
+    can actually do.
+    """
+    import os
+    import ssl
+    from urllib.parse import unquote, urlparse
+
+    import pg8000.native
+
+    from db import ssl_context  # noqa: PLC0415
+
+    password = os.environ.get("COACH_DB_PASSWORD", "").strip()
+    if not password:
+        check("COACH", "read-only role can SELECT", False,
+              "COACH_DB_PASSWORD not set — run pipeline/setup_coach_role.py first")
+        return
+
+    admin = urlparse(os.environ["SUPABASE_DB_URL"])
+    # Pooler usernames are <role>.<project-ref>; reuse the ref from the admin URL.
+    ref = (unquote(admin.username or "").split(".", 1) + [""])[1]
+    coach_user = f"nahva_coach.{ref}" if ref else "nahva_coach"
+
+    try:
+        conn = pg8000.native.Connection(
+            user=coach_user,
+            password=password,
+            host=admin.hostname or "",
+            port=admin.port or 5432,
+            database=(admin.path or "/postgres").lstrip("/") or "postgres",
+            ssl_context=ssl_context(),
+            timeout=30,
+        )
+    except Exception as exc:  # noqa: BLE001
+        check("COACH", "read-only role can connect", False,
+              f"{type(exc).__name__}: {str(exc)[:120]}")
+        return
+
+    try:
+        who = conn.run("select current_user")[0][0]
+        check("COACH", "connects as the coaching role", "nahva_coach" in str(who), str(who))
+
+        for table in ("activities", "wellness"):
+            try:
+                n = conn.run(f"select count(*) from public.{table}")[0][0]
+                check("COACH", f"can SELECT {table}", n is not None and n > 0, f"{n} rows")
+            except Exception as exc:  # noqa: BLE001
+                check("COACH", f"can SELECT {table}", False, f"{type(exc).__name__}")
+
+        # Every write must be refused. A pass here means the attempt FAILED.
+        writes = [
+            ("INSERT", "insert into public.activities (id, source, date, sport) "
+                       "values ('coachprobe:1','strava','2020-01-01T00:00:00Z','run')"),
+            ("UPDATE", "update public.activities set name = 'probe' where true"),
+            ("DELETE", "delete from public.activities where true"),
+            ("INSERT wellness", "insert into public.wellness (date) values ('2020-01-01')"),
+            ("DDL", "create table public.coach_probe (x int)"),
+        ]
+        for label, sql in writes:
+            try:
+                conn.run("begin")
+                conn.run(sql)
+                conn.run("rollback")
+                check("COACH", f"{label} is refused", False, "IT SUCCEEDED — role can write")
+            except Exception as exc:  # noqa: BLE001
+                try:
+                    conn.run("rollback")
+                except Exception:  # noqa: BLE001, S110
+                    pass
+                msg = str(exc)
+                denied = "permission denied" in msg or "row-level security" in msg
+                check("COACH", f"{label} is refused", denied, msg.split("\n")[0][:80])
+    finally:
+        conn.close()
+
+
+GATES = {"A": gate_a, "B": gate_b, "C": gate_c, "JOIN": gate_join, "COACH": gate_coach}
 
 
 def main() -> int:
