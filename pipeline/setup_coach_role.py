@@ -23,6 +23,7 @@ currently holds.
 from __future__ import annotations
 
 import argparse
+import os
 import sys
 from pathlib import Path
 
@@ -143,6 +144,48 @@ def report_privileges(conn) -> None:
               f"login={row[3]} bypassrls={row[4]}")
 
 
+def wait_for_pooler(password: str, attempts: int = 12, delay: float = 5.0) -> bool:
+    """Poll the pooler until it accepts the new password.
+
+    Supavisor caches role credentials, so for a few seconds after a password
+    change it still rejects both the old and the new one. Verifying immediately
+    reports 28P01 and looks like a failed rotation when it is only propagation.
+    """
+    import time
+    from urllib.parse import unquote, urlparse
+
+    import pg8000.native
+
+    from db import ssl_context
+
+    admin = urlparse(os.environ["SUPABASE_DB_URL"])
+    ref = (unquote(admin.username or "").split(".", 1) + [""])[1]
+    user = f"{ROLE}.{ref}" if ref else ROLE
+
+    for n in range(1, attempts + 1):
+        try:
+            conn = pg8000.native.Connection(
+                user=user, password=password, host=admin.hostname or "",
+                port=admin.port or 5432, database="postgres",
+                ssl_context=ssl_context(), timeout=20,
+            )
+            conn.close()
+            print(f"  pooler accepted the credentials (attempt {n})")
+            return True
+        except Exception as exc:  # noqa: BLE001
+            if "28P01" not in str(exc):
+                print(f"  pooler check failed for another reason: {str(exc)[:90]}")
+                return False
+            if n < attempts:
+                time.sleep(delay)
+
+    print(
+        f"  pooler still rejecting after {attempts * delay:.0f}s. The role and "
+        f"grants are committed; retry pipeline/verify.py COACH shortly."
+    )
+    return False
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description="Create the read-only coaching role.")
     ap.add_argument("--dry-run", action="store_true",
@@ -199,6 +242,8 @@ def main() -> int:
         conn.run("commit")
         print("\ncommitted")
         report_privileges(conn)
+        print("\nwaiting for the pooler to pick up the credentials ...")
+        wait_for_pooler(password)
     except Exception:
         conn.run("rollback")
         print("ROLLED BACK — no changes applied", file=sys.stderr)
