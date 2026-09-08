@@ -51,25 +51,82 @@ const RIDE_NAMES = [
 ];
 const GYM_NAMES = ["Strength", "Evening Weight Training", "Lower body", "Upper + core"];
 
-function buildIntervals(rand: () => number, sport: Sport, durationS: number): Interval[] | null {
-  if (sport !== "run" || durationS < 1800) return null;
-  const reps = 4;
-  const out: Interval[] = [
-    { label: "W/U", duration_s: 900, pace_s_per_km: 300, avg_hr: 128, intensity: 0.42 },
-  ];
-  for (let i = 1; i <= reps; i++) {
+/** Auto-split ~1 km laps, which is what intervals.icu actually returns for an
+ *  unstructured run: every segment type="WORK", label null, HR drifting up.
+ *  The laps SUM TO the activity's own duration — the previous version emitted a
+ *  fixed 3,780s structure for every run regardless of length, so a 36-minute
+ *  run carried a 63-minute structure. */
+function buildIntervals(
+  rand: () => number,
+  sport: Sport,
+  durationS: number,
+  distanceM: number,
+): Interval[] | null {
+  if (sport !== "run" || distanceM < 2000) return null;
+
+  const fullLaps = Math.floor(distanceM / 1000);
+  const remainderM = distanceM - fullLaps * 1000;
+  const basePace = durationS / (distanceM / 1000); // s per km
+  const out: Interval[] = [];
+
+  for (let i = 1; i <= fullLaps; i++) {
+    // Slight negative split, with HR drift across the run.
+    const drift = (i - 1) / Math.max(fullLaps - 1, 1);
+    const pace = basePace * (1.02 - drift * 0.04) * (0.995 + rand() * 0.01);
     out.push({
-      label: `${i}`,
-      duration_s: 480,
-      pace_s_per_km: 222 + Math.round(rand() * 6),
-      avg_hr: 162 + Math.round(rand() * 5),
-      intensity: 0.95,
+      n: i,
+      label: String(i),
+      type: "WORK",
+      duration_s: Math.round(pace),
+      distance_m: Math.round((998 + rand() * 5) * 10) / 10,
+      pace_s_per_km: pace,
+      avg_hr: Math.round(124 + drift * 20 + rand() * 3),
+      max_hr: Math.round(136 + drift * 20 + rand() * 4),
+      avg_power: null,
+      intensity: Math.round((0.7 + drift * 0.13) * 100) / 100,
+      zone: 1,
     });
-    if (i < reps) {
-      out.push({ label: "float", duration_s: 120, pace_s_per_km: 318, avg_hr: 141, intensity: 0.5 });
-    }
   }
-  out.push({ label: "C/D", duration_s: 600, pace_s_per_km: 330, avg_hr: 124, intensity: 0.35 });
+
+  if (remainderM > 40) {
+    const pace = basePace * 1.4;
+    out.push({
+      n: fullLaps + 1,
+      label: String(fullLaps + 1),
+      type: "WORK",
+      duration_s: Math.round((remainderM / 1000) * pace),
+      distance_m: Math.round(remainderM * 10) / 10,
+      pace_s_per_km: pace,
+      avg_hr: Math.round(138 + rand() * 4),
+      max_hr: Math.round(148 + rand() * 4),
+      avg_power: null,
+      intensity: 0.79,
+      zone: 1,
+    });
+  }
+
+  if (!out.length) return null;
+
+  // Rescale so the laps sum EXACTLY to the activity's moving time. Without this,
+  // per-lap rounding plus the drift factor drifts the total by a couple of
+  // minutes, and the structure contradicts the activity it belongs to.
+  const raw = out.reduce((s, i) => s + (i.duration_s ?? 0), 0);
+  if (raw > 0) {
+    let running = 0;
+    out.forEach((iv, idx) => {
+      if (idx === out.length - 1) {
+        iv.duration_s = Math.max(durationS - running, 1);
+      } else {
+        iv.duration_s = Math.round(((iv.duration_s ?? 0) / raw) * durationS);
+        running += iv.duration_s;
+      }
+      // Keep pace consistent with the adjusted duration.
+      if (iv.distance_m && iv.duration_s) {
+        iv.pace_s_per_km = iv.duration_s / (iv.distance_m / 1000);
+      }
+    });
+  }
+
   return out;
 }
 
@@ -79,10 +136,14 @@ function makeActivity(
   sport: Sport,
   withLoad: boolean,
   seq: number,
+  /** 0 = first session of the day, 1 = second. Drives the start time so a
+   *  same-day pair is morning + evening, never two rides two minutes apart —
+   *  which the previous random-hour version produced. */
+  slot = 0,
 ): Activity {
-  // Spread start times so a same-day commute pair reads as morning + evening
-  // rather than two sessions at the same hour.
-  const hour = sport === "gym" ? 17 : rand() < 0.5 ? 7 : 18;
+  // Gym must vary by slot too, or two gym sessions on one day both land at
+  // 17:00 and read as duplicates.
+  const hour = (sport === "gym" ? [17, 12] : [7, 18])[slot] ?? 7 + slot;
   const at = new Date(date);
   at.setUTCHours(hour, Math.floor(rand() * 55), 0, 0);
 
@@ -98,10 +159,11 @@ function makeActivity(
     avg_pace = duration_s / (distance_m / 1000);
     name = RUN_NAMES[Math.floor(rand() * RUN_NAMES.length)];
   } else if (sport === "ride") {
-    distance_m = 22000 + rand() * 78000;
+    // A second ride on the same day is a commute home, not another big loop.
+    distance_m = slot === 0 ? 22000 + rand() * 78000 : 12000 + rand() * 14000;
     duration_s = Math.round((distance_m / 1000) * (110 + rand() * 40));
     avg_power = 165 + Math.round(rand() * 70);
-    name = RIDE_NAMES[Math.floor(rand() * RIDE_NAMES.length)];
+    name = slot === 0 ? RIDE_NAMES[Math.floor(rand() * RIDE_NAMES.length)] : "Commute";
   } else if (sport === "gym") {
     distance_m = 0;
     duration_s = 1800 + Math.round(rand() * 2400);
@@ -131,7 +193,7 @@ function makeActivity(
     max_hr: sport === "gym" ? null : 158 + Math.round(rand() * 22),
     avg_power,
     avg_pace_s_per_km: avg_pace,
-    intervals: buildIntervals(rand, sport, duration_s),
+    intervals: buildIntervals(rand, sport, duration_s, distance_m ?? 0),
   };
 }
 
@@ -151,7 +213,7 @@ function buildActivities(): Activity[] {
     for (let n = 0; n < count; n++) {
       const s = rand();
       const sport: Sport = s < 0.62 ? "ride" : s < 0.85 ? "run" : s < 0.96 ? "gym" : "other";
-      out.push(makeActivity(rand, d, sport, false, seq++));
+      out.push(makeActivity(rand, d, sport, false, seq++, n));
     }
   }
 
@@ -190,9 +252,6 @@ function buildWellness(activities: Activity[]): Wellness[] {
     atl = atl + (load - atl) / 7;
 
     const sleep = 4.6 + rand() * 4.8;
-    const rem = sleep * (0.16 + rand() * 0.07);
-    const deep = sleep * (0.12 + rand() * 0.06);
-    const awake = sleep * (0.04 + rand() * 0.05);
 
     out.push({
       date: day,
@@ -202,12 +261,8 @@ function buildWellness(activities: Activity[]): Wellness[] {
       resting_hr: 43 + Math.round(rand() * 15),
       hrv: 26 + Math.round(rand() * 70),
       sleep_hours: Math.round(sleep * 100) / 100,
-      sleep_stages: {
-        awake_h: Math.round(awake * 100) / 100,
-        rem_h: Math.round(rem * 100) / 100,
-        deep_h: Math.round(deep * 100) / 100,
-        light_h: Math.round((sleep - rem - deep - awake) * 100) / 100,
-      },
+      // No stage breakdown exists in the live source, so none is invented here.
+      sleep_stages: null,
       // NULL in production: the API returns readiness as null on every row and
       // has no bodyBattery field. Kept null here so the views are forced to
       // handle absence rather than being tuned to numbers that never arrive.
@@ -236,6 +291,8 @@ export function loadMockDataset(): Dataset {
           to: withLoad[withLoad.length - 1].date.slice(0, 10),
         }
       : null,
+    origin: "mock",
+    today: TODAY,
   };
 }
 

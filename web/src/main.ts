@@ -1,14 +1,14 @@
 /** Nahva front-end shell.
  *
  *  Three tabs (card 2c: nav pattern A — ink bar, coral rule), with Activity
- *  detail as a pushed view. Body is folded into Home per card 2a, so there is
- *  no separate Recovery tab.
+ *  detail as a pushed view. Body is folded into Home per card 2a.
  *
- *  State lives here; each view is a pure render(state) -> HTML string. That
- *  keeps the JOIN phase to swapping loadMockDataset() for a Supabase query. */
+ *  The mockup's fake status bar ("9:41 · 5G · 82%") is not reproduced — that is
+ *  design-canvas furniture, and a real app shows the device's own.
+ */
 
 import "./app.css";
-import { loadMockDataset } from "./mock";
+import { isLiveConfigured, loadDataset } from "./data";
 import type { Dataset } from "./types";
 import { renderHome } from "./views/home";
 import { defaultLogState, renderLog, type Filter, type LogState, type Metric } from "./views/log";
@@ -21,7 +21,6 @@ type Tab = "home" | "log" | "fitness";
 
 interface AppState {
   tab: Tab;
-  /** When set, the activity detail is shown over the current tab. */
   activityId: string | null;
   log: LogState;
   progression: ProgressionState;
@@ -33,8 +32,6 @@ const TABS: { key: Tab; label: string }[] = [
   { key: "fitness", label: "FITNESS" },
 ];
 
-const dataset: Dataset = loadMockDataset();
-
 const state: AppState = {
   tab: "home",
   activityId: null,
@@ -42,11 +39,13 @@ const state: AppState = {
   progression: defaultProgressionState(),
 };
 
+let dataset: Dataset | null = null;
+let loadError: string | null = null;
+
 const root = document.querySelector<HTMLDivElement>("#app");
 if (!root) throw new Error("#app not found");
 
-/** Hash routing: #home | #log | #fitness | #activity/<id>.
- *  Gives the tabs real deep links, and survives a reload. */
+/** Hash routing: #home | #log | #fitness | #activity/<id>. */
 function readHash(): void {
   const hash = window.location.hash.replace(/^#/, "");
   if (!hash) return;
@@ -61,10 +60,10 @@ function readHash(): void {
 }
 
 function writeHash(): void {
-  const next = state.activityId ? `#activity/${encodeURIComponent(state.activityId)}` : `#${state.tab}`;
-  if (window.location.hash !== next) {
-    history.replaceState(null, "", next);
-  }
+  const next = state.activityId
+    ? `#activity/${encodeURIComponent(state.activityId)}`
+    : `#${state.tab}`;
+  if (window.location.hash !== next) history.replaceState(null, "", next);
 }
 
 function tabbar(): string {
@@ -78,7 +77,37 @@ function tabbar(): string {
   </nav>`;
 }
 
+/** Never leave it ambiguous whether a number on screen is real. */
+function originBanner(ds: Dataset): string {
+  if (ds.origin === "live") return "";
+  return `<div class="banner">
+    <span class="banner__tag">MOCK DATA</span>
+    <span>Not your training history. Set VITE_SUPABASE_URL and
+    VITE_SUPABASE_PUBLISHABLE_KEY in web/.env.local to read Supabase.</span>
+  </div>`;
+}
+
 function render(): void {
+  if (loadError) {
+    root!.innerHTML =
+      `<div class="page-title"><div class="page-title__h">Can't load data</div></div>
+       <div class="banner banner--error"><span class="banner__tag">ERROR</span><span>${loadError}</span></div>
+       <div class="cal__empty">${
+         isLiveConfigured()
+           ? "Supabase is configured but unreachable. Check the URL and publishable key."
+           : "No Supabase config found, and the mock fixture failed to build."
+       }</div>` + tabbar();
+    return;
+  }
+
+  if (!dataset) {
+    root!.innerHTML = `<div class="page-title">
+      <div class="page-title__h">Nahva</div>
+      <div class="page-title__sub">LOADING…</div>
+    </div>`;
+    return;
+  }
+
   let body: string;
   if (state.activityId) {
     body = renderActivity(dataset, state.activityId);
@@ -90,7 +119,7 @@ function render(): void {
     body = renderProgression(dataset, state.progression);
   }
 
-  root!.innerHTML = body + tabbar();
+  root!.innerHTML = originBanner(dataset) + body + tabbar();
   writeHash();
 
   // Keep the calendar scrolled to the most recent week.
@@ -98,10 +127,14 @@ function render(): void {
   if (scroller) scroller.scrollTop = scroller.scrollHeight;
 }
 
-/** One delegated listener for the whole app. */
+/** One delegated listener for the whole app. closest() resolves the innermost
+ *  match, so a dot inside a day cell opens the activity rather than selecting
+ *  the day. */
 root.addEventListener("click", (event) => {
-  const el = (event.target as HTMLElement).closest<HTMLElement>("[data-tab],[data-activity],[data-back],[data-metric],[data-filter],[data-range],[data-day]");
-  if (!el) return;
+  const el = (event.target as HTMLElement).closest<HTMLElement>(
+    "[data-tab],[data-activity],[data-back],[data-metric],[data-filter],[data-range],[data-day]",
+  );
+  if (!el || el.getAttribute("aria-disabled") === "true") return;
 
   if (el.dataset.tab) {
     state.tab = el.dataset.tab as Tab;
@@ -132,3 +165,13 @@ window.addEventListener("hashchange", () => {
 
 readHash();
 render();
+
+loadDataset()
+  .then((ds) => {
+    dataset = ds;
+    render();
+  })
+  .catch((err: unknown) => {
+    loadError = err instanceof Error ? err.message : String(err);
+    render();
+  });

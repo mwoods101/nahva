@@ -134,7 +134,61 @@ def gate_c(c) -> None:
           f"{strava} strava rows remain of 4690 imported")
 
 
-GATES = {"A": gate_a, "B": gate_b, "C": gate_c}
+# ──────────────── Gate JOIN — front-end reads live data ────────────────
+def gate_join(c) -> None:
+    """Reconciles a weekly volume total against a manual sum from the CSV.
+
+    The manual sum is computed here from raw column positions, with no pipeline
+    code involved, so this is an independent check rather than a restatement of
+    the import.
+    """
+    import csv
+    import datetime as dt
+
+    csv_path = Path(__file__).resolve().parent / "data" / "activities.csv"
+    if not csv_path.exists():
+        check("JOIN", "weekly volume reconciles against the CSV", False,
+              f"{csv_path} not present (gitignored) — run this locally")
+        return
+
+    week_start, week_end = dt.date(2026, 7, 20), dt.date(2026, 7, 26)
+    COL_DATE, COL_MOVING, COL_DIST_M = 1, 16, 17
+
+    n = 0
+    seconds = 0.0
+    metres = 0.0
+    with csv_path.open(newline="", encoding="utf-8-sig") as fh:
+        reader = csv.reader(fh)
+        next(reader)
+        for row in reader:
+            day = dt.datetime.strptime(row[COL_DATE], "%b %d, %Y, %I:%M:%S %p").date()
+            if week_start <= day <= week_end:
+                n += 1
+                seconds += float(row[COL_MOVING] or 0)
+                metres += float(row[COL_DIST_M] or 0)
+
+    db = c.run("""select count(*), sum(duration_s), sum(distance_m)
+                  from public.activities
+                  where (date at time zone 'Europe/London')::date between :a and :b""",
+               a=week_start.isoformat(), b=week_end.isoformat())[0]
+
+    check("JOIN", "week activity count reconciles", n == db[0], f"csv={n} db={db[0]}")
+    check("JOIN", "week moving time reconciles", abs(seconds - float(db[1])) < 0.5,
+          f"csv={seconds:.0f}s db={db[1]}s")
+    check("JOIN", "week distance reconciles", abs(metres - float(db[2])) < 0.5,
+          f"csv={metres:.1f}m db={float(db[2]):.1f}m")
+
+    # The front-end reads with the publishable key, so anon must be able to
+    # SELECT and must not be able to write.
+    policies = c.run("""select tablename, cmd, roles::text from pg_policies
+                        where schemaname='public' order by tablename""")
+    reads = [p for p in policies if p[1] == "SELECT" and "anon" in p[2]]
+    writes = [p for p in policies if p[1] != "SELECT"]
+    check("JOIN", "anon can SELECT both tables", len(reads) == 2, str(reads))
+    check("JOIN", "no write policy exists for anon", not writes, str(writes))
+
+
+GATES = {"A": gate_a, "B": gate_b, "C": gate_c, "JOIN": gate_join}
 
 
 def main() -> int:

@@ -82,6 +82,45 @@ def api_get(path: str, params: dict | None = None) -> object:
     return resp.json()
 
 
+# ───────────────────────── interval structure ─────────────────────────
+#
+# GET /activity/{id}/intervals returns 84 fields per interval in intervals.icu's
+# own vocabulary. Storing that raw is what broke the front-end: it expects
+# duration_s/avg_hr/pace, gets moving_time/average_heartrate/average_speed, and
+# `intensity` is a PERCENTAGE (72) not a 0..1 fraction, so intensity-scaled bars
+# rendered 7200% tall.
+#
+# Normalise here so the database holds one documented shape and every consumer
+# reads the same thing. Note what this data actually is: for an unstructured run
+# intervals.icu auto-splits into ~1 km laps, all type='WORK' with label=null —
+# there is no rep/recovery structure to recover.
+
+def normalise_intervals(raw: list[dict]) -> list[dict]:
+    out = []
+    for n, iv in enumerate(raw, start=1):
+        speed = iv.get("average_speed")  # m/s
+        duration = iv.get("moving_time") or iv.get("elapsed_time")
+        intensity = iv.get("intensity")
+        out.append({
+            "n": n,
+            # intervals.icu leaves `label` null on auto-split laps; `type` is the
+            # only structural marker it gives us ('WORK' / 'RECOVERY').
+            "label": iv.get("label") or str(n),
+            "type": iv.get("type"),
+            "duration_s": duration,
+            "distance_m": iv.get("distance"),
+            # m/s -> seconds per km. Guard against zero-speed segments.
+            "pace_s_per_km": (1000.0 / speed) if speed else None,
+            "avg_hr": iv.get("average_heartrate"),
+            "max_hr": iv.get("max_heartrate"),
+            "avg_power": iv.get("average_watts"),
+            # percentage -> 0..1 fraction, clamped.
+            "intensity": min(max(intensity / 100.0, 0.0), 1.5) if intensity is not None else None,
+            "zone": iv.get("zone"),
+        })
+    return out
+
+
 # ───────────────────────────── activities ─────────────────────────────
 
 ACT_FIELDS = [
@@ -324,7 +363,7 @@ def main() -> int:
             try:
                 d = api_get(f"/activity/{a['id']}/intervals")
                 if isinstance(d, dict) and d.get("icu_intervals"):
-                    structures[a["id"]] = d["icu_intervals"]
+                    structures[a["id"]] = normalise_intervals(d["icu_intervals"])
             except Exception as exc:  # noqa: BLE001
                 print(f"  warn: intervals for {a['id']}: {exc}")
         print(f"fetched interval structure for {len(structures)} activities")

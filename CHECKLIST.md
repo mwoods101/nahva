@@ -3,7 +3,8 @@
 Gates come from `CLAUDE.md` § *Definition of done*. Tick only with evidence.
 
 Reproduce all gate evidence with:
-`pipeline/.venv/bin/python pipeline/verify.py A B C`  → **16/16 passing**
+`pipeline/.venv/bin/python pipeline/verify.py`  → **21/21 passing** (A, B, C, JOIN)
+Front-end render checks: `cd web && npm run smoke` → **151/151 passing**
 
 ## 0 · Scaffold
 - [x] `/web`, `/pipeline`, `/supabase/migrations`, `/.github/workflows` created
@@ -39,7 +40,7 @@ Reproduce all gate evidence with:
 - [x] Workflow written — `.github/workflows/sync.yml`, daily 06:30 UTC + manual dispatch
 - [ ] **Action unproven** — needs GitHub Secrets (see *Blocked on human*)
 
-## D · Front-end  *(`/web`, mock data)*
+## D · Front-end  *(`/web`)*
 - [x] Design imported via `claude-design` MCP — project `4a37c4d9…`
       ("Mobile app layout exploration"), files `Freischwimmer.dc.html` + `support.js`,
       kept as provenance in `web/.design-src/`
@@ -47,16 +48,23 @@ Reproduce all gate evidence with:
       Activity detail (1g). **No Recovery tab** — card 2a folds Body into Home
 - [x] Nav per card 2c: pattern A, ink tab bar, coral rule, **three** tabs
 - [x] **Gate:** builds — `npm run build` (tsc --noEmit + vite) clean
-- [x] **Gate:** renders all views on mock data — `npm run smoke`, **130/130**
-      assertions, plus headless screenshots of all three tabs
+- [x] **Gate:** renders all views — `npm run smoke`, **151/151** assertions,
+      plus headless screenshots of all three tabs on live data
 - [x] **Gate:** matches tokens — `src/tokens.css` transcribed from card 2d;
       smoke test **fails on any raw hex** in a view, so drift is caught
 - [x] Interactions live: TIME/KM toggle, sport filter, day selection, PMC range tabs
 - [x] Hash routes: `#home`, `#log`, `#fitness`, `#activity/<id>`
 
 ## JOIN · Wire front-end to live Supabase
-- [ ] Mock data replaced with live queries in every view
-- [ ] **Gate:** weekly volume total reconciles against a manual CSV sum
+- [x] Mock data replaced with live queries — `web/src/data.ts` reads PostgREST
+      with the publishable key; `loadMockDataset()` remains only as an offline
+      fallback, and the UI shows a MOCK DATA banner when it is in use
+- [x] **Gate:** weekly volume reconciles against a manual CSV sum —
+      week 2026-07-20..26: count 4=4, moving 10436s=10436s, distance
+      31517.5m=31517.5m, **exact on all three**
+- [x] **Gate:** publishable key is read-only — anon `SELECT` works, anon
+      `INSERT` rejected (`42501`, HTTP 401); no write policy exists
+- [x] Numeric coercion on ingest, so `numeric` columns can't concatenate
 - [ ] Deployed to Vercel with env vars set
 
 ## COACH · Read-only role
@@ -85,13 +93,16 @@ time**, not as a historical record:
   short axis, no implied long-term trend, and an empty/partial state that reads
   as "building" rather than broken.
 
-**Handled in D.** `web/src/views/progression.ts` clamps the PMC to actual load
-coverage — a 1Y range never stretches 5 weeks across a year — labels the axis
-"N DAYS OF LOAD", and carries a permanent *FITNESS CURVE · BUILDING* panel
-stating the coverage in days against the volume span in years. `web/src/mock.ts`
-mirrors the real shape (23 of 4,611 activities carry load; 34 days of CTL;
-readiness and body_battery null throughout), so the views are exercised against
-production conditions rather than tuned to numbers that never arrive.
+**Handled.** `web/src/views/progression.ts` plots the PMC across the whole
+selected range with the curve occupying only the days that have load, marks the
+empty stretch *NO LOAD DATA*, labels the axis with actual coverage
+("36 OF 43 DAYS · 84%"), and carries a permanent *FITNESS CURVE · BUILDING*
+panel stating coverage in days against the volume span in years.
+
+An earlier version instead *clamped* the chart to load coverage. That made
+6W/3M/1Y/ALL produce a byte-identical path, so the range pills looked broken —
+reported in review 2026-09-08. `web/test/smoke.ts` now asserts four distinct CTL
+paths across the four ranges, so the regression can't return.
 
 ## Blocked on human
 - [x] Session-pooler `SUPABASE_DB_URL` — set, `aws-1-eu-west-1.pooler.supabase.com:5432`,
@@ -102,10 +113,39 @@ production conditions rather than tuned to numbers that never arrive.
 - [ ] Vercel project link + env vars
 - [ ] Claude ↔ Supabase connector auth (read-only role)
 
+## Fixed in review (2026-09-08)
+Reported after first running the app; all had genuine causes.
+- **Interval structure contradicted its activity.** Every mock run carried an
+  identical 3,780s structure, so a 36-minute run showed a 63-minute workout.
+  Laps now sum exactly to the activity's moving time (smoke: worst delta 0s).
+- **C and D disagreed on interval shape.** The sync stored intervals.icu's raw
+  84-field payload (`moving_time`, `average_heartrate`, `intensity` as a
+  percentage); the front-end expected `duration_s`/`avg_hr`/0–1 `intensity`, so
+  bars would have rendered 7200% tall. `normalise_intervals()` now writes one
+  documented shape and the backfill was re-run.
+- **"4 × 8min @ threshold" was invented.** intervals.icu auto-splits an
+  unstructured run into ~1 km laps, all `type=WORK` with null labels. The view
+  now describes what the segments are and says they aren't a planned workout.
+- **Range pills looked dead** — see the PMC note above.
+- **`290k` read as 290,000.** Weekly km totals now carry explicit units.
+- **Calendar dots weren't tappable.** Day cells are divs, dots are buttons, and
+  delegation resolves innermost-first, so a dot opens the activity.
+- **Implausible mock pairs** — two 60km+ rides minutes apart. A same-day second
+  ride is now a shorter commute at a different hour.
+- **HRV/RHR showed "—".** Today's wellness row has ctl/atl before Garmin pushes
+  hrv/restingHR, and every field was read off that one row. `web/src/wellness.ts`
+  resolves each metric to its most recent non-null value and dates it when stale.
+- **Fake status bar removed** — "9:41 · 5G · 82%" is design-canvas furniture.
+
 ## Known deviations
 - **`form` is computed as `ctl - atl`.** The API returns no `form` and no `tsb`
   field on any row (verified across all 46 wellness keys). CTL and ATL are pulled
   verbatim. Approved 2026-09-07.
+- **Readiness, body battery and sleep stages are not shown.** No data source:
+  intervals.icu returns no `bodyBattery` field, `readiness` is null on all 36
+  rows, and there is no stage breakdown, only `sleepSecs`. Card 2a's readiness
+  tile and body-battery block are dropped and the sleep chart shows total hours;
+  those slots now carry HRV, RHR and sleep hours. Approved 2026-09-08.
 - **TLS:** `SUPABASE_DB_SSLMODE=require` — encrypted but unverified. Supabase's
   Root 2021 CA is committed at `pipeline/certs/prod-ca-2021.crt` and `db.py`
   prefers it, but OpenSSL 3 rejects it for lacking a `keyUsage` extension.

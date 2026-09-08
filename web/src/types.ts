@@ -30,14 +30,27 @@ export interface Activity {
   intervals: Interval[] | null;
 }
 
+/** Normalised by pipeline/intervals_sync.py:normalise_intervals().
+ *
+ *  Note what this data usually IS: for an unstructured run, intervals.icu
+ *  auto-splits into ~1 km laps, every one `type: "WORK"` with a null label.
+ *  There is generally no rep/recovery structure to recover, so the UI must
+ *  render segments generically rather than assume a workout shape. */
 export interface Interval {
+  n: number;
   label: string;
-  duration_s: number;
-  /** seconds per km */
+  /** intervals.icu's only structural marker: "WORK" | "RECOVERY" | null. */
+  type: string | null;
+  duration_s: number | null;
+  distance_m: number | null;
+  /** seconds per km, derived from average_speed (m/s) */
   pace_s_per_km: number | null;
   avg_hr: number | null;
-  /** Relative intensity 0..1, used for the block diagram height. */
-  intensity: number;
+  max_hr: number | null;
+  avg_power: number | null;
+  /** 0..1 fraction. The API sends a percentage; the sync divides by 100. */
+  intensity: number | null;
+  zone: number | null;
 }
 
 export interface Wellness {
@@ -50,22 +63,22 @@ export interface Wellness {
   resting_hr: number | null;
   hrv: number | null;
   sleep_hours: number | null;
-  sleep_stages: SleepStages | null;
-  /** Garmin Training Readiness. NULL in practice — nullable by design. */
-  readiness: number | null;
-  /** Garmin Body Battery. Not returned by the API at all. */
-  body_battery: number | null;
   weight_kg: number | null;
+
+  /* The columns below exist in Postgres but are EMPTY in practice, verified
+   * against all 36 live rows. They are not rendered anywhere — see
+   * web/README.md § "Metrics with no data source".
+   *   sleep_stages  intervals.icu returns no stage breakdown, only sleepSecs
+   *   readiness     key exists, null on every row
+   *   body_battery  field is not returned by the API at all
+   * They stay in the type as a record of the schema, so that if a source ever
+   * appears the gap is already named. */
+  sleep_stages: null;
+  readiness: number | null;
+  body_battery: number | null;
 }
 
-export interface SleepStages {
-  awake_h: number;
-  rem_h: number;
-  light_h: number;
-  deep_h: number;
-}
-
-/** What every view reads. A live implementation returns the same thing. */
+/** What every view reads. Mock and live both produce this. */
 export interface Dataset {
   activities: Activity[];
   wellness: Wellness[];
@@ -73,4 +86,8 @@ export interface Dataset {
   volumeRange: { from: string; to: string };
   /** Inclusive bounds of load/CTL coverage — much shallower than volume. */
   loadRange: { from: string; to: string } | null;
+  /** Where this came from, so the UI can say so. */
+  origin: "live" | "mock";
+  /** The "now" the views should reckon from. Live = real clock. */
+  today: Date;
 }

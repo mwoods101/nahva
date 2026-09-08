@@ -1,22 +1,20 @@
 /** Progression — card 1d. PMC with coral CTL as hero, petrol ATL, TSB as a
  *  centred ochre strip. Range tabs are live.
  *
- *  IMPORTANT (CHECKLIST.md § Data depth): CTL/ATL cover only the intervals.icu
- *  window — about 5 weeks — while volume runs 13 years. This view must read as
- *  BUILDING and must not imply a long-term fitness trend:
- *
- *    - the PMC x-axis is clamped to actual load coverage and labelled with it,
- *      so a "1Y" range never stretches 5 weeks of data across a year;
- *    - a persistent notice states the coverage in plain terms;
- *    - the volume chart, which genuinely has depth, honours the range fully.
+ *  The PMC is plotted across the WHOLE selected range, with the curve occupying
+ *  only the days that actually have load. Earlier this chart was clamped to
+ *  load coverage, which meant 6W/3M/1Y/ALL produced a byte-identical path — the
+ *  pills looked broken. Plotting on the real timeline fixes that and states the
+ *  problem better: on 1Y you see ~5 weeks of curve against 47 weeks of nothing,
+ *  which is exactly the situation.
  */
 
 import { areaPath, gridlines, linePath, sparkline, tsbBars } from "../charts";
 import {
   addDays, duration, isoDay, km, round, shortDate, signed, sportColor, weekStart,
 } from "../format";
-import { TODAY } from "../mock";
-import type { Dataset, Sport, Wellness } from "../types";
+import { latest, series } from "../wellness";
+import type { Dataset, Sport } from "../types";
 
 export type Range = "6w" | "3m" | "1y" | "all";
 
@@ -39,34 +37,46 @@ const PMC = { w: 330, h: 190, pad: 8 };
 const TSB = { w: 330, h: 54 };
 
 export function renderProgression(dataset: Dataset, state: ProgressionState): string {
+  const today = dataset.today;
   const range = RANGES.find((r) => r.key === state.range) ?? RANGES[0];
-  const from = range.days === null
-    ? new Date(dataset.volumeRange.from)
-    : addDays(TODAY, -range.days);
+  const from =
+    range.days === null ? new Date(dataset.volumeRange.from) : addDays(today, -range.days);
 
-  // ── PMC: only rows that actually carry CTL. Never padded to fill the range.
-  const loaded: Wellness[] = dataset.wellness.filter((w) => w.ctl !== null);
-  const pmcRows = loaded.filter((w) => new Date(w.date).getTime() >= from.getTime());
-  const ctl = pmcRows.map((w) => w.ctl);
-  const atl = pmcRows.map((w) => w.atl);
-  const form = pmcRows.map((w) => w.form);
+  // Daily series across the entire range, null where no wellness row exists.
+  // The x position of every point reflects its true place on the timeline.
+  const byDate = new Map(dataset.wellness.map((w) => [w.date, w]));
+  const ctl: (number | null)[] = [];
+  const atl: (number | null)[] = [];
+  const form: (number | null)[] = [];
+  const days: string[] = [];
+  for (let d = new Date(from); d <= today; d = addDays(d, 1)) {
+    const key = isoDay(d);
+    const w = byDate.get(key);
+    days.push(key);
+    ctl.push(w?.ctl ?? null);
+    atl.push(w?.atl ?? null);
+    form.push(w?.form ?? null);
+  }
 
-  // Shared scale so CTL and ATL are visually comparable.
+  const present = ctl.filter((v): v is number => v !== null);
   const all = [...ctl, ...atl].filter((v): v is number => v !== null);
   const lo = Math.min(...all, 0);
   const hi = Math.max(...all, 1);
 
-  const latest = pmcRows[pmcRows.length - 1];
-  const coverageDays = loaded.length;
+  const loaded = dataset.wellness.filter((w) => w.ctl !== null);
+  const latest = loaded[loaded.length - 1] ?? null;
   const coverageFrom = loaded[0]?.date;
   const coverageTo = loaded[loaded.length - 1]?.date;
 
-  // Does the selected range extend beyond what load data can fill?
-  const rangeDays = range.days ?? daysBetween(new Date(dataset.volumeRange.from), TODAY);
-  const partial = coverageDays < rangeDays * 0.9;
+  // What fraction of the selected range actually has load behind it?
+  const covered = present.length;
+  const spanDays = days.length;
+  const pct = spanDays ? Math.round((covered / spanDays) * 100) : 0;
+  // Where the curve starts, as a fraction across the chart — for the marker.
+  const startIdx = ctl.findIndex((v) => v !== null);
+  const startPct = startIdx > 0 && spanDays > 1 ? (startIdx / (spanDays - 1)) * 100 : 0;
 
   return `
-  <div class="statusbar"><span>9:41</span><span>5G · 82%</span></div>
   <div class="page-title">
     <div class="page-title__h">Progression</div>
     <div class="page-title__sub">FITNESS · FATIGUE · FORM</div>
@@ -87,16 +97,26 @@ export function renderProgression(dataset: Dataset, state: ProgressionState): st
     </div>
 
     ${
-      pmcRows.length >= 2
-        ? `<svg viewBox="0 0 ${PMC.w} ${PMC.h}" width="100%" height="158" preserveAspectRatio="none">
-            ${gridlines(PMC)}
-            <path d="${areaPath(ctl, PMC, lo, hi)}" fill="var(--coral-wash)"></path>
-            <path d="${linePath(atl, PMC, lo, hi)}" fill="none" stroke="var(--petrol)" stroke-width="1.6" stroke-linejoin="round"></path>
-            <path d="${linePath(ctl, PMC, lo, hi)}" fill="none" stroke="var(--coral)" stroke-width="3" stroke-linejoin="round"></path>
-          </svg>
+      covered >= 2
+        ? `<div style="position:relative">
+            <svg viewBox="0 0 ${PMC.w} ${PMC.h}" width="100%" height="158" preserveAspectRatio="none">
+              ${gridlines(PMC)}
+              <path d="${areaPath(ctl, PMC, lo, hi)}" fill="var(--coral-wash)"></path>
+              <path d="${linePath(atl, PMC, lo, hi)}" fill="none" stroke="var(--petrol)" stroke-width="1.6" stroke-linejoin="round"></path>
+              <path d="${linePath(ctl, PMC, lo, hi)}" fill="none" stroke="var(--coral)" stroke-width="3" stroke-linejoin="round"></path>
+            </svg>
+            ${
+              startPct > 4
+                ? `<div style="position:absolute;top:0;bottom:0;left:0;width:${startPct.toFixed(1)}%;
+                     border-right:1.5px dashed var(--hairline);pointer-events:none"></div>
+                   <div class="mono" style="position:absolute;top:4px;left:6px;font-size:8.5px;
+                     letter-spacing:.1em;opacity:.4;max-width:${Math.max(startPct - 4, 10).toFixed(1)}%">NO LOAD DATA</div>`
+                : ""
+            }
+          </div>
           <div class="chart__axis">
-            <span>${coverageFrom ? shortDate(coverageFrom) : ""}</span>
-            <span>${pmcRows.length} DAYS OF LOAD</span>
+            <span>${shortDate(days[0])}</span>
+            <span>${covered} OF ${spanDays} DAYS · ${pct}%</span>
             <span>TODAY</span>
           </div>`
         : `<div class="cal__empty" style="margin:0">NOT ENOUGH LOAD DATA IN THIS RANGE</div>`
@@ -116,9 +136,9 @@ export function renderProgression(dataset: Dataset, state: ProgressionState): st
     </div>
   </div>
 
-  ${buildingNotice(coverageDays, coverageFrom, coverageTo, dataset, partial, range.label)}
+  ${buildingNotice(covered, coverageFrom, coverageTo, dataset, pct, range.label)}
 
-  ${volumeCard(dataset, from, range.key)}
+  ${volumeCard(dataset, from)}
 
   ${wellnessTrio(dataset)}
   <div class="spacer"></div>`;
@@ -130,7 +150,7 @@ function buildingNotice(
   from: string | undefined,
   to: string | undefined,
   dataset: Dataset,
-  partial: boolean,
+  pct: number,
   rangeLabel: string,
 ): string {
   const volumeYears = (
@@ -143,22 +163,21 @@ function buildingNotice(
       <div class="building__title">FITNESS CURVE · BUILDING</div>
       <div class="building__body">
         CTL/ATL exist for <strong>${days} days</strong>${from && to ? ` (${shortDate(from)} – ${shortDate(to)})` : ""},
-        because training load only arrives from intervals.icu. Volume goes back
+        because training load only arrives from intervals.icu — it covers
+        <strong>${pct}%</strong> of the ${rangeLabel} range. Volume goes back
         <strong>${volumeYears} years</strong>.
-        ${partial ? `The ${rangeLabel} range is longer than the load history, so the curve above covers only the days that have data — it is not stretched to fill the range.` : ""}
         Read this as a curve that fills in over time, not a long-term trend.
       </div>
     </div>
   </div>`;
 }
 
-function volumeCard(dataset: Dataset, from: Date, rangeKey: Range): string {
-  // Weekly volume buckets. Volume has real depth, so the full range applies.
-  const weeks: { start: Date; seconds: number; metres: number; dominant: Sport }[] = [];
+function volumeCard(dataset: Dataset, from: Date): string {
+  const buckets: { start: Date; seconds: number; metres: number; dominant: Sport }[] = [];
   const firstWeek = weekStart(from);
-  const lastWeek = weekStart(TODAY);
+  const lastWeek = weekStart(dataset.today);
   const totalWeeks = Math.round(daysBetween(firstWeek, lastWeek) / 7) + 1;
-  // Cap the bar count so a multi-year range stays legible; bucket by month past 26 weeks.
+  // Cap the bar count so a multi-year range stays legible.
   const stride = totalWeeks > 26 ? Math.ceil(totalWeeks / 26) : 1;
 
   for (let i = 0; i < totalWeeks; i += stride) {
@@ -170,9 +189,8 @@ function volumeCard(dataset: Dataset, from: Date, rangeKey: Range): string {
     });
     const bySport = new Map<Sport, number>();
     for (const a of acts) bySport.set(a.sport, (bySport.get(a.sport) ?? 0) + (a.duration_s ?? 0));
-    const dominant =
-      [...bySport.entries()].sort((x, y) => y[1] - x[1])[0]?.[0] ?? "other";
-    weeks.push({
+    const dominant = [...bySport.entries()].sort((x, y) => y[1] - x[1])[0]?.[0] ?? "other";
+    buckets.push({
       start,
       seconds: acts.reduce((acc, a) => acc + (a.duration_s ?? 0), 0),
       metres: acts.reduce((acc, a) => acc + (a.distance_m ?? 0), 0),
@@ -180,43 +198,51 @@ function volumeCard(dataset: Dataset, from: Date, rangeKey: Range): string {
     });
   }
 
-  const peak = Math.max(...weeks.map((w) => w.seconds), 1);
-  const mean = weeks.reduce((a, w) => a + w.seconds, 0) / (weeks.length || 1);
-  const unitNote = stride > 1 ? `${stride}-WEEK BUCKETS` : "WEEKLY VOLUME";
+  const peak = Math.max(...buckets.map((b) => b.seconds), 1);
+  const mean = buckets.reduce((a, b) => a + b.seconds, 0) / (buckets.length || 1);
+  // Say what a bar IS. Previously the heading said "WEEKLY VOLUME" while bars
+  // were silently multi-week buckets, and the average was per bucket.
+  const unit = stride === 1 ? "WEEK" : `${stride} WEEKS`;
 
   return `<div class="card" style="margin-top:10px">
     <div class="sleep__head">
-      <span class="eyebrow" style="letter-spacing:.16em;opacity:.55">${unitNote}</span>
+      <span class="eyebrow" style="letter-spacing:.16em;opacity:.55">VOLUME · ${buckets.length} BARS</span>
       <span class="mono" style="font-weight:700;font-size:13px">Ø ${duration(mean)}</span>
     </div>
     <div class="volbars">
-      ${weeks
-        .map((w, i) => {
-          const h = (w.seconds / peak) * 100;
-          const showLabel = weeks.length <= 14 || i % Math.ceil(weeks.length / 7) === 0;
-          return `<div class="volbars__col" title="${isoDay(w.start)} · ${duration(w.seconds)} · ${km(w.metres, 0)}km">
-            <div class="volbars__bar" style="height:${h}%;background:${sportColor(w.dominant)}"></div>
-            <div class="volbars__label">${showLabel ? shortDate(w.start.toISOString()).slice(0, 2) : ""}</div>
+      ${buckets
+        .map((b, i) => {
+          const h = (b.seconds / peak) * 100;
+          const showLabel = buckets.length <= 14 || i % Math.ceil(buckets.length / 7) === 0;
+          return `<div class="volbars__col" title="${isoDay(b.start)} + ${unit.toLowerCase()} · ${duration(b.seconds)} · ${km(b.metres, 0)}km">
+            <div class="volbars__bar" style="height:${h}%;background:${sportColor(b.dominant)}"></div>
+            <div class="volbars__label">${showLabel ? shortDate(b.start.toISOString()).slice(0, 2) : ""}</div>
           </div>`;
         })
         .join("")}
     </div>
-    <div class="mono" style="font-size:9px;opacity:.4;margin-top:8px;letter-spacing:.06em">
-      BAR COLOUR = DOMINANT SPORT${rangeKey === "all" ? " · FULL HISTORY" : ""}
+    <div class="mono" style="font-size:9px;opacity:.4;margin-top:8px;letter-spacing:.06em;line-height:1.6">
+      ONE BAR = ${unit} OF MOVING TIME · Ø IS PER BAR<br />
+      COLOUR = DOMINANT SPORT (<span style="color:var(--coral)">RUN</span>
+      <span style="color:var(--petrol)">RIDE</span>
+      <span style="color:var(--ochre)">GYM</span>)
     </div>
   </div>`;
 }
 
 function wellnessTrio(dataset: Dataset): string {
-  const recent = dataset.wellness.slice(-28);
-  const last = recent[recent.length - 1];
+  // Per-metric resolution: hrv/resting_hr land later than ctl/atl, so reading
+  // them all off the newest row shows "–" for whatever hasn't synced yet.
+  const hrv = latest(dataset.wellness, "hrv");
+  const rhr = latest(dataset.wellness, "resting_hr");
+  const sleep = latest(dataset.wellness, "sleep_hours");
   const cards = [
-    { label: "HRV", value: round(last?.hrv ?? null), series: recent.map((w) => w.hrv), color: "var(--coral)" },
-    { label: "RHR", value: round(last?.resting_hr ?? null), series: recent.map((w) => w.resting_hr), color: "var(--petrol)" },
+    { label: "HRV", value: round(hrv.value), series: series(dataset.wellness, "hrv", 28), color: "var(--coral)" },
+    { label: "RHR", value: round(rhr.value), series: series(dataset.wellness, "resting_hr", 28), color: "var(--petrol)" },
     {
       label: "SLEEP",
-      value: last?.sleep_hours ? last.sleep_hours.toFixed(1) : "–",
-      series: recent.map((w) => w.sleep_hours),
+      value: sleep.value === null ? "–" : sleep.value.toFixed(1),
+      series: series(dataset.wellness, "sleep_hours", 28),
       // A fourth series would break the three-colour rule, so ink at 40%.
       color: "var(--extra-series)",
     },

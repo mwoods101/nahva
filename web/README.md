@@ -2,14 +2,27 @@
 
 Mobile-first SPA implementing the Claude Design project
 ["Mobile app layout exploration"](https://claude.ai/design/p/4a37c4d9-9d35-4e5d-b9cf-bcdff272cd90).
-Currently on **mock data** — wiring to Supabase is the JOIN phase.
+Reads **live Supabase** via PostgREST. The mock fixture remains only as an
+offline fallback; when it is in use the UI shows a MOCK DATA banner, so it is
+never ambiguous whether a number is real.
 
 ```bash
 npm install
 npm run dev        # http://localhost:5173
 npm run build      # tsc --noEmit && vite build
-npm run smoke      # render-time checks over every view (130 assertions)
+npm run smoke      # render-time checks over every view (151 assertions)
 ```
+
+Live data needs `web/.env.local` (gitignored):
+
+```
+VITE_SUPABASE_URL=https://<ref>.supabase.co
+VITE_SUPABASE_PUBLISHABLE_KEY=sb_publishable_...
+```
+
+Both are client-safe. RLS is on and the only policies are `SELECT` for
+anon/authenticated, verified: an anon `INSERT` returns `42501` / HTTP 401.
+Without these vars the app falls back to the fixture.
 
 ## Which design cards this implements
 
@@ -17,10 +30,10 @@ The design has two turns. **t2 supersedes t1** where they overlap:
 
 | View | Card | Notes |
 |---|---|---|
-| Home / This week | **2a** | Hero is *moving time*, readiness tile is petrol, the whole Body screen folds in under the week |
+| Home / This week | **2a** | Hero is *moving time*; the Body screen folds in under the week. Readiness tile and body-battery block dropped — see *Metrics with no data source* |
 | Training log | **2b** | Calendar — week per row, one dot per activity; dot size *and* its number read the metric |
 | Progression | **1d** | PMC — coral CTL hero, petrol ATL, ochre TSB strip |
-| Activity detail | **1g** | Sport-coloured header, interval block diagram, recovery context |
+| Activity detail | **1g** | Sport-coloured header, segment block diagram, recovery context |
 | Colour system | **2d** | Transcribed verbatim into `src/tokens.css` |
 | Nav | **2c** | Pattern A — ink tab bar, coral rule. **Three** tabs |
 
@@ -64,11 +77,15 @@ rather than flattering the design:
 Consequences the views must handle, and do:
 
 - **The PMC reads as "building."** ~5 weeks of CTL/ATL against 13 years of
-  volume. The chart is clamped to actual load coverage and never stretched to
-  fill a longer range; a persistent notice states the coverage in days and
-  explicitly says it is not a long-term trend. See `views/progression.ts`.
-- **Absent metrics render as absent.** Readiness and body battery show `—` with
-  NOT REPORTED, not a plausible-looking number.
+  volume. The chart spans the whole selected range with the curve occupying only
+  the days that have load, marks the empty stretch NO LOAD DATA, and labels the
+  axis with real coverage ("36 OF 43 DAYS · 84%"). A persistent notice states the
+  coverage and says it is not a long-term trend. See `views/progression.ts`.
+  (An earlier version *clamped* the chart to coverage, which made all four range
+  pills produce an identical path and look broken; the smoke test now asserts
+  four distinct CTL paths.)
+- **Metrics that arrive late are not reported as missing.** See *Reading wellness
+  metrics* below.
 - **Strava rows show no load.** Activity detail states
   `NO TRAINING LOAD · STRAVA-SOURCED` and, where Strava had its own figure, says
   it is not used — `strava_load` must never reach the PMC.
@@ -83,7 +100,9 @@ too; it just makes a poor fixture.
 src/tokens.css      design tokens — the only colour definitions
 src/app.css         component styles, transcribed from the design cards
 src/types.ts        mirrors the Postgres schema in supabase/migrations/
-src/mock.ts         deterministic fixture (swap this out at JOIN)
+src/data.ts         live Supabase reads (PostgREST, publishable key)
+src/mock.ts         deterministic fixture — offline fallback only
+src/wellness.ts     per-metric resolution of wellness values
 src/format.ts       duration/distance/pace formatting, sport→colour
 src/charts.ts       hand-rolled SVG paths — no chart library
 src/views/*.ts      one module per view, pure state → HTML string
@@ -92,16 +111,53 @@ test/smoke.ts       render assertions
 .design-src/        the imported design + per-card extracts, kept as provenance
 ```
 
-Views are pure `render(state) → string`, so JOIN means replacing
-`loadMockDataset()` with a Supabase query returning the same `Dataset` shape —
-not rewriting views.
+Views are pure `render(state) → string` over a `Dataset`, which both `data.ts`
+and `mock.ts` produce. Swapping source required no view changes.
 
 Routes are hash-based: `#home`, `#log`, `#fitness`, `#activity/<id>`.
 
-## Known gaps (JOIN phase)
+## Known gaps
 
-- No Supabase client yet; `SUPABASE_URL` + `SUPABASE_PUBLISHABLE_KEY` become
-  Vercel env vars.
-- Weekly rollups are computed client-side over the full activity list. Fine for
-  4.7k rows; if it grows, move to a SQL view.
-- Not yet deployed. `vercel link` and env vars are outstanding.
+- **Not deployed.** `vercel link` plus `VITE_SUPABASE_URL` /
+  `VITE_SUPABASE_PUBLISHABLE_KEY` as Vercel env vars are outstanding.
+- All 4.7k activities are fetched on load (paginated at 1,000/request, `raw`
+  excluded) and rolled up client-side. Fine at this size; if it grows, move the
+  weekly rollups into a SQL view.
+- No caching or loading skeleton beyond a LOADING… title.
+- `ride` load is entirely absent, so a sport-split load view has nothing to show
+  until Garmin syncs a ride.
+
+
+## Metrics with no data source
+
+Three elements of card 2a have nothing to populate them, verified against all 36
+live wellness rows:
+
+| Metric | Why |
+|---|---|
+| `readiness` | key exists in the API, null on every row |
+| `body_battery` | field is not returned by intervals.icu at all |
+| `sleep_stages` | no stage breakdown, only `sleepSecs` |
+
+Rather than render three permanently-empty blocks, the readiness tile and
+body-battery block are dropped and the sleep chart shows total hours. Those
+slots now carry HRV, RHR and sleep hours. Agreed 2026-09-08. The columns remain
+in the schema and in `types.ts` so the gap stays named if a source ever appears.
+
+## Reading wellness metrics
+
+`src/wellness.ts` resolves each metric to its most recent non-null value rather
+than reading them all off the newest row. A wellness row's fields don't populate
+together — intervals.icu computes ctl/atl immediately, Garmin pushes hrv and
+restingHR later — so today's row routinely has ctl/atl and a null hrv. Reading
+one row made HRV and RHR display "—" when they were merely not in yet. Values
+older than the newest row are shown with their date.
+
+## Interval structure is not a workout
+
+For an unstructured run, intervals.icu auto-splits into ~1 km laps: every segment
+`type: "WORK"`, `label: null`, `intensity` as a percentage. There is normally no
+rep/recovery structure to recover, so Activity detail describes what the segments
+are and states they aren't a planned workout. `pipeline/intervals_sync.py`
+normalises the 84-field payload into the documented `Interval` shape before it
+reaches the database.

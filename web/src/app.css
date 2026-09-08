@@ -915,3 +915,25 @@ body {
 .spacer {
   height: 24px;
 }
+
+/* ── Origin / error banner ─────────────────────────────────── */
+.banner {
+  margin: 12px var(--gutter) 0;
+  padding: 10px 12px;
+  border-radius: var(--r-chip);
+  background: var(--ochre);
+  color: var(--ochre-on);
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font: 400 10.5px/1.5 var(--data);
+}
+.banner--error {
+  background: var(--coral);
+  color: var(--coral-on);
+}
+.banner__tag {
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+}
