@@ -38,7 +38,11 @@ Front-end render checks: `cd web && npm run smoke` → **151/151 passing**
 - [x] **Gate:** `readiness`/`body_battery` tolerated as null — 0/35 non-null, no errors
 - [x] Interval structure stored for 20/24 activities (gym sessions skipped by design)
 - [x] Workflow written — `.github/workflows/sync.yml`, daily 06:30 UTC + manual dispatch
-- [ ] **Action unproven** — needs GitHub Secrets (see *Blocked on human*)
+- [x] **Action proven end-to-end** — run
+      [34245838521](https://github.com/mwoods101/nahva/actions/runs/34245838521),
+      green in 15s: fetched 6 activities + 8 wellness rows, wrote via
+      `aws-1-eu-west-1.pooler.supabase.com:5432` (IPv4, as required from a
+      runner), dedup 0, committed; gate C **5/5** in CI
 
 ## D · Front-end  *(`/web`)*
 - [x] Design imported via `claude-design` MCP — project `4a37c4d9…`
@@ -107,9 +111,12 @@ paths across the four ranges, so the regression can't return.
 ## Blocked on human
 - [x] Session-pooler `SUPABASE_DB_URL` — set, `aws-1-eu-west-1.pooler.supabase.com:5432`,
       resolves to IPv4 so it will work from Actions
-- [ ] **GitHub Secrets** for the Action: `SUPABASE_DB_URL` (pooler string),
+- [x] **GitHub Secrets** set: `SUPABASE_DB_URL` (pooler string),
       `INTERVALS_API_KEY`, `INTERVALS_ATHLETE_ID`
-- [ ] Push the repo to GitHub (nothing pushed yet — commits are local only)
+- [x] Pushed to GitHub — `mwoods101/nahva` @ `83e33f9`, 5 commits, authorship
+      normalised to `m.woods101@gmail.com`
+- [ ] `COACH_DB_PASSWORD` — the 15-char value is rejected by a length guard;
+      needs ≥16 (use `secrets.token_urlsafe(32)`)
 - [ ] Vercel project link + env vars
 - [ ] Claude ↔ Supabase connector auth (read-only role)
 
