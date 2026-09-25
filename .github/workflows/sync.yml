@@ -8,9 +8,11 @@ name: intervals.icu sync
 
 on:
   schedule:
-    # 06:30 UTC daily — after Garmin has normally pushed the previous night's
-    # sleep/HRV into intervals.icu.
-    - cron: "30 6 * * *"
+    # Every 2 hours at :30 UTC, so same-day workouts land within ~2h. The
+    # 06:30 slot is kept — by then Garmin has normally pushed the previous
+    # night's sleep/HRV into intervals.icu. Upserts are idempotent, so the
+    # overlapping 30-day windows are harmless.
+    - cron: "30 */2 * * *"
   workflow_dispatch:
     inputs:
       days:
