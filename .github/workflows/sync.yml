@@ -1,18 +1,23 @@
 name: intervals.icu sync
 
-# Daily incremental sync of activities + wellness from intervals.icu into
-# Supabase. The Strava CSV import is deliberately NOT here — it is a one-off
-# local run (BUILD_BRIEF.md §6).
+# Incremental sync of activities + wellness from intervals.icu into Supabase.
+# The Strava CSV import is deliberately NOT here — it is a one-off local run
+# (BUILD_BRIEF.md §6).
 #
-# STATUS: not yet verified end-to-end. Requires the repository secrets below.
+# Two schedules share this workflow:
+#   */15 — fast: last 2 days only, so same-day workouts land quickly at a few
+#          API calls per run. GitHub's cron is best-effort: runs typically start
+#          10-20 min late and can be dropped under load, so expect ~15-35 min.
+#   06:40 — daily: 30-day window plus the gate-C verify. By then Garmin has
+#          normally pushed the previous night's sleep/HRV into intervals.icu,
+#          and the wide window catches late edits. Upserts are idempotent, so
+#          the overlapping windows are harmless. Kept off the :15 grid so it never
+#          fires at the same instant as a fast run.
 
 on:
   schedule:
-    # Every 2 hours at :30 UTC, so same-day workouts land within ~2h. The
-    # 06:30 slot is kept — by then Garmin has normally pushed the previous
-    # night's sleep/HRV into intervals.icu. Upserts are idempotent, so the
-    # overlapping 30-day windows are harmless.
-    - cron: "30 */2 * * *"
+    - cron: "*/15 * * * *"
+    - cron: "40 6 * * *"
   workflow_dispatch:
     inputs:
       days:
@@ -28,6 +33,9 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    env:
+      # The fast cron syncs 2 days; the daily cron and manual runs default to 30.
+      FAST: ${{ github.event.schedule == '*/15 * * * *' }}
 
     steps:
       - uses: actions/checkout@v5
@@ -57,9 +65,10 @@ jobs:
           # rejects. Traffic stays encrypted; CA verification is off.
           SUPABASE_DB_SSLMODE: require
         run: |
-          python pipeline/intervals_sync.py --days "${{ github.event.inputs.days || '30' }}"
+          python pipeline/intervals_sync.py --days "${{ env.FAST == 'true' && '2' || github.event.inputs.days || '30' }}"
 
       - name: Verify gate C
+        if: env.FAST != 'true'
         env:
           SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
           SUPABASE_DB_SSLMODE: require
